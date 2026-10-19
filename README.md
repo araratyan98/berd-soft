@@ -7,11 +7,11 @@
 - English՝ https://araratyan98.github.io/berd-soft/en/
 
 ## Կարգավորումներ
-`../berd-os/parts/body.html`-ի սկզբում `BERD_CONFIG` բլոկն է. կոնտակտներ, հայտերի հասցե (`leadEndpoint`), վիճակագրություն։
+`berd-os/parts/body.html`-ի սկզբում `BERD_CONFIG` բլոկն է. կոնտակտներ, հայտերի հասցե (`leadEndpoint`), վիճակագրություն։
 
 ## Ինչպես թարմացնել
-1. Տեքստերը՝ `../berd-os/parts/content.js` (երեք լեզուն), ոճերը՝ `parts/extra.css`, կոդը՝ `parts/body.html`։
-2. `node ../berd-os/compose.js` → `node build.js` → commit և push։
+1. Տեքստերը՝ `berd-os/parts/content.js` (երեք լեզուն), ոճերը՝ `parts/extra.css`, կոդը՝ `parts/body.html`։
+2. `node build.js` (ինքը նախ compose է անում) → commit և push։
 
 ## Հայտեր Telegram-ով
 Տես `worker/SETUP.md`։

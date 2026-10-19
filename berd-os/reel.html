@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="hy"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@500;700;800;900&family=Onest:wght@600;800&display=block">
+<style>
+/* 1080×1920 Instagram Reel: the live site in a frame, captions above, call to action below */
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#07080c;color:#fff;font-family:"Noto Sans Armenian","Onest",sans-serif}
+.bg{position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 46%,#1c2350 0%,#07080c 70%)}
+.blk{position:absolute;width:520px;height:520px;filter:blur(140px);opacity:.35}
+.top{position:absolute;left:70px;right:70px;top:110px;display:grid;gap:22px}
+.brand{display:flex;align-items:center;gap:16px;font:800 40px "Onest",sans-serif}
+.mk{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:48px;height:48px}
+.mk i:nth-child(1){background:#1B36F5}.mk i:nth-child(2){background:#CCFF00}.mk i:nth-child(3){background:#E01060}.mk i:nth-child(4){background:#FFB800}
+.cap{position:relative;height:250px}
+.cap p{position:absolute;inset:0;font:900 76px/1.08 "Noto Sans Armenian",sans-serif;letter-spacing:-.02em;opacity:0;transform:translateY(30px);transition:opacity .5s,transform .5s cubic-bezier(.2,.8,.2,1)}
+.cap p.on{opacity:1;transform:none}
+.cap p em{font-style:normal;color:#CCFF00}
+.frame{position:absolute;left:30px;top:520px;width:1020px;height:717px;border-radius:26px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.6),0 0 0 2px rgba(255,255,255,.08)}
+iframe{width:1440px;height:1012px;border:0;transform:scale(.7084);transform-origin:0 0}
+.bottom{position:absolute;left:70px;right:70px;bottom:150px;display:grid;gap:26px}
+.chips{display:flex;flex-wrap:wrap;gap:14px}
+.chips span{padding:14px 22px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);font:700 30px "Noto Sans Armenian",sans-serif}
+.cta{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:30px 36px;border-radius:26px;background:#CCFF00;color:#111}
+.cta b{font:900 40px "Noto Sans Armenian",sans-serif}
+.cta small{display:block;font:700 30px "Onest",sans-serif;margin-top:6px}
+.cta i{font-style:normal;font:900 64px "Onest",sans-serif}
+.end{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:40px;background:#07080c;opacity:0;transition:opacity .7s;text-align:center;padding:80px}
+.end.on{opacity:1}
+.end .mk{width:170px;height:170px;gap:12px}
+.end h1{font:900 96px/1.06 "Noto Sans Armenian",sans-serif;letter-spacing:-.02em}
+.end h1 em{font-style:normal;color:#CCFF00}
+.end p{font:700 40px "Onest",sans-serif;color:#c3c8d8}
+.end .tg{padding:22px 40px;border-radius:999px;background:#CCFF00;color:#111;font:900 42px "Onest",sans-serif}
+</style></head><body>
+<div class="bg"></div>
+<span class="blk" style="left:-160px;top:420px;background:#1B36F5"></span>
+<span class="blk" style="right:-160px;top:900px;background:#E01060"></span>
+<div class="top">
+  <div class="brand"><span class="mk"><i></i><i></i><i></i><i></i></span>BERD SOFT</div>
+  <div class="cap">
+    <p data-c="0">Կայք, որը<br>բացվում է <em>ինչպես<br>համակարգիչ</em></p>
+    <p data-c="1">Մեր աշխատանքները՝<br><em>կենդանի</em>, ոչ թե<br>նկարներով</p>
+    <p data-c="2"><em>Առաջ</em> և <em>հետո</em>.<br>տարբերությունը<br>տեսանելի է</p>
+    <p data-c="3">Գինը՝<br><em>վայրկյանների</em><br>ընթացքում</p>
+    <p data-c="4">Հարցրեք մեր<br><em>ռոբոտին</em>՝<br>24/7</p>
+  </div>
+</div>
+<div class="frame"><iframe id="site" src="/?reel=1"></iframe></div>
+<div class="bottom">
+  <div class="chips"><span>Կայքեր</span><span>Հավելվածներ</span><span>Telegram-բոտեր</span></div>
+  <div class="cta"><div><b>Թվային բերդ ձեր բիզնեսի համար</b><small>araratyan98.github.io/berd-soft</small></div><i>→</i></div>
+</div>
+<div class="end" id="end">
+  <span class="mk"><i></i><i></i><i></i><i></i></span>
+  <h1>Թվային <em>բերդ</em><br>ձեր բիզնեսի համար</h1>
+  <p>Կայքեր · Հավելվածներ · Telegram-բոտեր</p>
+  <span class="tg">@BerdSoft</span>
+</div>
+<script>
+// the timeline runs on page timers, so the recorder's virtual clock drives it frame by frame
+var cap=-1;
+function show(i){document.querySelectorAll('.cap p').forEach(function(p){p.classList.toggle('on',+p.dataset.c===i)})}
+function at(ms,fn){setTimeout(fn,ms)}
+function D(){return document.getElementById('site').contentDocument}
+function q(s){return D().querySelector(s)}
+function click(s){var e=q(s);if(e)e.click();return !!e}
+function closeAll(){D().querySelectorAll('.win .c').forEach(function(b){b.click()})}
+window.startReel=function(){var f=document.getElementById('site');f.addEventListener('load',run,{once:true});f.src='/?reel=1&t='+Date.now();};
+function run(){
+  at(300,function(){show(0)});
+  at(4200,function(){show(1);click('[data-app="work"]')});
+  at(5600,function(){click('.card[data-p="nairi"]')});
+  at(6800,function(){var v=q('.win[data-key="p:nairi"] [data-view]');if(v){var y=0,t=setInterval(function(){y+=14;v.scrollTop=y;if(y>520)clearInterval(t)},33)}});
+  at(8600,function(){closeAll()});
+  at(9100,function(){show(2);click('[data-app="work"]')});
+  at(9900,function(){click('.card[data-p="dent"]')});
+  at(11000,function(){click('.win[data-key="p:dent"] [data-batoggle]')});
+  at(13300,function(){closeAll()});
+  at(13800,function(){show(3);click('[data-app="calc"]')});
+  var steps=[['type','shop'],['feat','pay'],['feat','admin'],['feat','seo'],['lang','ru'],['feat','tgbot']];
+  steps.forEach(function(s,i){at(14700+i*420,function(){click('.win[data-key="calc"] [data-g="'+s[0]+'"][data-k="'+s[1]+'"]')})});
+  at(17700,function(){closeAll()});
+  at(18200,function(){show(4);click('#botFab')});
+  at(19500,function(){var b=D().querySelectorAll('.win[data-key="bot"] .qs button');if(b[1])b[1].click()});
+  at(22600,function(){document.getElementById('end').classList.add('on')});
+}
+</script>
+</body></html>

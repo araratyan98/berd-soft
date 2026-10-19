@@ -1,4 +1,4 @@
-// Builds the GitHub Pages site from the prototype source (../berd-os/berd-os.html):
+// Builds the GitHub Pages site from the prototype source (berd-os/berd-os.html, composed first from berd-os/parts):
 //   index.html (Armenian), ru/index.html, en/index.html, sitemap.xml, robots.txt, 404.html
 // Each page gets its own <title>, description, canonical, hreflang links, Open Graph tags,
 // JSON-LD (ProfessionalService + FAQ) and a readable text version of the content for search engines
@@ -6,7 +6,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const SRC = path.join(__dirname, '..', 'berd-os', 'berd-os.html');
+require('./berd-os/compose.js');
+const SRC = path.join(__dirname, 'berd-os', 'berd-os.html');
 const OUT = __dirname;
 const src = fs.readFileSync(SRC, 'utf8');
 

@@ -1,0 +1,1645 @@
+<title>BERD OS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500;600;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one-screen stage; a laptop whose 1280×800 screen is a scaled virtual desktop ("BERD OS").
+   Phones get the same apps as a phone home screen instead of the laptop. Single dark look by choice. */
+:root{
+  color-scheme:dark;
+  --stage:#0b0c10; --stage-2:#14161d; --chrome:#e9eaee; --chrome-2:#d6d8de;
+  --win:#fbfbfc; --win-2:#f1f2f5; --line:#dcdee4; --text:#121318; --muted:#5f6370;
+  --blue:#1B36F5; --lime:#CCFF00; --pink:#E01060; --amber:#FFB800; --ink:#0D0D0F;
+  --on-stage:#eef0f6; --on-stage-2:#9aa0b0;
+  --f-ui:"Noto Sans Armenian","Onest",system-ui,sans-serif;
+  --f-lat:"Onest","Noto Sans Armenian",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+html,body{height:100%}
+body{background:var(--stage);color:var(--on-stage);font-family:var(--f-ui);overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.mk{display:inline-grid;grid-template-columns:1fr 1fr;gap:9%;flex:none}
+.mk i{display:block}.mk i:nth-child(1){background:var(--blue)}.mk i:nth-child(2){background:var(--lime)}.mk i:nth-child(3){background:var(--pink)}.mk i:nth-child(4){background:var(--amber)}
+
+/* ---------- stage ---------- */
+.stage{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:8px;padding-block:14px;
+  background:radial-gradient(70% 55% at 50% 45%,#1a1d2a 0%,var(--stage) 70%)}
+.top{display:flex;justify-content:space-between;align-items:center;font:600 14px var(--f-lat);color:var(--on-stage)}
+.top .b{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.01em;font-size:16px}
+.top .b .mk{width:18px;height:18px}
+.top small{color:var(--on-stage-2);font:500 13px var(--f-ui)}
+.hint{text-align:center;color:var(--on-stage-2);font:500 13px var(--f-ui)}
+.hint b{color:var(--on-stage);font-weight:600}
+/* every laptop dimension derives from --sw (the screen width), so the frame always wraps the screen exactly */
+.laptop-wrap{display:grid;place-items:center;min-height:0;min-width:0;perspective:2400px}
+.laptop{--sw:1000px;--pad:calc(var(--sw)*.022);position:relative;transform-style:preserve-3d;width:calc(var(--sw) + var(--pad)*2)}
+.lid{position:relative;box-sizing:content-box;width:var(--sw);padding:var(--pad) var(--pad) calc(var(--pad)*1.45);background:#0c0c0e;
+  border-radius:calc(var(--sw)*.018) calc(var(--sw)*.018) calc(var(--sw)*.006) calc(var(--sw)*.006);
+  box-shadow:inset 0 0 0 1.5px #3a3b41,inset 0 0 0 4px #050506,0 calc(var(--sw)*.05) calc(var(--sw)*.09) calc(var(--sw)*-.03) rgba(0,0,0,.85);
+  transform-origin:50% 100%;backface-visibility:hidden}
+.lid:before{content:"";position:absolute;left:50%;top:0;width:calc(var(--sw)*.1);height:calc(var(--pad)*.95);transform:translateX(-50%);background:#050506;border-radius:0 0 calc(var(--pad)*.5) calc(var(--pad)*.5);z-index:2}
+.lid .cam{position:absolute;left:50%;top:calc(var(--pad)*.32);width:calc(var(--pad)*.3);height:calc(var(--pad)*.3);transform:translateX(-50%);border-radius:50%;background:#1d2533;box-shadow:inset 0 0 2px #5b7cff;z-index:3}
+.screen{position:relative;overflow:hidden;width:var(--sw);height:calc(var(--sw)*.625);border-radius:calc(var(--sw)*.004);background:#000}
+.glass{position:absolute;inset:0;z-index:1001;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.02) 32%,rgba(255,255,255,0) 46%)}
+.deck{position:relative;height:calc(var(--sw)*.02);margin:0 calc(var(--sw)*-.07);background:linear-gradient(180deg,#e2e4e8,#b3b6bd 55%,#6c6f77);
+  border-radius:2px 2px calc(var(--sw)*.016) calc(var(--sw)*.016);box-shadow:0 calc(var(--sw)*.03) calc(var(--sw)*.05) calc(var(--sw)*-.01) rgba(0,0,0,.75)}
+.deck:before{content:"";position:absolute;left:50%;top:0;width:calc(var(--sw)*.15);height:45%;transform:translateX(-50%);background:linear-gradient(#9da0a8,#c6c8cd);border-radius:0 0 calc(var(--sw)*.01) calc(var(--sw)*.01)}
+.zoom .deck{display:none}
+/* power-on: black panel, a soft bloom of light, then the boot screen shows through */
+.power{position:absolute;inset:0;z-index:1000;background:#000;pointer-events:none}
+.power.on{animation:poweron .9s ease-out forwards}
+@keyframes poweron{0%{background:#000;opacity:1}18%{background:radial-gradient(60% 45% at 50% 50%,#3b4bff 0%,#0b0d1c 60%,#000 100%);opacity:1}100%{opacity:0}}
+.os.ready .hero{animation:rise .7s cubic-bezier(.2,.8,.2,1) backwards}
+.os.ready .dock{animation:dockin .7s .15s cubic-bezier(.2,.8,.2,1) backwards}
+.os.ready .dicons{animation:rise .7s .25s cubic-bezier(.2,.8,.2,1) backwards}
+.os.ready .wall{animation:wallin 1.1s ease-out backwards}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes dockin{from{opacity:0;transform:translate(-50%,40px)}}
+@keyframes wallin{from{transform:scale(1.06);filter:brightness(.4)}}
+
+/* virtual 1280×800 OS */
+.os{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0;overflow:hidden;font-family:var(--f-ui);color:var(--text)}
+
+/* boot */
+.boot{position:absolute;inset:0;z-index:999;background:#000;display:grid;place-items:center;align-content:center;gap:34px;color:#fff;transition:opacity .45s}
+.boot .mk{width:92px;height:92px}
+.boot .mk i{animation:pop .5s 1.25s cubic-bezier(.2,.9,.3,1.3) both}
+.boot .mk i:nth-child(2){animation-delay:1.37s}.boot .mk i:nth-child(3){animation-delay:1.49s}.boot .mk i:nth-child(4){animation-delay:1.61s}
+.boot .bar{width:220px;height:5px;border-radius:5px;background:#2a2b30;overflow:hidden}
+.boot .bar i{display:block;height:100%;width:0;background:#fff;border-radius:5px;animation:load 1.5s 1.5s ease-in-out forwards}
+.boot small{position:absolute;bottom:26px;font:500 13px var(--f-ui);color:#7c808c}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes load{to{width:100%}}
+.boot.gone{opacity:0;pointer-events:none}
+
+/* wallpaper */
+.wall{position:absolute;inset:0;background:#101219;overflow:hidden}
+.wall .blk{position:absolute;filter:saturate(1.05)}
+.wall:after{content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wall .shade{position:absolute;inset:0;background:radial-gradient(60% 70% at 25% 45%,rgba(10,11,16,.0),rgba(10,11,16,.55) 70%),linear-gradient(90deg,rgba(10,11,16,.82) 0%,rgba(10,11,16,.35) 46%,rgba(10,11,16,0) 70%)}
+
+/* menu bar */
+.menubar{position:absolute;left:0;right:0;top:0;height:28px;z-index:500;display:flex;align-items:center;gap:20px;padding:0 14px;
+  background:rgba(18,19,26,.55);backdrop-filter:blur(18px) saturate(1.4);color:#f3f4f8;font:500 13px var(--f-ui)}
+.menubar .mk{width:14px;height:14px}
+.menubar b{font:800 13px var(--f-lat);letter-spacing:.01em}
+.menubar .app{font-weight:700}
+.menubar .sp{flex:1}
+.menubar .r{display:flex;gap:16px;align-items:center;font-variant-numeric:tabular-nums}
+.menubar .fs{padding:2px 8px;border-radius:5px}.menubar .fs:hover{background:rgba(255,255,255,.14)}
+
+/* desktop headline widget */
+.hero{position:absolute;left:64px;top:118px;width:620px;color:#fff;z-index:1}
+.hero .kick{display:inline-flex;align-items:center;gap:8px;font:600 13px var(--f-ui);color:#cfd3e0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:999px}
+.hero .kick i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.hero h1{margin:22px 0 0;font:800 58px/1.06 var(--f-ui);letter-spacing:-.025em;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero p{margin:20px 0 0;font:400 18px/1.55 var(--f-ui);color:#c6cad8;max-width:46ch}
+.hero .acts{display:flex;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:12px;font:700 15px var(--f-ui)}
+.btn.p{background:var(--lime);color:#111}.btn.p:hover{background:#dbff4d}
+.btn.g{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}.btn.g:hover{background:rgba(255,255,255,.18)}
+
+/* desktop icons */
+.dicons{position:absolute;right:26px;top:52px;display:grid;gap:18px;z-index:1}
+.dicon{width:96px;display:grid;justify-items:center;gap:7px;color:#fff;font:600 12.5px/1.25 var(--f-ui);text-align:center;padding:6px 4px;border-radius:8px}
+.dicon:hover,.dicon:focus-visible{background:rgba(255,255,255,.12)}
+.dicon .ico{width:58px;height:58px}
+.dicon span{text-shadow:0 1px 3px rgba(0,0,0,.6)}
+
+/* dock */
+.dock{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);transform-origin:50% 100%;transition:transform .35s cubic-bezier(.2,.8,.2,1),bottom .35s;z-index:4000;display:flex;align-items:flex-end;gap:10px;padding:9px 12px;
+  border-radius:22px;background:rgba(240,242,248,.18);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.dock .sep{width:1px;align-self:stretch;margin:4px 2px;background:rgba(255,255,255,.25)}
+.dk{position:relative;width:58px;height:58px;transition:transform .18s cubic-bezier(.3,.7,.4,1.4)}
+.dk .ico{width:100%;height:100%}
+.dk:hover{transform:translateY(-12px) scale(1.28)}
+.dk:hover+.dk,.dk:has(+.dk:hover){transform:translateY(-5px) scale(1.12)}
+.dk .tip{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%);white-space:nowrap;padding:5px 10px;border-radius:7px;
+  background:rgba(20,21,28,.9);color:#fff;font:600 12px var(--f-ui);opacity:0;pointer-events:none;transition:opacity .15s}
+.dk:hover .tip,.dk:focus-visible .tip{opacity:1}
+.dk .run{position:absolute;left:50%;bottom:-7px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff;opacity:0}
+.dk.on .run{opacity:.9}
+
+/* app icons (shared by dock, desktop, phone) */
+.ico{display:grid;place-items:center;border-radius:22%;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 10px rgba(0,0,0,.28)}
+.ico svg{width:56%;height:56%}
+.i-work{background:linear-gradient(160deg,#4c63ff,#1B36F5 55%,#1226b8)}
+.i-serv{background:linear-gradient(160deg,#e6ff6a,#CCFF00 55%,#a6d100)}
+.i-proc{background:linear-gradient(160deg,#ffffff,#eceef3)}
+.i-about{background:linear-gradient(160deg,#ff4f90,#E01060 55%,#b00b4a)}
+.i-chat{background:linear-gradient(160deg,#ffd257,#FFB800 55%,#e09a00)}
+.i-term{background:linear-gradient(160deg,#2b2d35,#0e0f13)}
+.i-folder{background:none;box-shadow:none;overflow:visible}
+
+/* windows */
+.win{position:absolute;display:flex;flex-direction:column;background:var(--win);border-radius:12px;overflow:hidden;z-index:100;
+  box-shadow:0 0 0 1px rgba(0,0,0,.22),0 28px 70px rgba(0,0,0,.45);will-change:transform}
+.win[hidden]{display:none!important}
+.win.max{left:0!important;top:28px!important;width:1280px!important;height:712px!important;border-radius:0}
+/* a maximized window leaves a slim strip at the bottom; the dock shrinks into it and grows back when no window is maximized */
+.os.has-max .dock{transform:translateX(-50%) scale(.66);bottom:2px}
+.os.has-max .dock .dk:hover{transform:translateY(-8px) scale(1.2)}
+.win.anim{transition:left .32s cubic-bezier(.2,.8,.2,1),top .32s cubic-bezier(.2,.8,.2,1),width .32s cubic-bezier(.2,.8,.2,1),height .32s cubic-bezier(.2,.8,.2,1),border-radius .32s}
+.tbar{height:40px;flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--win-2);border-bottom:1px solid var(--line);cursor:grab;user-select:none}
+.tbar:active{cursor:grabbing}
+.lights{display:flex;gap:8px}
+.lights button{width:13px;height:13px;border-radius:50%;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25);display:grid;place-items:center;font:700 9px/1 var(--f-lat);color:transparent}
+.lights:hover button{color:rgba(0,0,0,.55)}
+.lights .c{background:var(--pink)}.lights .m{background:var(--amber)}.lights .x{background:var(--lime)}
+.tbar .tt{flex:1;text-align:center;font:600 13px var(--f-ui);color:#3b3e48;margin-right:58px}
+.wbody{flex:1;min-height:0;overflow:auto;color:var(--text)}
+.wbody::-webkit-scrollbar{width:10px}.wbody::-webkit-scrollbar-thumb{background:#c9ccd4;border-radius:10px;border:3px solid var(--win)}
+
+/* portfolio app */
+.pf{display:grid;grid-template-columns:200px 1fr;height:100%}
+.pf aside{background:#eef0f4;border-right:1px solid var(--line);padding:16px 10px;display:grid;align-content:start;gap:2px}
+.pf aside h5{margin:6px 10px 8px;font:700 11px var(--f-ui);letter-spacing:.06em;color:#8a8e9a;text-transform:uppercase}
+.pf aside button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:8px 10px;border-radius:8px;font:600 13.5px var(--f-ui);color:#2c2f38}
+.pf aside button span{font:500 12px var(--f-lat);color:#8a8e9a}
+.pf aside button.on{background:#dfe3ff;color:var(--blue)}
+.pf aside .note{margin:16px 10px 0;padding:12px;border-radius:10px;background:#fff7dc;color:#6b5200;font:500 12px/1.45 var(--f-ui)}
+.pf main{padding:20px 22px;overflow:auto;min-width:0}
+.pf main h3{margin:0 0 4px;font:800 24px var(--f-ui);letter-spacing:-.01em}
+.pf main .sub{color:var(--muted);font:500 14px var(--f-ui);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{display:grid;gap:10px;text-align:left;padding:0;border-radius:14px;cursor:pointer}
+.card .th{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 6px 16px rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s}
+.card:hover .th{transform:translateY(-3px);box-shadow:0 0 0 2px var(--blue),0 12px 24px rgba(27,54,245,.18)}
+.card .th .tag{position:absolute;left:10px;top:10px;font:700 10.5px var(--f-ui);background:rgba(255,255,255,.92);color:#333;padding:3px 8px;border-radius:6px}
+.card b{font:700 15px var(--f-ui);color:var(--text)}
+.card small{display:block;font:500 12.5px var(--f-ui);color:var(--muted);margin-top:2px}
+
+/* browser window */
+.br{display:grid;grid-template-columns:1fr 300px;grid-template-rows:minmax(0,1fr);height:100%}
+.br .vp,.br .info{min-height:0}
+.br .vp{display:flex;flex-direction:column;min-width:0;background:#e9ebf0}
+.br .addr{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--win-2);border-bottom:1px solid var(--line)}
+.br .addr .u{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:500 13px var(--f-lat);color:#444}
+.br .addr .u i{width:10px;height:12px;border:2px solid #22a35a;border-radius:3px;display:inline-block}
+.br .addr .demo{font:700 11px var(--f-ui);color:#8a5a00;background:#fff1c7;padding:4px 8px;border-radius:6px}
+.br .view{flex:1;min-height:0;position:relative;overflow-y:auto;overscroll-behavior:contain}
+.shint{position:sticky;display:block;width:max-content;margin:-46px auto 0;bottom:14px;padding:8px 14px;border-radius:999px;background:rgba(18,19,26,.82);color:#fff;font:600 12.5px var(--f-ui);pointer-events:none;transition:opacity .4s}
+.shint.off{opacity:0}
+.br .info{border-left:1px solid var(--line);padding:22px 20px;overflow:auto;background:#fff}
+.br .info .cat{font:700 11.5px var(--f-ui);letter-spacing:.06em;color:var(--blue);text-transform:uppercase}
+.br .info h3{margin:8px 0 6px;font:800 24px/1.15 var(--f-ui)}
+.br .info .t{display:inline-block;font:700 11px var(--f-ui);color:#8a5a00;background:#fff1c7;padding:3px 8px;border-radius:6px}
+.br .info dl{display:grid;gap:14px;margin:20px 0}
+.br .info dt{font:700 12px var(--f-ui);color:var(--muted);margin-bottom:3px}
+.br .info dd{margin:0;font:500 14px/1.5 var(--f-ui)}
+.br .info .chips{display:flex;flex-wrap:wrap;gap:6px}
+.br .info .chips span{font:600 11.5px var(--f-lat);padding:4px 9px;border-radius:999px;background:#eef0f6;color:#333}
+
+/* generic content apps */
+.pad{padding:24px 26px}
+.pad h3{margin:0;font:800 26px/1.15 var(--f-ui);letter-spacing:-.01em}
+.pad .lead{margin:8px 0 20px;color:var(--muted);font:500 14.5px/1.55 var(--f-ui);max-width:60ch}
+.svc{display:grid;gap:10px}
+.svc .row{display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.svc .row .sq{width:52px;height:52px;border-radius:12px;display:grid;place-items:center}
+.svc .row .sq svg{width:26px;height:26px}
+.svc .row b{font:700 16px var(--f-ui)}.svc .row p{margin:3px 0 0;font:500 13.5px/1.45 var(--f-ui);color:var(--muted)}
+.svc .row .k{font:700 12.5px var(--f-ui);color:var(--blue);white-space:nowrap;padding:8px 12px;border-radius:999px;background:#eef1ff}
+.svc .row .k:hover{background:var(--blue);color:#fff}
+.notes{display:grid;grid-template-columns:220px 1fr;height:100%}
+.notes aside{background:#faf6e8;border-right:1px solid #ece4c8;padding:16px 12px}
+.notes aside div{padding:10px 12px;border-radius:8px;background:#f1e7c2;font:700 13px var(--f-ui);color:#4a3d10}
+.notes aside small{display:block;font:500 12px var(--f-ui);color:#8a7a40;margin-top:3px}
+.notes main{padding:26px 30px;background:#fffdf6;overflow:auto}
+.notes h3{margin:0 0 6px;font:800 26px var(--f-ui)}
+.notes .date{color:#9a8f6a;font:500 12.5px var(--f-ui);margin-bottom:18px}
+.steps{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.steps li{display:grid;grid-template-columns:26px 1fr auto;gap:14px;align-items:start}
+.steps .ck{width:22px;height:22px;border-radius:50%;border:2px solid #c9bd8f;display:grid;place-items:center;margin-top:2px}
+.steps li.done .ck{background:var(--blue);border-color:var(--blue)}
+.steps li.done .ck:after{content:"";width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.steps b{font:700 16px var(--f-ui)}.steps p{margin:3px 0 0;font:500 14px/1.5 var(--f-ui);color:#5c5640}
+.steps .d{font:600 12.5px var(--f-ui);color:#8a7a40;white-space:nowrap;background:#f3ecd2;padding:3px 9px;border-radius:999px}
+.gua{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gua div{padding:18px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.gua b{display:block;font:800 17px/1.25 var(--f-ui);margin-bottom:6px}
+.gua p{margin:0;font:500 13.5px/1.5 var(--f-ui);color:var(--muted)}
+.gua div:nth-child(1){border-top:4px solid var(--blue)}.gua div:nth-child(2){border-top:4px solid var(--lime)}.gua div:nth-child(3){border-top:4px solid var(--pink)}.gua div:nth-child(4){border-top:4px solid var(--amber)}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.stack span{font:600 12.5px var(--f-lat);padding:6px 11px;border-radius:8px;background:#eef0f6}
+
+/* chat */
+.chat{display:grid;grid-template-rows:auto 1fr auto;height:100%;background:#eef0f5}
+.chat .hd{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#fff;border-bottom:1px solid var(--line)}
+.chat .av{width:40px;height:40px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.chat .av .mk{width:18px;height:18px}
+.chat .hd b{display:block;font:700 15px var(--f-ui)}.chat .hd small{font:500 12px var(--f-ui);color:#22a35a}
+.chat .log{padding:18px;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:78%;padding:10px 14px;border-radius:16px;font:500 14px/1.45 var(--f-ui)}
+.msg.in{background:#fff;align-self:flex-start;border-bottom-left-radius:5px}
+.msg.out{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.msg small{display:block;font:500 11px var(--f-lat);opacity:.6;margin-top:4px;text-align:right}
+.chat form{display:grid;gap:8px;padding:12px 14px;background:#fff;border-top:1px solid var(--line)}
+.chat .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chat input,.chat textarea{width:100%;box-sizing:border-box;font:500 14px var(--f-ui);padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#f7f8fb;color:var(--text);resize:none}
+.chat .send{display:flex;gap:8px;align-items:center}
+.chat .send textarea{flex:1}
+.chat .send button{flex:none;height:42px;padding:0 16px;border-radius:10px;background:var(--blue);color:#fff;font:700 14px var(--f-ui)}
+.chat .tg{font:500 12px var(--f-ui);color:var(--muted)}
+.chat .tg b{font-family:var(--f-lat);color:var(--text);user-select:all}
+
+/* terminal */
+.term{height:100%;box-sizing:border-box;background:#0e0f13;color:#d8dbe4;font:400 13.5px/1.6 var(--f-mono);padding:14px 16px;overflow:auto}
+.term .l{white-space:pre-wrap}
+.term .g{color:var(--lime)}.term .bl{color:#8fa0ff}.term .pk{color:#ff6aa3}.term .am{color:var(--amber)}
+.term form{display:flex;gap:8px}
+.term input{flex:1;background:none;border:0;outline:0;color:#fff;font:inherit;padding:0}
+
+/* ---------- phone mode ---------- */
+.phone{display:none}
+@media (max-width:760px){
+  body{overflow:auto;padding-left:0;padding-right:0}
+  .stage{display:none}
+  .phone{display:block;position:relative;min-height:100%;
+    background:radial-gradient(120% 60% at 20% 0%,#2a3cff 0%,#121427 45%,#0b0c10 100%);color:#fff;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 120px}
+}
+.phone .sb{display:flex;justify-content:space-between;align-items:center;font:700 14px var(--f-lat);padding:4px 6px 0}
+.phone .sb span{display:flex;align-items:center;gap:6px}
+.phone .wid{margin-top:22px;padding:20px;border-radius:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px)}
+.phone .wid .mk{width:26px;height:26px}
+.phone .wid h1{margin:14px 0 0;font:800 30px/1.1 var(--f-ui);letter-spacing:-.02em;text-wrap:balance}
+.phone .wid h1 em{font-style:normal;color:var(--lime)}
+.phone .wid p{margin:10px 0 0;color:#c8ccda;font:500 14.5px/1.5 var(--f-ui)}
+.phone .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px;margin-top:26px}
+.phone .app{display:grid;justify-items:center;align-content:start;gap:8px;min-width:0;font:600 12px/1.25 var(--f-ui);text-align:center;color:#fff;hyphens:none}
+.phone .app .ico{width:100%;max-width:68px;height:auto;aspect-ratio:1}
+/* phone home: recent work carousel */
+.phone .feat{margin-top:30px}
+.phone .feat h2{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 12px;font:700 17px var(--f-ui)}
+.phone .feat h2 button{font:600 13px var(--f-ui);color:var(--lime)}
+.phone .rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1*max(16px,env(safe-area-inset-right,0px))) 0 0;padding:0 16px 6px 0}
+.phone .rail::-webkit-scrollbar{display:none}
+.phone .rail .card{flex:none;width:72%;scroll-snap-align:start;color:#fff}
+.phone .rail .card b{color:#fff}.phone .rail .card small{color:#aab0c2}
+.phone .wid,.phone .app,.phone .feat,.phone .pdock{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.phone .app:nth-child(2){animation-delay:.05s}.phone .app:nth-child(3){animation-delay:.1s}.phone .app:nth-child(4){animation-delay:.15s}.phone .app:nth-child(5){animation-delay:.2s}.phone .feat{animation-delay:.25s}
+.phone{box-sizing:border-box;width:100%;overflow-x:hidden}
+.phone .pdock{position:fixed;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  display:flex;justify-content:space-around;padding:12px;border-radius:28px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(22px);z-index:5}
+.phone .pdock .app{width:22%}.phone .pdock .ico{width:100%;max-width:58px;height:auto;aspect-ratio:1}
+.sheet{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:var(--win);color:var(--text);
+  padding-top:env(safe-area-inset-top,0px);transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+.sheet.open{transform:none}
+.sheet .sh{display:flex;align-items:center;gap:10px;padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:var(--win-2)}
+.sheet .sh button{font:700 15px var(--f-ui);color:var(--blue)}
+.sheet .sh b{flex:1;text-align:center;font:700 15px var(--f-ui);margin-right:60px}
+.sheet .sbody{flex:1;overflow:auto;min-height:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+/* phone-specific overrides of app layouts */
+.sheet .pf{grid-template-columns:1fr}
+.sheet .pf aside{display:flex;overflow-x:auto;gap:6px;border-right:0;border-bottom:1px solid var(--line);padding:10px 12px}
+.sheet .pf aside h5,.sheet .pf aside .note{display:none}
+.sheet .pf aside button{white-space:nowrap;gap:6px}
+.sheet .pf main{padding:16px}
+.sheet .grid{grid-template-columns:1fr 1fr;gap:12px}
+.sheet .br{grid-template-columns:1fr;grid-template-rows:auto;height:auto}
+.sheet .br .view{flex:none;height:auto;overflow:visible}
+/* demo sites reflow like real mobile sites inside the phone browser */
+.sheet .ms nav div{display:none}
+.sheet .ms .hero2{grid-template-columns:1fr;padding:18px 20px 28px}
+.sheet .ms .hero2 h2{font-size:30px}
+.sheet .ms .art{max-width:70%}
+.sheet .ms .feats{grid-template-columns:1fr;padding:6px 20px 26px}
+.sheet .ms .band{padding:24px 16px}
+.sheet .ms .band b{font-size:22px}
+.sheet .ms .gal{padding:22px 20px;grid-auto-rows:90px}
+.sheet .ms .quote{padding:24px 20px;font-size:17px}
+.sheet .db{grid-template-columns:1fr}
+.sheet .db aside{display:none}
+.sheet .db main{padding:12px}
+.sheet .db .kpi{grid-template-columns:1fr 1fr}
+.sheet .db table{font-size:11px}
+.sheet .db td:nth-child(3),.sheet .db th:nth-child(3){display:none}
+.sheet .pf aside{align-items:center}
+.sheet .pf aside button{padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+.sheet .pf aside button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sheet .pf aside button.on span{color:#dfe3ff}
+.sheet .br .info{border-left:0}
+.sheet .notes{grid-template-columns:1fr}
+.sheet .notes aside{display:none}
+.sheet .gua{grid-template-columns:1fr}
+.sheet .pad{padding:18px 16px}
+.sheet .svc .row{grid-template-columns:44px 1fr}
+.sheet .svc .row .k{grid-column:2;justify-self:start}
+.sheet .svc .row .sq{width:44px;height:44px}
+.sheet .chat{height:100%}
+.sheet .chat .two{grid-template-columns:1fr}
+.sheet .term{min-height:100%}
+
+/* mock websites inside the browser */
+.ms{font-family:var(--f-ui);color:#111;background:#fff}
+.ms nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;font:600 12px var(--f-ui)}
+.ms nav b{font:800 16px var(--f-lat)}
+.ms nav div{display:flex;gap:18px;opacity:.75}
+.ms .hero2{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;padding:30px 28px 40px;align-items:center}
+.ms .hero2 h2{margin:0;font:800 38px/1.08 var(--f-ui);letter-spacing:-.02em}
+.ms .hero2 p{margin:12px 0 18px;font:500 13.5px/1.55 var(--f-ui);opacity:.75}
+.ms .hero2 .cta{display:inline-block;padding:11px 18px;border-radius:10px;font:700 13px var(--f-ui)}
+.ms .art{aspect-ratio:1/1;max-width:100%;border-radius:18px;position:relative;overflow:hidden}
+.ms .art i{position:absolute;border-radius:14px}
+.ms .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:10px 28px 34px}
+.ms .feats div{border-radius:14px;padding:16px;font:700 13px var(--f-ui)}
+.ms .feats div p{margin:6px 0 0;font:500 12px/1.45 var(--f-ui);opacity:.7}
+.ms .band{padding:34px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center}
+.ms .band b{display:block;font:800 30px var(--f-lat)}
+.ms .band span{font:500 12px var(--f-ui);opacity:.75}
+.ms .gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:120px;gap:10px;padding:30px 28px}
+.ms .gal i{border-radius:12px}
+.ms .gal i:first-child{grid-row:span 2}
+.ms .quote{padding:34px 28px;font:600 20px/1.4 var(--f-ui)}
+.ms .quote small{display:block;margin-top:10px;font:500 12px var(--f-ui);opacity:.6}
+.ms footer{padding:26px 28px;display:flex;justify-content:space-between;font:500 12px var(--f-ui)}
+/* dashboard mock */
+.db{display:grid;grid-template-columns:170px 1fr;min-height:1100px;font-family:var(--f-ui);background:#f4f6fb;color:#151821}
+.db aside{background:#141a33;color:#cfd6f5;padding:18px 14px;display:grid;align-content:start;gap:6px;font:600 12.5px var(--f-ui)}
+.db aside b{color:#fff;font:800 16px var(--f-lat);margin-bottom:14px}
+.db aside span{padding:8px 10px;border-radius:8px}.db aside span.on{background:#2a3570;color:#fff}
+.db main{padding:20px}
+.db .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.db .kpi div{background:#fff;border-radius:12px;padding:14px;font:600 11.5px var(--f-ui);color:#6b7080}
+.db .kpi b{display:block;font:800 22px var(--f-lat);color:#151821;margin-top:6px}
+.db .chart{margin-top:12px;background:#fff;border-radius:12px;height:200px;display:flex;align-items:flex-end;gap:10px;padding:18px}
+.db .chart i{flex:1;border-radius:6px 6px 0 0}
+.db table{width:100%;margin-top:12px;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font:500 12px var(--f-ui)}
+.db td,.db th{padding:11px 12px;border-bottom:1px solid #eef0f5;text-align:left}
+.db th{font-weight:700;color:#6b7080;background:#fafbfd}
+.db .st{padding:3px 8px;border-radius:999px;font-weight:700;font-size:11px}
+/* phone app mock */
+.pa{min-height:1150px;display:grid;justify-items:center;gap:26px;padding:30px 0;background:linear-gradient(180deg,#f1fff0,#e7ecff)}
+.pa .pf2{width:250px;height:520px;border-radius:40px;background:#111;padding:10px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+.pa .pf2 .in{height:100%;border-radius:31px;overflow:hidden;background:#fff;font-family:var(--f-ui);padding:34px 14px 14px;display:grid;align-content:start;gap:10px}
+.pa .pf2 h4{margin:0;font:800 18px var(--f-ui)}
+.pa .pf2 .c{border-radius:16px;padding:14px;font:700 12px var(--f-ui)}
+.pa .pf2 .c b{display:block;font:800 26px var(--f-lat);margin-top:4px}
+.pa .pf2 .r{display:flex;gap:8px}.pa .pf2 .r div{flex:1;border-radius:12px;height:70px}
+/* telegram mock */
+.tgm{min-height:1050px;background:linear-gradient(180deg,#cfe3c8,#a9c7a0);font-family:var(--f-ui);padding:0 0 30px}
+.tgm .h{display:flex;align-items:center;gap:10px;padding:12px 18px;background:#fff;font:700 14px var(--f-ui)}
+.tgm .h i{width:34px;height:34px;border-radius:50%;background:#c0392b}
+.tgm .h small{display:block;font:500 11px var(--f-ui);color:#4a90d9}
+.tgm .b{display:flex;flex-direction:column;gap:10px;padding:18px}
+.tgm .m{max-width:70%;padding:10px 13px;border-radius:14px;font:500 13px/1.4 var(--f-ui);background:#fff}
+.tgm .m.me{align-self:flex-end;background:#e2ffc7}
+.tgm .kb{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:70%}
+.tgm .kb span{background:rgba(255,255,255,.75);border-radius:10px;padding:9px;text-align:center;font:600 12px var(--f-ui);color:#2b6cb0}
+.tgm .menu{max-width:72%;background:#fff;border-radius:14px;overflow:hidden}
+.tgm .menu div{display:flex;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #eee;font:600 12.5px var(--f-ui)}
+
+/* assistant: floating robot button */
+.botfab{position:absolute;right:26px;bottom:22px;z-index:5000;width:74px;height:74px;border-radius:50%;padding:0;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#ffffff,#e9ebf3 70%);box-shadow:0 0 0 3px var(--lime),0 14px 30px rgba(0,0,0,.45);animation:bob 3.2s ease-in-out infinite;transition:transform .2s}
+.botfab:hover{transform:scale(1.08)}
+.botfab .rb{width:76%;height:76%;overflow:visible}
+.botfab .ring{position:absolute;inset:-3px;border-radius:50%;border:3px solid var(--lime);animation:ping 2.6s ease-out infinite;pointer-events:none}
+.rb-eyes{transform-origin:32px 31px;animation:blink 4.2s infinite}
+.rb-ant{animation:glow 1.6s ease-in-out infinite alternate}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes ping{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(1.45);opacity:0}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes glow{from{fill:#E01060}to{fill:#ff6aa3}}
+.bubble{position:absolute;right:112px;bottom:44px;z-index:5000;max-width:240px;padding:11px 15px;border-radius:16px 16px 4px 16px;background:#fff;color:var(--text);
+  font:600 14px/1.35 var(--f-ui);box-shadow:0 12px 28px rgba(0,0,0,.35);opacity:0;transform:translateY(8px) scale(.96);transform-origin:100% 100%;transition:opacity .35s,transform .35s;pointer-events:none}
+.bubble.show{opacity:1;transform:none}
+.pfab{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:40;width:64px;height:64px}
+/* assistant chat */
+.abot .rbav{background:#eef1ff;width:44px;height:44px}
+.abot .rbav .rb{width:36px;height:36px}
+.abot .hd small{color:#22a35a}
+.abot .log{padding-bottom:6px}
+.msg .act{display:block;margin-top:9px;padding:7px 12px;border-radius:999px;background:var(--blue);color:#fff;font:700 12.5px var(--f-ui)}
+.msg .act:hover{background:#0f25c9}
+.msg.typing{display:flex;gap:5px;padding:13px 15px}
+.msg.typing i{width:7px;height:7px;border-radius:50%;background:#9aa0b0;animation:dots 1s infinite}
+.msg.typing i:nth-child(2){animation-delay:.15s}.msg.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dots{0%,80%,100%{opacity:.3;transform:none}40%{opacity:1;transform:translateY(-3px)}}
+.abot{grid-template-rows:auto 1fr auto auto}
+.abot .qs{display:flex;flex-wrap:wrap;gap:7px;padding:10px 14px;background:#eef0f5;max-height:150px;overflow:auto}
+.abot .qs button{padding:8px 12px;border-radius:999px;background:#fff;border:1.5px solid #cdd3ff;color:var(--blue);font:600 13px var(--f-ui);text-align:left}
+.abot .qs button:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.abot .qs.back{justify-content:center}
+.abot .qs.back button{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;padding:9px 18px}
+.abot .qs.back button:hover{background:#0f25c9}
+.abot .ask{display:flex;gap:8px;padding:10px 14px;background:#fff;border-top:1px solid var(--line)}
+.abot .ask input{flex:1;min-width:0;font:500 14px var(--f-ui);padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:#f7f8fb;color:var(--text)}
+.abot .ask button{flex:none;width:42px;height:42px;border-radius:50%;background:var(--blue);color:#fff;font:700 16px var(--f-lat)}
+
+@media (prefers-reduced-motion:reduce){
+  .botfab,.botfab .ring,.rb-eyes,.rb-ant,.msg.typing i{animation:none}
+  .boot .mk i,.boot .bar i{animation:none}.boot .bar i{width:100%}
+  .dk,.sheet{transition:none}
+}
+/* ==== extra (parts/extra.css) ==== */
+/* language switcher */
+.langbtn{padding:2px 8px;border-radius:5px;font:700 12px var(--f-lat);letter-spacing:.02em}
+.langbtn:hover,.langbtn[aria-expanded="true"]{background:rgba(255,255,255,.16)}
+.langmenu{position:absolute;z-index:6000;min-width:180px;padding:6px;border-radius:12px;background:rgba(250,250,252,.98);color:var(--text);box-shadow:0 18px 40px rgba(0,0,0,.35);display:grid;gap:2px}
+.langmenu button{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:9px 12px;border-radius:8px;font:600 14px var(--f-ui);text-align:left;color:var(--text)}
+.langmenu button:hover{background:#eef1ff}
+.langmenu button[aria-checked="true"]{color:var(--blue)}
+.langmenu button[aria-checked="true"]::after{content:"✓";font-weight:800}
+.os .langmenu{top:30px;right:60px}
+.phone .sb .langbtn{border:1px solid rgba(255,255,255,.35);padding:3px 10px;border-radius:999px;color:#fff;font-size:12px}
+.phone .sb .r{display:flex;align-items:center;gap:10px}
+.phone .langmenu{top:46px;right:max(16px,env(safe-area-inset-right,0px))}
+.i-brief{background:linear-gradient(160deg,#2c3040,#111319)}
+
+/* brief wizard */
+.brief{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100%;background:#f6f7fb}
+.brief .bh{padding:18px 24px 14px;background:#fff;border-bottom:1px solid var(--line)}
+.brief .bh small{font:700 11.5px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--blue)}
+.brief .bh h3{margin:6px 0 0;font:800 22px/1.2 var(--f-ui);text-wrap:balance}
+.brief .bh p{margin:6px 0 0;color:var(--muted);font:500 13.5px/1.45 var(--f-ui)}
+.brief .prog{height:5px;border-radius:5px;background:#e5e8f2;margin-top:14px;overflow:hidden}
+.brief .prog i{display:block;height:100%;background:var(--blue);border-radius:5px;transition:width .35s}
+.brief .bb{padding:18px 24px;overflow:auto;min-height:0}
+.brief .opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px}
+.brief .opt{display:flex;align-items:center;gap:12px;padding:14px;border-radius:14px;background:#fff;border:1.5px solid var(--line);text-align:left;font:600 14.5px/1.3 var(--f-ui);color:var(--text);transition:border-color .15s,background .15s}
+.brief .opt:hover{border-color:#aab4ff}
+.brief .opt[aria-pressed="true"]{border-color:var(--blue);background:#eef1ff}
+.brief .opt .bx{flex:none;width:22px;height:22px;border-radius:6px;border:2px solid #c3c8d6;display:grid;place-items:center}
+.brief .opt.one .bx{border-radius:50%}
+.brief .opt[aria-pressed="true"] .bx{border-color:var(--blue);background:var(--blue)}
+.brief .opt[aria-pressed="true"] .bx::after{content:"";width:8px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.brief .fields{display:grid;gap:12px;max-width:540px}
+.brief label{display:grid;gap:6px;font:600 13px var(--f-ui);color:#3b3e48}
+.brief input,.brief textarea{font:500 15px var(--f-ui);padding:11px 13px;border:1.5px solid var(--line);border-radius:10px;background:#fff;color:var(--text);resize:vertical;width:100%;box-sizing:border-box}
+.brief input:focus,.brief textarea:focus{outline:none;border-color:var(--blue)}
+.brief .consent{font:500 12px/1.45 var(--f-ui);color:var(--muted)}
+.brief .err{color:#c4183c;font:600 13px var(--f-ui);min-height:18px;margin-top:10px}
+.brief .bf{display:flex;justify-content:space-between;gap:10px;padding:12px 24px;background:#fff;border-top:1px solid var(--line)}
+.brief .bf button{padding:11px 20px;border-radius:10px;font:700 14px var(--f-ui)}
+.brief .bf .nx{background:var(--blue);color:#fff}.brief .bf .nx:hover{background:#0f25c9}
+.brief .bf .nx[disabled]{opacity:.6;cursor:progress}
+.brief .bf .bk{background:#eef0f5;color:#333}
+.brief .bf .bk[disabled]{opacity:.35;cursor:default}
+.brief .done{display:grid;justify-items:start;gap:14px}
+.brief .done .ok{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font:900 26px var(--f-lat);color:#111;background:var(--lime)}
+.brief .done .ok.warn{background:var(--amber)}
+.brief .done p{margin:0;font:500 14.5px/1.55 var(--f-ui);max-width:58ch}
+.brief .sum{display:grid;gap:8px;width:100%;max-width:580px;margin:0;padding:14px 16px;border-radius:12px;background:#fff;border:1px solid var(--line);box-sizing:border-box}
+.brief .sum div{display:grid;grid-template-columns:150px 1fr;gap:10px;font:500 13.5px/1.45 var(--f-ui)}
+.brief .sum dt{color:var(--muted);font-weight:600}
+.brief .sum dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.brief .row2{display:flex;flex-wrap:wrap;gap:8px}
+.brief .row2 button{padding:10px 16px;border-radius:10px;font:700 13.5px var(--f-ui);background:#eef0f5;color:#222}
+.brief .row2 button.pri{background:var(--blue);color:#fff}
+.sheet .brief{height:100%}
+.sheet .brief .opts{grid-template-columns:1fr}
+.sheet .brief .sum div{grid-template-columns:1fr;gap:2px}
+.sheet .brief .bh,.sheet .brief .bb,.sheet .brief .bf{padding-left:16px;padding-right:16px}
+
+/* contacts, honeypot, screen-reader text */
+.cts{display:flex;flex-wrap:wrap;gap:8px}
+.cts a{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#eef1ff;color:var(--blue);font:600 13px var(--f-lat);text-decoration:none}
+.cts a:hover{background:var(--blue);color:#fff}
+.about-cts{margin-top:20px}
+.about-cts h4{margin:0 0 8px;font:700 14px var(--f-ui)}
+.chat .tg .cts{margin-top:6px}
+.hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== icons for new apps ===== */
+.i-calc{background:linear-gradient(160deg,#8a6bff,#5a37e6 55%,#3a1fb0)}
+.i-blog{background:linear-gradient(160deg,#ffffff,#e9ecf6)}
+.i-game{background:#111319}
+.i-game svg{width:62%;height:62%}
+
+/* ===== estimator ===== */
+.calc{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:100%;background:#f6f7fb}
+.calc .cl{grid-row:1;overflow:auto;padding:20px 22px;border-right:1px solid var(--line);background:#fff;min-height:0}
+.calc h3{margin:0;font:800 22px/1.2 var(--f-ui);text-wrap:balance}
+.calc .sub{margin:6px 0 4px;color:var(--muted);font:500 13px/1.5 var(--f-ui)}
+.calc h4{margin:18px 0 8px;font:700 12px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:#6a6e7b;display:flex;justify-content:space-between}
+.calc h4 b{color:var(--blue);font:800 14px var(--f-lat)}
+.calc .cg{display:flex;flex-wrap:wrap;gap:7px}
+.calc .cc{padding:8px 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:600 13px var(--f-ui);color:#2b2e38;transition:all .15s}
+.calc .cc:hover{border-color:#aab4ff}
+.calc .cc.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.calc input[type=range]{width:100%;accent-color:var(--blue)}
+.calc .cr{grid-row:1;display:grid;place-items:center;padding:22px;min-width:0;min-height:0;overflow:hidden;
+  background:radial-gradient(70% 70% at 50% 40%,#eef1ff,#f6f7fb 70%)}
+.calc .stagebox{width:100%;max-width:560px;display:grid;place-items:center;position:relative;transform-origin:50% 50%;transition:transform .25s}
+.calc .cb{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;padding:14px 22px;background:#121318;color:#fff}
+.calc .est{display:grid;gap:2px}
+.calc .est span{font:600 11px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:#9aa0b0}
+.calc .est b{font:800 22px var(--f-lat);color:var(--lime);font-variant-numeric:tabular-nums}
+.calc .cf{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.calc .cf input{width:150px;padding:10px 12px;border-radius:10px;border:1px solid #33364a;background:#1c1e27;color:#fff;font:500 13.5px var(--f-ui)}
+.calc .cf button{padding:10px 16px;border-radius:10px;background:var(--lime);color:#111;font:800 13.5px var(--f-ui)}
+.calc .cf button[disabled]{opacity:.6}
+.calc .cn{flex-basis:100%;margin:0;font:500 12px/1.45 var(--f-ui);color:#9aa0b0}
+.calc .cn.bad{color:#ffb3c8}
+.calc .cn .cts a{background:#262938;color:#fff}
+/* live mockup */
+.dv{position:relative;width:100%;transition:all .3s}
+.mb.pop{animation:mbpop .5s cubic-bezier(.2,.9,.3,1.25) both}
+@keyframes mbpop{from{opacity:0;transform:translateY(14px) scale(.92)}}
+.brv{border-radius:12px;background:#fff;box-shadow:0 30px 60px rgba(27,54,245,.16),0 0 0 1px rgba(0,0,0,.06)}
+.brv .bt{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid #eef0f5}
+.brv .bt i{width:9px;height:9px;border-radius:50%;background:#e2e4ea}
+.brv .bt i:nth-child(1){background:var(--pink)}.brv .bt i:nth-child(2){background:var(--amber)}.brv .bt i:nth-child(3){background:var(--lime)}
+.brv .bt span{margin-left:10px;flex:1;background:#f3f4f8;border-radius:6px;padding:4px 10px;font:500 11px var(--f-lat);color:#777}
+.bpage{padding:12px;display:grid;gap:10px}
+.mnav{display:flex;align-items:center;gap:10px;font:600 10.5px var(--f-ui);color:#555;flex-wrap:wrap}
+.mnav b{font:900 12px var(--f-lat);color:var(--ink);margin-right:auto}
+.mnav em{font-style:normal;font:700 9.5px var(--f-lat);padding:2px 6px;border-radius:5px;background:#eef1ff;color:var(--blue)}
+.mnav .lg{padding:3px 8px;border-radius:6px;background:var(--ink);color:#fff}
+.mnav .ct{font-size:13px}
+.mh{display:grid;gap:7px;padding:16px;border-radius:10px;background:linear-gradient(135deg,#eef1ff,#fdf0f5)}
+.mh b{display:block;height:14px;width:70%;border-radius:4px;background:var(--ink)}
+.mh i{display:block;height:7px;width:85%;border-radius:4px;background:#c9cee0}
+.mh u{display:block;width:80px;height:22px;border-radius:7px;background:var(--blue);margin-top:4px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.grid4 i{aspect-ratio:1.35;border-radius:8px;background:#f1f2f6;position:relative}
+.grid4 i::after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:5px;border-radius:3px;background:#d4d8e4}
+.grid4 i:nth-child(3n+1){background:#fff4d6}.grid4 i:nth-child(4n+2){background:#e8ebff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:10px;border-radius:10px;background:#f7f8fb}
+.cal i{height:16px;border-radius:4px;background:#e4e7ef}
+.cal i.on{background:var(--pink)}
+.payc{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:10px;background:linear-gradient(120deg,#1B36F5,#6b4dff);color:#fff;font:700 12px var(--f-lat)}
+.payc u{text-decoration:none;background:var(--lime);color:#111;padding:4px 10px;border-radius:6px;font:800 11px var(--f-ui);min-width:30px;min-height:14px}
+.serp{display:grid;gap:3px;padding:10px 12px;border-radius:10px;border:1px solid #eef0f5}
+.serp small{font:500 9.5px var(--f-lat);color:#1a7f37}
+.serp b{font:600 12px var(--f-lat);color:#1a0dab}
+.serp i{height:6px;width:80%;border-radius:3px;background:#e1e4ec}
+.pgs{display:flex;gap:5px}
+.pgs i{flex:1;height:30px;border-radius:6px;background:#f1f2f6;border:1px dashed #d4d8e4}
+.dsh{display:grid;grid-template-columns:70px 1fr;gap:8px;min-height:150px}
+.dsh aside{display:grid;align-content:start;gap:6px;padding:8px;border-radius:8px;background:#141a33}
+.dsh aside i{height:8px;border-radius:4px;background:#3a4373}
+.dsh aside i:first-child{background:var(--lime)}
+.dsh .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.dsh .kp i{height:38px;border-radius:8px;background:#eef1ff}
+.dsh .tb{display:grid;gap:5px;margin-top:8px}
+.dsh .tb i{height:10px;border-radius:4px;background:#f1f2f6}
+.admp{position:absolute;right:-26px;top:58px;width:120px;padding:10px;border-radius:10px;background:#121318;color:#fff;box-shadow:0 18px 30px rgba(0,0,0,.25);display:grid;gap:6px;font:800 11px var(--f-ui)}
+.admp i{height:7px;border-radius:4px;background:#3b3e4f}
+.admp i:nth-child(2){background:var(--lime);width:70%}
+.tgbub{position:absolute;left:-22px;bottom:30px;padding:8px 12px;border-radius:14px 14px 14px 4px;background:#2aabee;color:#fff;font:800 11px var(--f-lat);box-shadow:0 14px 24px rgba(42,171,238,.35)}
+.crmc{position:absolute;right:-18px;bottom:-14px;padding:7px 11px;border-radius:9px;background:var(--amber);color:#111;font:800 11px var(--f-lat);box-shadow:0 10px 20px rgba(0,0,0,.15)}
+.phv{width:230px;height:440px;border-radius:36px;background:#111;padding:9px;box-shadow:0 30px 60px rgba(27,54,245,.2)}
+.phv .ph-in{position:relative;height:100%;border-radius:28px;background:#fff;overflow:hidden;padding:34px 12px 12px;display:grid;align-content:start;gap:9px}
+.phv .isl{position:absolute;left:50%;top:9px;width:70px;height:18px;margin-left:-35px;border-radius:10px;background:#111}
+.tabbar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;padding:12px;border-top:1px solid #eef0f5;background:#fff}
+.tabbar i{width:18px;height:18px;border-radius:6px;background:#d8dbe6}
+.tabbar i:first-child{background:var(--blue)}
+.accr{display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:#f7f8fb}
+.accr span{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--amber))}
+.accr b{flex:1;height:8px;border-radius:4px;background:#d4d8e4}
+.tgv{max-width:340px;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#cfe3c8,#a9c7a0);box-shadow:0 30px 60px rgba(0,0,0,.18)}
+.tgv .tgh{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;font:700 13px var(--f-lat)}
+.tgv .tgh i{width:30px;height:30px;border-radius:50%;background:var(--blue)}
+.tgv .tgb{display:grid;gap:8px;padding:14px;min-height:260px;align-content:start}
+.tgv .tm{justify-self:start;max-width:80%;padding:8px 11px;border-radius:12px;background:#fff;font:600 12px var(--f-ui)}
+.tgv .tm.me{justify-self:end;background:#e2ffc7}
+.tgv .tk{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-width:85%}
+.tgv .tk span{padding:8px;border-radius:9px;background:rgba(255,255,255,.8);text-align:center;font:600 11px var(--f-ui);color:#2b6cb0}
+.sheet .calc{grid-template-columns:1fr;grid-template-rows:auto auto auto;height:auto}
+.sheet .calc .cl,.sheet .calc .cr{grid-row:auto}
+.sheet .calc .cl{border-right:0;border-bottom:1px solid var(--line)}
+.sheet .calc .cr{min-height:340px}
+.sheet .calc .cr{padding:22px 34px}
+.sheet .calc .cf{margin-left:0;width:100%}
+.sheet .calc .cf input{flex:1;min-width:0;width:auto}
+.sheet .calc .cf button{width:100%}
+
+/* ===== before / after ===== */
+.batab{padding:5px 10px;border-radius:7px;background:var(--ink);color:#fff;font:700 11.5px var(--f-ui);white-space:nowrap}
+.batab[aria-pressed="true"]{background:var(--lime);color:#111}
+.ba{position:sticky;top:0;height:100%;min-height:420px;z-index:5;overflow:hidden;background:#fff}
+.sheet .ba{position:relative;height:70vh}
+.ba .bal,.ba .bar2{position:absolute;inset:0;overflow:hidden}
+.ba .bar2{will-change:clip-path}
+.old{min-height:100%;background:#c0c0c0;font-family:"Times New Roman",Times,serif;color:#000;padding:10px}
+.old .ot{background:#000080;color:#ff0;font:bold 22px "Comic Sans MS","Times New Roman",serif;padding:10px;text-align:center}
+.old marquee{background:#ff0;color:red;font:bold 14px Arial,sans-serif;padding:4px;margin:6px 0}
+.old table{width:100%;border:3px outset #fff;background:#d4d0c8;margin:6px 0}
+.old td{border:2px inset #fff;padding:6px;color:#00e;text-decoration:underline;font-size:14px}
+.old .ob{display:grid;grid-template-columns:140px 1fr;gap:12px;margin-top:10px}
+.old .oimg{height:110px;border:2px solid #808080;background:repeating-linear-gradient(45deg,#ddd 0 8px,#bbb 8px 16px);display:grid;place-items:center;font:bold 12px Arial;color:#666}
+.old p{margin:0;font-size:14px;line-height:1.35}
+.old .oc{margin-top:16px;text-align:center;font:11px Arial;color:#333}
+.ba .lb{position:absolute;top:12px;padding:5px 10px;border-radius:7px;font:800 12px var(--f-ui);z-index:3}
+.ba .lb.l{left:12px;background:#000080;color:#ff0}
+.ba .lb.r{right:12px;background:var(--lime);color:#111}
+.ba .handle{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);z-index:3;pointer-events:none}
+.ba .handle::after{content:"⇆";position:absolute;top:50%;left:50%;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.25);display:grid;place-items:center;font:900 16px var(--f-lat);color:#111}
+.ba .bars{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;margin:0}
+.ba .bahint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(18,19,26,.8);color:#fff;font:600 11.5px var(--f-ui);z-index:3;white-space:nowrap;pointer-events:none}
+
+/* ===== live chat ===== */
+.msg.team{background:#eef1ff}
+.msg.team b{display:block;font:800 11px var(--f-lat);color:var(--blue);margin-bottom:2px}
+
+/* ===== time of day ===== */
+.greet{margin:0 0 -8px;font:600 15px var(--f-ui);color:var(--lime);letter-spacing:.01em}
+.phone .greet{margin:10px 0 -6px;font-size:13px}
+.wall::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;transition:background 1s}
+.wall .shade{z-index:1}
+.os[data-tod="morning"] .wall::before{background:linear-gradient(200deg,rgba(255,190,120,.28),rgba(255,190,120,0) 55%)}
+.os[data-tod="evening"] .wall::before{background:linear-gradient(200deg,rgba(255,110,60,.32),rgba(120,40,140,.25) 60%,rgba(0,0,0,0))}
+.os[data-tod="night"] .wall::before{background:linear-gradient(180deg,rgba(5,8,30,.55),rgba(5,8,30,.35))}
+.os[data-tod="night"] .wall .blk{filter:brightness(.55) saturate(.9)}
+.stars{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity 1s;pointer-events:none}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
+.os[data-tod="night"] .stars{opacity:1}
+.phone[data-tod="night"]{background:radial-gradient(120% 60% at 20% 0%,#0f1a5c 0%,#0a0c1f 45%,#06070d 100%)}
+.phone[data-tod="evening"]{background:radial-gradient(120% 60% at 20% 0%,#7a2a6b 0%,#1a1030 45%,#0b0c10 100%)}
+.phone[data-tod="morning"]{background:radial-gradient(120% 60% at 20% 0%,#ff9a62 0%,#3a2a6b 40%,#0b0c10 100%)}
+
+/* ===== game ===== */
+.game{display:grid;justify-items:center;align-content:start;gap:10px;padding:12px;height:100%;box-sizing:border-box;background:#14151c;color:#fff;outline:none}
+.game .gtop{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:220px}
+.game .gtop div{text-align:center;padding:6px;border-radius:10px;background:#1d1f2a}
+.game .gtop small{display:block;font:600 10.5px var(--f-ui);color:#9aa0b0}
+.game .gtop b{font:800 18px var(--f-lat);color:var(--lime);font-variant-numeric:tabular-nums}
+.game .gwrap{position:relative}
+.game canvas{display:block;border-radius:10px;max-width:100%;height:auto;box-shadow:0 0 0 2px #2a2d3b}
+.game .gov{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;background:rgba(10,11,16,.82);border-radius:10px;text-align:center;padding:16px}
+.game .gov b{font:900 22px var(--f-lat)}
+.game .gov button{padding:11px 22px;border-radius:10px;background:var(--lime);color:#111;font:800 15px var(--f-ui)}
+.game .gov small{font:500 11.5px/1.5 var(--f-ui);color:#aab0c0}
+.game .gpad{display:flex;gap:8px}
+.game .gpad button{width:50px;height:40px;border-radius:12px;background:#22252f;color:#fff;font:800 18px var(--f-lat)}
+.game .gpad button:active{background:var(--blue)}
+.toast{position:absolute;left:50%;top:44px;transform:translateX(-50%);z-index:7000;padding:10px 18px;border-radius:999px;background:var(--lime);color:#111;font:800 14px var(--f-ui);box-shadow:0 12px 30px rgba(0,0,0,.35);animation:tin .35s cubic-bezier(.2,.9,.3,1.3);transition:opacity .5s}
+body>.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px))}
+.toast.out{opacity:0}
+@keyframes tin{from{opacity:0;transform:translate(-50%,-12px)}}
+
+/* ===== blog ===== */
+.blog{height:100%;background:#fbfbfd}
+.bl-h{padding:22px 26px 6px}
+.bl-h h3{margin:0;font:800 26px var(--f-ui)}
+.bl-h p{margin:6px 0 0;color:var(--muted);font:500 14px var(--f-ui)}
+.bl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:16px 26px 26px}
+.bl-card{position:relative;display:grid;align-content:start;gap:8px;text-align:left;padding:20px 18px 18px;border-radius:16px;background:#fff;border:1px solid var(--line);overflow:hidden;transition:transform .2s,box-shadow .2s}
+.bl-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(27,54,245,.12)}
+.bl-bar{position:absolute;left:0;top:0;right:0;height:5px}
+.bl-meta{display:flex;align-items:center;gap:8px;font:600 11.5px var(--f-lat);color:#8a8e9a}
+.bl-meta i{width:10px;height:10px;border-radius:3px}
+.bl-card b{font:800 17px/1.3 var(--f-ui);color:var(--text)}
+.bl-card span:not(.bl-bar):not(.bl-meta){font:500 13px/1.5 var(--f-ui);color:var(--muted)}
+.bl-card em{font-style:normal;font:700 13px var(--f-ui);color:var(--blue);margin-top:4px}
+.bl-r{max-width:680px;margin:0 auto;padding:16px 26px 40px}
+.bl-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.bl-nav button,.bl-nav a{font:700 13px var(--f-ui);color:var(--blue);text-decoration:none}
+.bl-r h1{margin:10px 0 0;font:800 30px/1.18 var(--f-ui);letter-spacing:-.01em;text-wrap:balance}
+.bl-lead{margin:12px 0 18px;font:500 17px/1.55 var(--f-ui);color:#4a4e5a}
+.bl-r h2{margin:26px 0 8px;font:800 19px/1.3 var(--f-ui)}
+.bl-r p,.bl-r li{font:400 15.5px/1.7 var(--f-ui);color:#22252e}
+.bl-r ul{padding-left:20px}
+.sheet .bl-list{padding:12px 16px 24px}
+.sheet .bl-h{padding:18px 16px 4px}
+.sheet .bl-r{padding:14px 16px 32px}
+
+</style>
+
+<div class="stage" id="stage">
+  <div class="top">
+    <span class="b"><span class="mk"><i></i><i></i><i></i><i></i></span>BERD SOFT</span>
+    <small data-t="ui.protoNote"></small>
+  </div>
+  <div class="laptop-wrap" id="lwrap">
+    <div class="laptop" id="laptop">
+      <div class="lid" id="lid"><span class="cam"></span>
+        <div class="screen" id="screen"><div class="power" id="power"></div><div class="glass"></div>
+          <div class="os" id="os">
+            <div class="wall" id="wall">
+              <span class="blk" style="left:690px;top:-60px;width:420px;height:420px;background:var(--blue)"></span>
+              <span class="blk" style="left:1130px;top:-60px;width:420px;height:420px;background:var(--lime)"></span>
+              <span class="blk" style="left:690px;top:380px;width:420px;height:420px;background:var(--pink)"></span>
+              <span class="blk" style="left:1130px;top:380px;width:420px;height:420px;background:var(--amber)"></span>
+              <span class="shade"></span>
+            </div>
+
+            <div class="menubar">
+              <span class="mk"><i></i><i></i><i></i><i></i></span><b>BERD SOFT</b>
+              <span class="sp"></span>
+              <span class="r"><button class="fs" id="fsBtn" type="button" data-ta="ui.zoom">⤢</button><button class="langbtn" id="langBtn" type="button" aria-haspopup="menu" aria-expanded="false"></button><span id="clock">--:--</span></span>
+            </div>
+
+            <section class="hero" aria-label="BERD SOFT">
+              <span class="kick"><i></i><span data-t="hero.kick"></span></span>
+              <h1 data-t="hero.h1"></h1>
+              <p data-t="hero.p"></p>
+              <div class="acts">
+                <button class="btn p" type="button" data-open="work" data-t="hero.b1"></button>
+                <button class="btn g" type="button" data-open="brief" data-t="hero.b2"></button>
+              </div>
+            </section>
+
+            <div class="dicons" id="dicons"></div>
+            <div id="wins"></div>
+            <nav class="dock" id="dock" data-ta="ui.dock"></nav>
+            <span class="bubble" id="botBubble" data-t="ui.bubble"></span>
+            <button class="botfab" id="botFab" type="button" data-ta="ui.apps.bot"></button>
+
+            <div class="boot" id="boot" role="presentation">
+              <span class="mk"><i></i><i></i><i></i><i></i></span>
+              <span class="bar"><i></i></span>
+              <small data-t="ui.skip"></small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deck" id="deck"></div>
+    </div>
+  </div>
+  <div class="hint" data-t="ui.hint"></div>
+</div>
+
+<!-- phone home screen -->
+<div class="phone" id="phone">
+  <div class="sb"><span id="pclock">--:--</span><span class="r"><button class="langbtn" id="pLangBtn" type="button" aria-haspopup="menu" aria-expanded="false"></button><span>BERD SOFT</span></span></div>
+  <section class="wid">
+    <span class="mk"><i></i><i></i><i></i><i></i></span>
+    <h1 data-t="hero.h1"></h1>
+    <p data-t="hero.p"></p>
+  </section>
+  <div class="apps" id="papps"></div>
+  <section class="feat"><h2><span data-t="ui.recent"></span> <button type="button" id="featAll" data-t="ui.allArrow"></button></h2><div class="rail" id="prail"></div></section>
+  <nav class="pdock" id="pdock" data-ta="ui.dock"></nav>
+  <button class="botfab pfab" id="pBotFab" type="button" data-ta="ui.apps.bot"></button>
+</div>
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sh"><button type="button" id="sheetBack" data-t="ui.back"></button><b id="sheetTitle"></b></div>
+  <div class="sbody" id="sheetBody"></div>
+</div>
+
+<script>
+/* ===================== SITE SETTINGS — edit only this block ===================== */
+window.BERD_CONFIG = window.BERD_CONFIG || {
+  siteUrl: 'https://araratyan98.github.io/berd-soft/',
+  /* contacts appear in "Contact", "About us", the assistant and search results; leave '' to hide one */
+  contacts: {
+    telegram: 'BerdSoft',   // username without @, e.g. 'berd_soft'
+    phone: '+374 55 551355',      // international format, e.g. '+37499123456'
+    email: 'berdsoft@gmail.com',      // e.g. 'hello@berdsoft.am'
+    instagram: 'berd.soft'   // username without @
+  },
+  /* Cloudflare Worker URL that forwards requests to your Telegram (see worker/SETUP.md) */
+  leadEndpoint: 'https://berd-leads.araratyanarmen398.workers.dev',
+  /* estimator prices: [from price in $, days]; edit freely */
+  pricing: {
+    types: { landing:[119,7], site:[239,14], shop:[419,21], webapp:[599,28], mobile:[959,35], bot:[179,7] },
+    feats: { pay:[96,3], admin:[144,4], booking:[120,4], account:[180,5], crm:[180,5], seo:[72,2], tgbot:[179,5] },
+    perPage: [30,1],
+    perLang: [72,2]
+  },
+  /* analytics: leave '' to keep the site free of trackers (see ANALYTICS.md) */
+  analytics: {
+    ga4: 'G-4CBRGZZJ3Y', // Google Analytics 4 measurement id, e.g. 'G-XXXXXXXXXX'
+    clarity: 'z06ufokuyh', // Microsoft Clarity project id, e.g. 'k9x2abc3de'
+    goatcounter: ''  // optional: GoatCounter code, e.g. 'berdsoft'
+  }
+};
+/* ============================================================================== */
+</script>
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $ = function(s,r){return (r||document).querySelector(s)};
+var CFG = window.BERD_CONFIG||{}; CFG.contacts=CFG.contacts||{}; CFG.analytics=CFG.analytics||{};
+var CONTENT = /*CONTENT*/{"hy":{"meta":{"title":"BERD SOFT · Թվային բերդ ձեր բիզնեսի համար","desc":"BERD SOFT՝ կայքեր, վեբ և մոբայլ հավելվածներ, Telegram-բոտեր։ Դիզայնից մինչև գործարկում՝ մեկ թիմ։ Երևան։","ogAlt":"BERD SOFT կայքը նոութբուքի էկրանին"},"code":"ՀՅ","name":"Հայերեն","ui":{"protoNote":"Կայքի նախատիպ · նախագծերը թեստային են","hint":"Սեղմեք ներքևի <b>պատկերակներին</b>՝ ծրագրերը բացելու համար · պատուհանները կարելի է տեղաշարժել","skip":"Սեղմեք՝ բաց թողնելու համար","bubble":"Հարցեր ունե՞ք։ Հարցրեք ինձ","back":"‹ Հետ","zoom":"Մեծացնել էկրանը","close":"Փակել","min":"Թաքցնել","max":"Մեծացնել","demo":"Դեմո","scrollHint":"↓ Սքրոլեք՝ կայքը դիտելու համար","test":"Թեստային","testProject":"Թեստային նախագիծ","task":"Խնդիր","sol":"Լուծում","res":"Արդյունք","all":"Բոլորը","folders":"Թղթապանակներ","worksSub":"Սեղմեք նախագծի վրա՝ այն «բրաուզերում» բացելու համար։","worksNote":"Սրանք թեստային նախագծեր են։ Իրական աշխատանքները կավելացվեն հետո։","seeWorks":"Տեսնել աշխատանքները →","recent":"Վերջին աշխատանքները","allArrow":"Բոլորը →","dock":"Ծրագրեր","lang":"Լեզու","apps":{"work":"Աշխատանքներ","serv":"Ծառայություններ","proc":"Ինչպես ենք աշխատում","about":"Մեր մասին","brief":"Բրիֆ","chat":"Կապ","bot":"BERD Օգնական","calc":"Հաշվիչ","blog":"Բլոգ","game":"BERD Blocks"},"noscript":"Կայքը աշխատելու համար անհրաժեշտ է JavaScript։"},"hero":{"kick":"Վեբ ստուդիա · Երևան","h1":"Թվային <em>բերդ</em> ձեր բիզնեսի համար","p":"Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։","b1":"Բացել աշխատանքները →","b2":"Հաշվարկել նախագիծը"},"cats":{"web":"Կայքեր","app":"Վեբ հավելվածներ","mob":"Մոբայլ","bot":"Բոտեր"},"services":{"title":"Ծառայություններ","lead":"Հինգ ուղղություն՝ մեկ թիմ։ Կարիք չկա տարբեր մասնագետներ փնտրել և նրանց աշխատանքը համակարգել։","items":[["Կայքեր և լենդինգներ","Կայք, որը հինգ վայրկյանում բացատրում է ձեր բիզնեսը և բերում հայտեր։","web"],["Վեբ հավելվածներ","CRM, անձնական էջեր, ամրագրում, վճարումներ և ինտեգրումներ։","app"],["Մոբայլ հավելվածներ","Հավելվածներ iPhone-ի և Android-ի համար։ App Store-ում և Google Play-ում հրապարակումը մեր վրա է։","mob"],["Telegram-բոտեր","Պատվերներ, գրանցում և վճարում ուղիղ մեսենջերում։","bot"],["Սերվեր և աջակցություն","Դոմեն, SSL, պահուստավորում և մոնիտորինգ։ Մուտքերը ձերն են։",""]]},"process":{"side":"Ինչպես ենք աշխատում","sideSub":"5 փուլ","title":"Հինգ փուլ, յուրաքանչյուրը հաստատում եք դուք","sub":"Արդյունքը տեսնում եք յուրաքանչյուր քայլում","steps":[["Բրիֆ և գնահատում","Խորանում ենք խնդրի մեջ և վերադառնում աշխատանքների ցանկով ու ժամկետով։","Անվճար",1],["Նախատիպ և դիզայն","Սկզբում էկրանների կառուցվածքը, հետո՝ վիզուալը։ Հաստատում եք մինչև կոդը։","3–7 օր",1],["Մշակում","Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Ամեն շաբաթ ցույց ենք տալիս աշխատող տարբերակը թեստային հղումով։","1–4 շաբաթ",0],["Գործարկում","Դոմեն, սերվեր, SSL։ Բոլոր մուտքերը հանձնում ենք ձեզ։ Մնացած 70%-ը վճարում եք հանձնման ժամանակ։","1–2 օր",0],["Աջակցություն","Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ։","Մինչև 12 ամիս",0]]},"about":{"title":"Մենք BERD SOFT-ն ենք","lead":"Լրիվ ցիկլի մշակման ստուդիա Երևանում։ Աշխատում ենք Հայաստանի, ԱՊՀ-ի և Եվրոպայի հաճախորդների հետ։ Ահա մեր չորս սկզբունքները.","contacts":"Կոնտակտներ","gua":[["30% հիմա, 70%՝ հանձնելիս","Դիզայնը հաստատելուց հետո՝ 30% կանխավճար, մնացած 70%-ը՝ պատրաստ նախագիծը հանձնելիս։"],["Դիզայնը դուր չեկա՞վ, մի վճարեք","Մակետները հաստատում եք մինչև մշակումը։"],["Բոլոր մուտքերը ձերն են","Դոմենն ու սերվերը ձեր անունով են, կոդը հանձնվում է։"],["Գինը չի աճի","Գնացուցակը ֆիքսվում է մինչև աշխատանքի մեկնարկը։"]]},"chat":{"online":"● Առցանց է","greet1":"Բարև։ Պատմեք ձեր նախագծի մասին. ինչ է պետք անել և երբ։","greet2":"Պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում, գնահատումն անվճար է։","name":"Ձեր անունը","contact":"Հեռախոս կամ Telegram","msg":"Ինչ է պետք անել…","send":"Ուղարկել","needMsg":"Գրեք մի քանի բառ նախագծի մասին","needContact":"Նշեք հեռախոս կամ Telegram, որ կարողանանք պատասխանել","sent":"Շնորհակալություն{n}։ Ստացանք ձեր հաղորդագրությունը և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։","off":"Շնորհակալություն{n}։ Կայքը դեռ փորձնական ռեժիմում է, և հաղորդագրությունները ավտոմատ չեն ուղարկվում։ Խնդրում ենք գրել մեզ ուղիղ։","err":"Չհաջողվեց ուղարկել։ Ստուգեք ինտերնետը և փորձեք կրկին կամ գրեք մեզ ուղիղ։","direct":"Կամ գրեք ուղիղ.","noContacts":"Կոնտակտները շուտով կավելացվեն։"},"bot":{"name":"BERD Օգնական","status":"● Պատասխանում է միանգամից","hello":"Բարև։ Ես BERD SOFT-ի օգնականն եմ 👋","pick":"Ընտրեք հարցը ներքևից կամ գրեք ձերը։","back":"← Վերադառնալ հարցերին","ph":"Գրեք ձեր հարցը…","fallback":"Այս հարցին ավելի լավ կպատասխանի մեր թիմը։ Գրեք մեզ, և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։","fallbackAct":"Բացել «Կապ»-ը","qa":[["serv","Ի՞նչ ծառայություններ եք մատուցում","Ստեղծում ենք կայքեր, վեբ հավելվածներ, iPhone-ի և Android-ի հավելվածներ և Telegram-բոտեր։ Նաև կարգավորում ենք դոմենը, սերվերը և աջակցում ենք գործարկումից հետո։","serv","Բացել ծառայությունները"],["price","Որքա՞ն արժե կայքը","Գինը կախված է նախագծից. էջերի քանակից, ֆունկցիաներից և ինտեգրումներից։ Լրացրեք բրիֆը, և անվճար կուղարկենք մանրամասն նախահաշիվ։ Գինը ֆիքսվում է մինչև աշխատանքի մեկնարկը։","brief","Լրացնել բրիֆը"],["time","Որքա՞ն ժամանակ է պետք","Դիզայնը սովորաբար 3–7 օր է, մշակումը՝ 1–4 շաբաթ՝ կախված ծավալից։ Ճշգրիտ ժամկետը նշում ենք բրիֆից հետո։"],["pay","Ինչպե՞ս է կատարվում վճարումը","Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Մնացած 70%-ը վճարում եք պատրաստ նախագիծը հանձնելիս։"],["own","Ո՞ւմ է պատկանում կայքը","Ձեզ։ Դոմենն ու սերվերը գրանցվում են ձեր անունով, կոդը և բոլոր մուտքերը հանձնում ենք ձեզ։"],["sup","Աջակցում եք գործարկումից հետո","Այո։ Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ՝ մինչև 12 ամիս՝ կախված փաթեթից։"],["work","Ցույց տվեք ձեր աշխատանքները","Իհարկե։ «Աշխատանքներ»-ում նախագծի վրա սեղմելով այն կբացվի բրաուզերում։","work","Բացել աշխատանքները"],["start","Ինչի՞ց սկսել","Լրացրեք կարճ բրիֆը՝ 1 րոպե։ Մենք կուսումնասիրենք այն և կուղարկենք անվճար նախահաշիվ ու ժամկետ։","brief","Լրացնել բրիֆը"],["human","Ուզում եմ խոսել մարդու հետ","Իհարկե։ Գրեք մեզ «Կապ» պատուհանում, պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում։","chat","Բացել «Կապ»-ը"]]},"brief":{"stepOf":"Քայլ {i} / {n}","next":"Հաջորդը →","back":"← Հետ","submit":"Ուղարկել հայտը","sending":"Ուղարկվում է…","pickOne":"Ընտրեք տարբերակներից մեկը","pickSome":"Ընտրեք առնվազն մեկը","needName":"Գրեք ձեր անունը","needContact":"Նշեք հեռախոս կամ Telegram","oneHint":"Ընտրեք մեկ տարբերակ","manyHint":"Կարող եք ընտրել մի քանիսը","steps":[{"id":"type","q":"Ի՞նչ է պետք ստեղծել","multi":0,"opts":[["site","Կայք կամ լենդինգ"],["shop","Առցանց խանութ"],["app","Վեբ հավելված (CRM, անձնական էջ)"],["mob","Մոբայլ հավելված"],["bot","Telegram-բոտ"],["unsure","Դեռ չգիտեմ, խորհուրդ է պետք"]]},{"id":"feat","q":"Ի՞նչ պետք է կարողանա","multi":1,"opts":[["book","Առցանց գրանցում կամ ամրագրում"],["pay","Առցանց վճարում"],["admin","Ադմին վահանակ՝ բովանդակությունը փոխելու համար"],["lang","Մի քանի լեզու"],["crm","Ինտեգրում CRM-ի կամ 1C-ի հետ"],["track","Պատվերների կամ առաքման հետևում"],["account","Անձնական էջ հաճախորդի համար"],["seo","Google-ում առաջխաղացում (SEO)"]]},{"id":"design","q":"Ունե՞ք դիզայն կամ օրինակներ","multi":0,"opts":[["ready","Այո, դիզայնը պատրաստ է"],["refs","Ունենք օրինակներ, որոնք դուր են գալիս"],["none","Ոչ, պետք է ստեղծել զրոյից"]]},{"id":"time","q":"Ե՞րբ է պետք","multi":0,"opts":[["asap","Որքան հնարավոր է շուտ"],["month","Մեկ ամսվա ընթացքում"],["quarter","2–3 ամսում"],["flex","Ժամկետը ճկուն է"]]}],"cq":"Ինչպե՞ս կապվել ձեզ հետ","chint":"Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում և կուղարկենք անվճար նախահաշիվ։","name":"Անուն","contact":"Հեռախոս կամ Telegram","comment":"Մի քանի բառ նախագծի մասին (ըստ ցանկության)","consent":"Ուղարկելով՝ համաձայնում եք, որ մեր թիմը կապ հաստատի ձեզ հետ այս հայտի վերաբերյալ։","doneSent":"Շնորհակալություն։ Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում և կուղարկենք անվճար նախահաշիվ։","doneOff":"Կայքը դեռ փորձնական ռեժիմում է, և հայտը ավտոմատ չի ուղարկվել։ Պատճենեք այն և ուղարկեք մեզ ուղիղ։","doneErr":"Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ պատճենեք հայտը և ուղարկեք մեզ ուղիղ։","titleSent":"Հայտն ընդունված է","titleOff":"Հայտը պատրաստ է","titleErr":"Հայտը չուղարկվեց","retry":"Փորձել կրկին","again":"Լրացնել նոր բրիֆ","copy":"Պատճենել հայտը","copied":"Պատճենված է ✓","labels":{"type":"Ինչ է պետք","feat":"Ֆունկցիաներ","design":"Դիզայն","time":"Ժամկետ","name":"Անուն","contact":"Կոնտակտ","comment":"Մեկնաբանություն"}},"projects":{"aroma":{"kind":"Telegram-բոտ + կայք","task":"Առավոտյան հերթերը սրճարանում կորցնում էին հաճախորդներին։","sol":"Նախնական պատվեր Telegram-բոտով և պարզ կայք մենյուով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"cargo":{"kind":"Վեբ հավելված","task":"Բեռների կարգավիճակները վարում էին Excel-ում, մենեջերները ծանրաբեռնված էին զանգերով։","sol":"Հաճախորդի անձնական էջ՝ առաքումների հետևումով և ծանուցումներով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"fitup":{"kind":"iOS և Android հավելված","task":"Մարզումների գրանցումները վարում էին նամակագրությամբ, և դրանց մի մասը կորչում էր։","sol":"Մոբայլ հավելված՝ ժամանակացույցով, գրանցումով և հիշեցումներով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"dent":{"kind":"Կայք՝ առցանց գրանցումով","task":"Հիվանդները զանգում էին ոչ աշխատանքային ժամերին և չէին կարողանում գրանցվել։","sol":"Կայք՝ առցանց գրանցումով, բժիշկների ժամանակացույցով և SMS հիշեցումով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"nairi":{"kind":"Առցանց խանութ","task":"Վաճառում էին Instagram-ի նամակներով և պատվերներ էին կորցնում։","sol":"Առցանց խանութ՝ կատալոգով, զամբյուղով և առցանց վճարումով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"tavern":{"kind":"Առաքման բոտ","task":"Առաքման ծառայությունները պահում էին պատվերի գումարի զգալի մասը։","sol":"Սեփական Telegram-բոտ՝ մենյուով, վճարումով և առաքման հետևումով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"}},"days":["Կիր","Երկ","Երք","Չրք","Հնգ","Ուրբ","Շբթ"],"tod":{"morning":"Բարի առավոտ","day":"Բարի օր","evening":"Բարի երեկո","night":"Բարի գիշեր"},"calc":{"title":"Հավաքեք ձեր նախագիծը","sub":"Ընտրեք, թե ինչ է պետք. նախագիծը կհավաքվի աջ կողմում, իսկ ներքևում կտեսնեք մոտավոր գինն ու ժամկետը։","type":"Ինչ ենք ստեղծում","pages":"Էջերի քանակ","features":"Ֆունկցիաներ","langs":"Լեզուներ","types":{"landing":"Լենդինգ","site":"Կայք","shop":"Խանութ","webapp":"Վեբ հավելված","mobile":"Մոբայլ հավելված","bot":"Telegram-բոտ"},"feats":{"pay":"Առցանց վճարում","admin":"Ադմին վահանակ","booking":"Առցանց գրանցում","account":"Անձնական էջ","crm":"CRM / 1C ինտեգրում","seo":"SEO առաջխաղացում","tgbot":"Telegram-բոտ կայքին"},"price":"Մոտավոր գին","time":"Ժամկետ","days":"օր","weeks":"շաբաթ","from":"մոտ","note":"Սա նախնական գնահատական է։ Ճշգրիտ գինը ֆիքսում ենք բրիֆից հետո, անվճար։","send":"Ուղարկել այս նախագիծը","name":"Անուն","contact":"Հեռախոս կամ Telegram","needContact":"Նշեք հեռախոս կամ Telegram","sent":"Ստացանք ձեր նախագիծը։ Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։","failed":"Չհաջողվեց ուղարկել։ Գրեք մեզ ուղիղ.","mock":{"home":"Գլխավոր","about":"Մեր մասին","catalog":"Կատալոգ","contact":"Կապ","book":"Գրանցվել","cart":"Զամբյուղ","login":"Մուտք","pay":"Վճարել","admin":"Ադմին","dash":"Վահանակ","orders":"Պատվերներ"}},"ba":{"tab":"Առաջ / Հետո","before":"Առաջ","after":"Հետո","hint":"Քաշեք սահիչը՝ համեմատելու համար","sample":"Թեստային օրինակ"},"live":{"intro":"Գրեք մեզ, և կպատասխանենք հենց այստեղ, այս չատում։","optional":"Կոնտակտը՝ ըստ ցանկության, եթե ուզում եք պատասխան ստանալ նաև կայքից դուրս","sent":"Ուղարկված է։ Մեր թիմը կպատասխանի այստեղ, սովորաբար մի քանի րոպեում աշխատանքային ժամերին։","team":"BERD SOFT"},"game":{"title":"BERD Blocks","score":"Միավոր","best":"Լավագույն","lines":"Տողեր","start":"Սկսել","again":"Նորից","over":"Խաղն ավարտվեց","help":"← → շարժել · ↑ պտտել · ↓ արագ · Space՝ ցած","found":"Դուք գտաք թաքնված խաղը 🎮","paused":"Դադար"},"blog":{"title":"Բլոգ","sub":"Հոդվածներ կայքերի, հավելվածների և բոտերի մասին՝ բիզնեսի համար","read":"Կարդալ","min":"րոպե","back":"← Բոլոր հոդվածները","open":"Բացել առանձին էջով ↗"}},"ru":{"meta":{"title":"BERD SOFT · Цифровая крепость для вашего бизнеса","desc":"BERD SOFT — сайты, веб- и мобильные приложения, Telegram-боты. От дизайна до запуска — одна команда. Ереван.","ogAlt":"Сайт BERD SOFT на экране ноутбука"},"code":"RU","name":"Русский","ui":{"protoNote":"Прототип сайта · проекты тестовые","hint":"Нажимайте на <b>иконки</b> внизу, чтобы открыть программы · окна можно перетаскивать","skip":"Нажмите, чтобы пропустить","bubble":"Есть вопросы? Спросите меня","back":"‹ Назад","zoom":"Развернуть экран","close":"Закрыть","min":"Свернуть","max":"Развернуть","demo":"Демо","scrollHint":"↓ Прокрутите, чтобы посмотреть сайт","test":"Тест","testProject":"Тестовый проект","task":"Задача","sol":"Решение","res":"Результат","all":"Все","folders":"Папки","worksSub":"Нажмите на проект, чтобы открыть его в «браузере».","worksNote":"Это тестовые проекты. Реальные работы добавим позже.","seeWorks":"Смотреть работы →","recent":"Последние работы","allArrow":"Все →","dock":"Программы","lang":"Язык","apps":{"work":"Работы","serv":"Услуги","proc":"Как мы работаем","about":"О нас","brief":"Бриф","chat":"Связь","bot":"BERD Ассистент","calc":"Калькулятор","blog":"Блог","game":"BERD Blocks"},"noscript":"Для работы сайта нужен JavaScript."},"hero":{"kick":"Веб-студия · Ереван","h1":"Цифровая <em>крепость</em> для вашего бизнеса","p":"Сайты, приложения и Telegram-боты — надёжные, быстрые и работающие на вас.","b1":"Открыть работы →","b2":"Рассчитать проект"},"cats":{"web":"Сайты","app":"Веб-приложения","mob":"Мобильные","bot":"Боты"},"services":{"title":"Услуги","lead":"Пять направлений — одна команда. Не нужно искать разных специалистов и координировать их работу.","items":[["Сайты и лендинги","Сайт, который за пять секунд объясняет ваш бизнес и приносит заявки.","web"],["Веб-приложения","CRM, личные кабинеты, бронирование, оплаты и интеграции.","app"],["Мобильные приложения","Приложения для iPhone и Android. Публикацию в App Store и Google Play берём на себя.","mob"],["Telegram-боты","Заказы, запись и оплата прямо в мессенджере.","bot"],["Сервер и поддержка","Домен, SSL, резервные копии и мониторинг. Все доступы — ваши.",""]]},"process":{"side":"Как мы работаем","sideSub":"5 этапов","title":"Пять этапов, каждый вы утверждаете","sub":"Результат видите на каждом шаге","steps":[["Бриф и оценка","Разбираемся в задаче и возвращаемся со списком работ и сроками.","Бесплатно",1],["Прототип и дизайн","Сначала структура экранов, потом визуал. Утверждаете до начала кода.","3–7 дней",1],["Разработка","После утверждения дизайна вы вносите 30% предоплаты, и мы начинаем код. Каждую неделю показываем рабочую версию по тестовой ссылке.","1–4 недели",0],["Запуск","Домен, сервер, SSL. Передаём вам все доступы. Остальные 70% оплачиваются при сдаче.","1–2 дня",0],["Поддержка","Обновления, резервные копии, мониторинг и доработки.","До 12 месяцев",0]]},"about":{"title":"Мы — BERD SOFT","lead":"Студия разработки полного цикла в Ереване. Работаем с клиентами из Армении, СНГ и Европы. Наши четыре принципа:","contacts":"Контакты","gua":[["30% сейчас, 70% при сдаче","После утверждения дизайна — 30% предоплаты, остальные 70% — при сдаче готового проекта."],["Не понравился дизайн — не платите","Макеты утверждаются до начала разработки."],["Все доступы ваши","Домен и сервер оформляются на вас, код передаётся."],["Цена не вырастет","Смета фиксируется до начала работ."]]},"chat":{"online":"● В сети","greet1":"Здравствуйте! Расскажите о вашем проекте: что нужно сделать и к какому сроку.","greet2":"Отвечаем в течение одного рабочего дня, оценка бесплатная.","name":"Ваше имя","contact":"Телефон или Telegram","msg":"Что нужно сделать…","send":"Отправить","needMsg":"Напишите пару слов о проекте","needContact":"Укажите телефон или Telegram, чтобы мы могли ответить","sent":"Спасибо{n}! Мы получили ваше сообщение и ответим в течение одного рабочего дня.","off":"Спасибо{n}! Сайт пока работает в тестовом режиме, и сообщения не отправляются автоматически. Пожалуйста, напишите нам напрямую.","err":"Не удалось отправить. Проверьте интернет и попробуйте снова или напишите нам напрямую.","direct":"Или напишите напрямую:","noContacts":"Контакты скоро появятся."},"bot":{"name":"BERD Ассистент","status":"● Отвечает сразу","hello":"Здравствуйте! Я ассистент BERD SOFT 👋","pick":"Выберите вопрос ниже или напишите свой.","back":"← Вернуться к вопросам","ph":"Напишите ваш вопрос…","fallback":"На этот вопрос лучше ответит наша команда. Напишите нам, и мы ответим в течение одного рабочего дня.","fallbackAct":"Открыть «Связь»","qa":[["serv","Какие услуги вы оказываете?","Создаём сайты, веб-приложения, приложения для iPhone и Android и Telegram-боты. Также настраиваем домен и сервер и поддерживаем проект после запуска.","serv","Открыть услуги"],["price","Сколько стоит сайт?","Цена зависит от проекта: количества страниц, функций и интеграций. Заполните бриф, и мы бесплатно пришлём подробную смету. Цена фиксируется до начала работ.","brief","Заполнить бриф"],["time","Сколько времени нужно?","Дизайн обычно занимает 3–7 дней, разработка — 1–4 недели в зависимости от объёма. Точный срок называем после брифа."],["pay","Как происходит оплата?","После утверждения дизайна вы вносите 30% предоплаты, и мы начинаем код. Остальные 70% оплачиваются при сдаче готового проекта."],["own","Кому принадлежит сайт?","Вам. Домен и сервер оформляются на ваше имя, код и все доступы передаём вам."],["sup","Поддерживаете после запуска?","Да. Обновления, резервные копии, мониторинг и доработки — до 12 месяцев в зависимости от пакета."],["work","Покажите ваши работы","Конечно. В разделе «Работы» нажмите на проект, и он откроется в браузере.","work","Открыть работы"],["start","С чего начать?","Заполните короткий бриф — это займёт минуту. Мы изучим его и пришлём бесплатную смету и сроки.","brief","Заполнить бриф"],["human","Хочу поговорить с человеком","Конечно. Напишите нам в окне «Связь» — отвечаем в течение одного рабочего дня.","chat","Открыть «Связь»"]]},"brief":{"stepOf":"Шаг {i} из {n}","next":"Далее →","back":"← Назад","submit":"Отправить заявку","sending":"Отправляем…","pickOne":"Выберите один из вариантов","pickSome":"Выберите хотя бы один вариант","needName":"Напишите ваше имя","needContact":"Укажите телефон или Telegram","oneHint":"Выберите один вариант","manyHint":"Можно выбрать несколько","steps":[{"id":"type","q":"Что нужно создать?","multi":0,"opts":[["site","Сайт или лендинг"],["shop","Интернет-магазин"],["app","Веб-приложение (CRM, личный кабинет)"],["mob","Мобильное приложение"],["bot","Telegram-бот"],["unsure","Пока не знаю, нужен совет"]]},{"id":"feat","q":"Что он должен уметь?","multi":1,"opts":[["book","Онлайн-запись или бронирование"],["pay","Онлайн-оплата"],["admin","Админ-панель для изменения контента"],["lang","Несколько языков"],["crm","Интеграция с CRM или 1С"],["track","Отслеживание заказов или доставки"],["account","Личный кабинет клиента"],["seo","Продвижение в Google (SEO)"]]},{"id":"design","q":"Есть ли дизайн или примеры?","multi":0,"opts":[["ready","Да, дизайн готов"],["refs","Есть примеры, которые нравятся"],["none","Нет, нужно создать с нуля"]]},{"id":"time","q":"Когда нужно?","multi":0,"opts":[["asap","Как можно скорее"],["month","В течение месяца"],["quarter","Через 2–3 месяца"],["flex","Сроки гибкие"]]}],"cq":"Как с вами связаться?","chint":"Ответим в течение одного рабочего дня и пришлём бесплатную смету.","name":"Имя","contact":"Телефон или Telegram","comment":"Пара слов о проекте (по желанию)","consent":"Отправляя заявку, вы соглашаетесь, что наша команда свяжется с вами по этому запросу.","doneSent":"Спасибо! Мы ответим в течение одного рабочего дня и пришлём бесплатную смету.","doneOff":"Сайт пока работает в тестовом режиме, и заявка не отправилась автоматически. Скопируйте её и отправьте нам напрямую.","doneErr":"Не удалось отправить. Попробуйте снова или скопируйте заявку и отправьте нам напрямую.","titleSent":"Заявка принята","titleOff":"Заявка готова","titleErr":"Заявка не отправлена","retry":"Попробовать снова","again":"Заполнить новый бриф","copy":"Скопировать заявку","copied":"Скопировано ✓","labels":{"type":"Что нужно","feat":"Функции","design":"Дизайн","time":"Сроки","name":"Имя","contact":"Контакт","comment":"Комментарий"}},"projects":{"aroma":{"kind":"Telegram-бот + сайт","task":"Из-за утренних очередей кофейня теряла клиентов.","sol":"Предзаказ через Telegram-бота и простой сайт с меню.","res":"Тестовый проект: реальный результат добавим позже."},"cargo":{"kind":"Веб-приложение","task":"Статусы грузов вели в Excel, менеджеры тонули в звонках.","sol":"Личный кабинет клиента с отслеживанием доставок и уведомлениями.","res":"Тестовый проект: реальный результат добавим позже."},"fitup":{"kind":"Приложение для iOS и Android","task":"Записи на тренировки вели в переписке, и часть из них терялась.","sol":"Мобильное приложение с расписанием, записью и напоминаниями.","res":"Тестовый проект: реальный результат добавим позже."},"dent":{"kind":"Сайт с онлайн-записью","task":"Пациенты звонили в нерабочее время и не могли записаться.","sol":"Сайт с онлайн-записью, расписанием врачей и SMS-напоминаниями.","res":"Тестовый проект: реальный результат добавим позже."},"nairi":{"kind":"Интернет-магазин","task":"Продавали через сообщения в Instagram и теряли заказы.","sol":"Интернет-магазин с каталогом, корзиной и онлайн-оплатой.","res":"Тестовый проект: реальный результат добавим позже."},"tavern":{"kind":"Бот для доставки","task":"Сервисы доставки забирали значительную часть суммы заказа.","sol":"Собственный Telegram-бот с меню, оплатой и отслеживанием доставки.","res":"Тестовый проект: реальный результат добавим позже."}},"days":["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],"tod":{"morning":"Доброе утро","day":"Добрый день","evening":"Добрый вечер","night":"Доброй ночи"},"calc":{"title":"Соберите свой проект","sub":"Выберите, что нужно: проект соберётся справа, а внизу вы увидите примерную цену и срок.","type":"Что создаём","pages":"Количество страниц","features":"Функции","langs":"Языки","types":{"landing":"Лендинг","site":"Сайт","shop":"Магазин","webapp":"Веб-приложение","mobile":"Мобильное приложение","bot":"Telegram-бот"},"feats":{"pay":"Онлайн-оплата","admin":"Админ-панель","booking":"Онлайн-запись","account":"Личный кабинет","crm":"Интеграция CRM / 1С","seo":"SEO-продвижение","tgbot":"Telegram-бот к сайту"},"price":"Примерная цена","time":"Срок","days":"дн.","weeks":"нед.","from":"около","note":"Это предварительная оценка. Точную цену фиксируем после брифа, бесплатно.","send":"Отправить этот проект","name":"Имя","contact":"Телефон или Telegram","needContact":"Укажите телефон или Telegram","sent":"Мы получили ваш проект и ответим в течение одного рабочего дня.","failed":"Не удалось отправить. Напишите нам напрямую:","mock":{"home":"Главная","about":"О нас","catalog":"Каталог","contact":"Контакты","book":"Записаться","cart":"Корзина","login":"Войти","pay":"Оплатить","admin":"Админ","dash":"Панель","orders":"Заказы"}},"ba":{"tab":"До / После","before":"До","after":"После","hint":"Двигайте ползунок, чтобы сравнить","sample":"Тестовый пример"},"live":{"intro":"Напишите нам, и мы ответим прямо здесь, в этом чате.","optional":"Контакт — по желанию, если хотите получить ответ и вне сайта","sent":"Отправлено. Наша команда ответит здесь, обычно за несколько минут в рабочее время.","team":"BERD SOFT"},"game":{"title":"BERD Blocks","score":"Очки","best":"Рекорд","lines":"Линии","start":"Начать","again":"Ещё раз","over":"Игра окончена","help":"← → двигать · ↑ повернуть · ↓ быстрее · Space — вниз","found":"Вы нашли скрытую игру 🎮","paused":"Пауза"},"blog":{"title":"Блог","sub":"Статьи о сайтах, приложениях и ботах для бизнеса","read":"Читать","min":"мин","back":"← Все статьи","open":"Открыть отдельной страницей ↗"}},"en":{"meta":{"title":"BERD SOFT · A digital fortress for your business","desc":"BERD SOFT builds websites, web and mobile apps and Telegram bots. One team from design to launch. Yerevan, Armenia.","ogAlt":"The BERD SOFT website on a laptop screen"},"code":"EN","name":"English","ui":{"protoNote":"Website prototype · projects are placeholders","hint":"Click the <b>icons</b> below to open apps · windows can be dragged around","skip":"Click to skip","bubble":"Got questions? Ask me","back":"‹ Back","zoom":"Enlarge screen","close":"Close","min":"Minimize","max":"Maximize","demo":"Demo","scrollHint":"↓ Scroll to explore the site","test":"Sample","testProject":"Sample project","task":"Challenge","sol":"Solution","res":"Result","all":"All","folders":"Folders","worksSub":"Click a project to open it in the “browser”.","worksNote":"These are sample projects. Real case studies are coming soon.","seeWorks":"See our work →","recent":"Latest work","allArrow":"All →","dock":"Apps","lang":"Language","apps":{"work":"Our work","serv":"Services","proc":"How we work","about":"About us","brief":"Brief","chat":"Contact","bot":"BERD Assistant","calc":"Estimator","blog":"Blog","game":"BERD Blocks"},"noscript":"This website needs JavaScript to run."},"hero":{"kick":"Web studio · Yerevan","h1":"A digital <em>fortress</em> for your business","p":"Websites, apps and Telegram bots that are solid, fast and working for you.","b1":"See our work →","b2":"Estimate a project"},"cats":{"web":"Websites","app":"Web apps","mob":"Mobile","bot":"Bots"},"services":{"title":"Services","lead":"Five disciplines, one team. No need to hire separate specialists and coordinate them.","items":[["Websites and landing pages","A site that explains your business in five seconds and brings in leads.","web"],["Web applications","CRMs, client portals, booking, payments and integrations.","app"],["Mobile apps","Apps for iPhone and Android. We handle publishing to the App Store and Google Play.","mob"],["Telegram bots","Orders, bookings and payments right inside the messenger.","bot"],["Hosting and support","Domain, SSL, backups and monitoring. Every login stays yours.",""]]},"process":{"side":"How we work","sideSub":"5 stages","title":"Five stages, and you approve each one","sub":"You see the result at every step","steps":[["Brief and estimate","We dig into the task and come back with a scope of work and a timeline.","Free",1],["Prototype and design","Screen structure first, then visuals. You approve before any code is written.","3–7 days",1],["Development","Once the design is approved you pay a 30% deposit and we start coding. Every week you see a working version on a test link.","1–4 weeks",0],["Launch","Domain, server, SSL. We hand over every login. The remaining 70% is paid on delivery.","1–2 days",0],["Support","Updates, backups, monitoring and improvements.","Up to 12 months",0]]},"about":{"title":"We are BERD SOFT","lead":"A full-cycle development studio in Yerevan. We work with clients across Armenia, the CIS and Europe. Our four principles:","contacts":"Contacts","gua":[["30% now, 70% on delivery","A 30% deposit after the design is approved, the remaining 70% when the finished project is delivered."],["Don’t like the design? Don’t pay","Mockups are approved before development starts."],["Every login is yours","The domain and server are registered in your name, and the code is handed over."],["The price won’t grow","The estimate is fixed before work begins."]]},"chat":{"online":"● Online","greet1":"Hi! Tell us about your project: what needs to be built and by when.","greet2":"We reply within one business day, and the estimate is free.","name":"Your name","contact":"Phone or Telegram","msg":"What do you need…","send":"Send","needMsg":"Write a few words about the project","needContact":"Add a phone or Telegram so we can reply","sent":"Thank you{n}! We got your message and will reply within one business day.","off":"Thank you{n}! The site is still in test mode and messages are not sent automatically yet. Please write to us directly.","err":"Couldn’t send. Check your connection and try again, or write to us directly.","direct":"Or write directly:","noContacts":"Contacts are coming soon."},"bot":{"name":"BERD Assistant","status":"● Replies instantly","hello":"Hi! I’m the BERD SOFT assistant 👋","pick":"Pick a question below or type your own.","back":"← Back to questions","ph":"Type your question…","fallback":"Our team can answer this one better. Write to us and we’ll reply within one business day.","fallbackAct":"Open “Contact”","qa":[["serv","What services do you offer?","We build websites, web applications, iPhone and Android apps and Telegram bots. We also set up the domain and server and support the project after launch.","serv","Open services"],["price","How much does a website cost?","It depends on the project: the number of pages, features and integrations. Fill in the brief and we’ll send a detailed estimate for free. The price is fixed before work begins.","brief","Fill in the brief"],["time","How long does it take?","Design usually takes 3–7 days and development 1–4 weeks, depending on scope. We give an exact timeline after the brief."],["pay","How does payment work?","Once the design is approved you pay a 30% deposit and we start coding. The remaining 70% is paid when the finished project is delivered."],["own","Who owns the website?","You do. The domain and server are registered in your name, and we hand over the code and every login."],["sup","Do you support it after launch?","Yes. Updates, backups, monitoring and improvements for up to 12 months, depending on the package."],["work","Show me your work","Sure. In “Our work”, click a project and it opens in the browser.","work","Open our work"],["start","Where do I start?","Fill in the short brief, it takes a minute. We’ll review it and send a free estimate and timeline.","brief","Fill in the brief"],["human","I want to talk to a person","Of course. Write to us in the “Contact” window and we’ll reply within one business day.","chat","Open “Contact”"]]},"brief":{"stepOf":"Step {i} of {n}","next":"Next →","back":"← Back","submit":"Send request","sending":"Sending…","pickOne":"Pick one of the options","pickSome":"Pick at least one option","needName":"Enter your name","needContact":"Add a phone or Telegram","oneHint":"Pick one option","manyHint":"You can pick several","steps":[{"id":"type","q":"What do you need?","multi":0,"opts":[["site","Website or landing page"],["shop","Online store"],["app","Web app (CRM, client portal)"],["mob","Mobile app"],["bot","Telegram bot"],["unsure","Not sure yet, I need advice"]]},{"id":"feat","q":"What should it be able to do?","multi":1,"opts":[["book","Online booking"],["pay","Online payments"],["admin","Admin panel to edit content"],["lang","Several languages"],["crm","CRM or 1C integration"],["track","Order or delivery tracking"],["account","Client account area"],["seo","Google ranking (SEO)"]]},{"id":"design","q":"Do you have a design or examples?","multi":0,"opts":[["ready","Yes, the design is ready"],["refs","We have examples we like"],["none","No, it needs to be designed from scratch"]]},{"id":"time","q":"When do you need it?","multi":0,"opts":[["asap","As soon as possible"],["month","Within a month"],["quarter","In 2–3 months"],["flex","The timeline is flexible"]]}],"cq":"How can we reach you?","chint":"We’ll reply within one business day and send a free estimate.","name":"Name","contact":"Phone or Telegram","comment":"A few words about the project (optional)","consent":"By sending, you agree that our team may contact you about this request.","doneSent":"Thank you! We’ll reply within one business day and send a free estimate.","doneOff":"The site is still in test mode, so the request was not sent automatically. Copy it and send it to us directly.","doneErr":"Couldn’t send. Try again, or copy the request and send it to us directly.","titleSent":"Request received","titleOff":"Your request is ready","titleErr":"Request not sent","retry":"Try again","again":"Fill in a new brief","copy":"Copy request","copied":"Copied ✓","labels":{"type":"What","feat":"Features","design":"Design","time":"Timeline","name":"Name","contact":"Contact","comment":"Comment"}},"projects":{"aroma":{"kind":"Telegram bot + website","task":"Morning queues were costing the café customers.","sol":"Pre-ordering through a Telegram bot and a simple website with the menu.","res":"Sample project: the real result will be added later."},"cargo":{"kind":"Web application","task":"Shipment statuses lived in Excel and managers were swamped with calls.","sol":"A client portal with shipment tracking and notifications.","res":"Sample project: the real result will be added later."},"fitup":{"kind":"iOS and Android app","task":"Class bookings happened in chat threads and some got lost.","sol":"A mobile app with schedules, booking and reminders.","res":"Sample project: the real result will be added later."},"dent":{"kind":"Website with online booking","task":"Patients called after hours and couldn’t book an appointment.","sol":"A website with online booking, doctors’ schedules and SMS reminders.","res":"Sample project: the real result will be added later."},"nairi":{"kind":"Online store","task":"They sold through Instagram DMs and lost orders along the way.","sol":"An online store with a catalog, cart and online payments.","res":"Sample project: the real result will be added later."},"tavern":{"kind":"Delivery bot","task":"Delivery platforms kept a large share of every order.","sol":"Their own Telegram bot with a menu, payments and delivery tracking.","res":"Sample project: the real result will be added later."}},"days":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"tod":{"morning":"Good morning","day":"Good afternoon","evening":"Good evening","night":"Good night"},"calc":{"title":"Build your project","sub":"Pick what you need: the project assembles on the right, and below you see an approximate price and timeline.","type":"What are we building","pages":"Number of pages","features":"Features","langs":"Languages","types":{"landing":"Landing page","site":"Website","shop":"Online store","webapp":"Web app","mobile":"Mobile app","bot":"Telegram bot"},"feats":{"pay":"Online payments","admin":"Admin panel","booking":"Online booking","account":"Client account","crm":"CRM / 1C integration","seo":"SEO","tgbot":"Telegram bot for the site"},"price":"Approximate price","time":"Timeline","days":"days","weeks":"weeks","from":"about","note":"This is a rough estimate. We fix the exact price after the brief, for free.","send":"Send this project","name":"Name","contact":"Phone or Telegram","needContact":"Add a phone or Telegram","sent":"We got your project and will reply within one business day.","failed":"Couldn’t send. Write to us directly:","mock":{"home":"Home","about":"About","catalog":"Catalog","contact":"Contact","book":"Book","cart":"Cart","login":"Log in","pay":"Pay","admin":"Admin","dash":"Dashboard","orders":"Orders"}},"ba":{"tab":"Before / After","before":"Before","after":"After","hint":"Drag the slider to compare","sample":"Sample"},"live":{"intro":"Write to us and we’ll reply right here in this chat.","optional":"Contact is optional, add it if you want a reply outside the site too","sent":"Sent. Our team will reply here, usually within minutes during business hours.","team":"BERD SOFT"},"game":{"title":"BERD Blocks","score":"Score","best":"Best","lines":"Lines","start":"Start","again":"Play again","over":"Game over","help":"← → move · ↑ rotate · ↓ faster · Space drop","found":"You found the hidden game 🎮","paused":"Paused"},"blog":{"title":"Blog","sub":"Articles about websites, apps and bots for business","read":"Read","min":"min","back":"← All articles","open":"Open as a page ↗"}}}/*/CONTENT*/;
+var LANGS = ['hy','ru','en'];
+var L = pickLang();
+function T(){return CONTENT[L]}
+function get(path){return path.split('.').reduce(function(o,k){return o&&o[k]},T())}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pickLang(){
+  var d=document.documentElement.getAttribute('data-lang');if(LANGS.indexOf(d)>=0)return d;
+  try{var s=localStorage.getItem('berd-lang');if(LANGS.indexOf(s)>=0)return s}catch(e){}
+  return 'hy'; // Armenian first; visitors switch with the ՀՅ / RU / EN menu
+}
+
+/* ---------- analytics (loads only when configured) ---------- */
+var A=CFG.analytics;
+(function loadAnalytics(){
+  try{
+    if(A.goatcounter){var g=document.createElement('script');g.async=true;g.src='https://gc.zgo.at/count.js';g.setAttribute('data-goatcounter','https://'+A.goatcounter+'.goatcounter.com/count');document.head.appendChild(g)}
+    if(A.ga4){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(A.ga4);document.head.appendChild(s);
+      window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());
+      gtag('config',A.ga4,{anonymize_ip:true,site_language:L,device_view:matchMedia('(max-width:760px)').matches?'phone':'laptop'})}
+    if(A.clarity){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script',A.clarity);
+      clarity('set','lang',L);clarity('set','view',matchMedia('(max-width:760px)').matches?'phone':'laptop')}
+  }catch(e){}
+})();
+/* every interaction goes to all configured tools with the same name, so reports line up */
+var lastStep='home';
+function track(name,detail,extra){
+  try{
+    if(name!=='window_time')lastStep=name+(detail?':'+detail:'');
+    if(A.goatcounter&&window.goatcounter&&goatcounter.count)goatcounter.count({path:'event/'+name+(detail?'/'+detail:''),title:name,event:true});
+    if(A.ga4&&window.gtag)gtag('event',name,Object.assign({detail:detail||'',lang:L},extra||{}));
+    if(A.clarity&&window.clarity){clarity('event',name+(detail?'_'+detail:''));if(name==='lead_sent')clarity('upgrade','lead')}
+  }catch(e){}
+}
+/* time spent in each window, and the last thing done before leaving the site */
+var winOpenedAt={};
+function winOpened(key){winOpenedAt[key]=Date.now()}
+function winClosed(key){var t=winOpenedAt[key];if(t){delete winOpenedAt[key];track('window_time',key,{seconds:Math.round((Date.now()-t)/1000)})}}
+window.addEventListener('pagehide',function(){
+  Object.keys(winOpenedAt).forEach(winClosed);
+  try{if(A.ga4&&window.gtag)gtag('event','exit_after',{detail:lastStep,lang:L,transport_type:'beacon'})}catch(e){}
+});
+
+/* ---------- leads: every form goes through here ---------- */
+function sendLead(payload){
+  payload.lang=L;payload.page=location.href;payload.sentAt=new Date().toISOString();
+  if(!CFG.leadEndpoint)return Promise.resolve('off');
+  return fetch(CFG.leadEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
+    .then(function(r){return r.ok?'sent':'error'}).catch(function(){return 'error'})
+    .then(function(st){if(st==='sent')track('lead_sent',payload.type);return st});
+}
+function contactItems(){
+  var c=CFG.contacts,a=[];
+  if(c.telegram)a.push(['https://t.me/'+encodeURIComponent(c.telegram),'Telegram @'+c.telegram]);
+  if(c.phone)a.push(['tel:'+c.phone.replace(/[^+\d]/g,''),c.phone]);
+  if(c.email)a.push(['mailto:'+c.email,c.email]);
+  if(c.instagram)a.push(['https://instagram.com/'+encodeURIComponent(c.instagram),'Instagram @'+c.instagram]);
+  return a;
+}
+function contactsHTML(){
+  var a=contactItems();if(!a.length)return '<span>'+esc(T().chat.noContacts)+'</span>';
+  return '<span class="cts">'+a.map(function(x){return '<a href="'+esc(x[0])+'" target="_blank" rel="noopener" data-ct>'+esc(x[1])+'</a>'}).join('')+'</span>';
+}
+
+/* ---------- icons ---------- */
+var SV = {
+  work:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 13h8"/></svg>',
+  serv:'<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><path d="M17.25 14v6.5M14 17.25h6.5"/></svg>',
+  proc:'<svg viewBox="0 0 24 24" fill="none" stroke="#1B36F5" stroke-width="2.2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.3 1.3L7 5M3.5 12l1.3 1.3L7 11" stroke="#E01060"/><circle cx="5" cy="18" r="1.4" fill="#1B36F5"/></svg>',
+  about:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.3 6-5.3s5.4 1.9 6 5.3"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.2c2.3.2 4 1.7 4.5 4.3"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.1" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5" stroke-linecap="round"/></svg>',
+  brief:'<svg viewBox="0 0 24 24" fill="none" stroke="#CCFF00" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1" stroke="#fff"/><path d="m8.5 11 1.6 1.6L13 9.8M8.5 16.5h7" /></svg>'
+};
+var FOLDER = '<svg viewBox="0 0 64 54" width="100%" height="100%"><path d="M2 8a5 5 0 0 1 5-5h16l6 6h28a5 5 0 0 1 5 5v33a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5z" fill="#3e57ff"/><path d="M2 17a5 5 0 0 1 5-5h50a5 5 0 0 1 5 5v30a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5z" fill="#5b71ff"/><rect x="10" y="22" width="9" height="9" fill="#CCFF00"/><rect x="21" y="22" width="9" height="9" fill="#fff"/><rect x="10" y="33" width="9" height="9" fill="#E01060"/><rect x="21" y="33" width="9" height="9" fill="#FFB800"/></svg>';
+var DOC = '<svg viewBox="0 0 48 60" width="80%" height="100%"><path d="M4 4h28l12 12v40H4z" fill="#fff"/><path d="M32 4v12h12" fill="#dfe2ea"/><path d="M11 26h26M11 33h26M11 40h18" stroke="#9aa0b0" stroke-width="2.4"/><rect x="11" y="13" width="14" height="6" fill="#E01060"/></svg>';
+var ROBOT='<svg viewBox="0 0 64 64" class="rb"><line x1="32" y1="5" x2="32" y2="13" stroke="#c9ccd6" stroke-width="3" stroke-linecap="round"/><circle class="rb-ant" cx="32" cy="5" r="4" fill="#E01060"/>'+
+  '<rect x="6" y="27" width="6" height="14" rx="3" fill="#FFB800"/><rect x="52" y="27" width="6" height="14" rx="3" fill="#FFB800"/>'+
+  '<rect x="10" y="13" width="44" height="40" rx="18" fill="#16182a"/><rect x="15" y="20" width="34" height="22" rx="11" fill="#1B36F5"/>'+
+  '<g class="rb-eyes"><rect x="21" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/><rect x="36" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/></g>'+
+  '<path d="M26 47.5q6 3 12 0" stroke="#CCFF00" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
+
+/* ---------- projects (visual data; texts live in CONTENT[lang].projects) ---------- */
+var PROJ = [
+  {id:'aroma',name:'Aroma Coffee',cat:'bot',url:'aroma-coffee.am',c1:'#3b2416',c2:'#f4e7d7',c3:'#c8742c',stack:['Telegram Bot API','Node.js','PostgreSQL'],type:'tg'},
+  {id:'cargo',name:'CargoLink',cat:'app',url:'app.cargolink.am',c1:'#141a33',c2:'#f4f6fb',c3:'#1B36F5',stack:['React','TypeScript','Node.js'],type:'db'},
+  {id:'fitup',name:'FitUp',cat:'mob',url:'fitup.app',c1:'#0f3d1f',c2:'#f1fff0',c3:'#2fbf5f',stack:['React Native','Node.js'],type:'mob'},
+  {id:'dent',name:'Dent Plus',cat:'web',url:'dentplus.am',c1:'#0c3550',c2:'#eef8ff',c3:'#1aa3d9',stack:['Next.js','PostgreSQL'],type:'site'},
+  {id:'nairi',name:'Nairi Wear',cat:'web',url:'nairiwear.am',c1:'#1a1a1a',c2:'#f6f3ee',c3:'#E01060',stack:['Next.js','Stripe','Admin'],type:'site'},
+  {id:'tavern',name:'Old Tavern',cat:'bot',url:'t.me/oldtavern_bot',c1:'#5a1d14',c2:'#fff4ec',c3:'#c0392b',stack:['Telegram Bot API','Python'],type:'tg'}
+];
+function proj(id){var p=PROJ.filter(function(x){return x.id===id})[0];if(!p)return null;var t=T().projects[id]||{};return Object.assign({},p,t)}
+function thumb(p){
+  var b='<div class="th" style="background:'+p.c2+'"><span class="tag">'+esc(T().ui.test)+'</span>';
+  b+='<span style="position:absolute;left:14%;top:26%;width:46%;height:12%;border-radius:6px;background:'+p.c1+'"></span>';
+  b+='<span style="position:absolute;left:14%;top:44%;width:34%;height:6%;border-radius:4px;background:'+p.c1+';opacity:.35"></span>';
+  b+='<span style="position:absolute;left:14%;top:58%;width:22%;height:11%;border-radius:6px;background:'+p.c3+'"></span>';
+  b+='<span style="position:absolute;right:8%;top:22%;width:28%;height:56%;border-radius:10px;background:'+p.c3+';opacity:.85"></span>';
+  return b+'</div>';
+}
+/* the demo sites show the client's own (Armenian) content, so they stay in one language */
+function mock(p){
+  if(p.type==='db') return '<div class="db"><aside><b>'+p.name+'</b><span class="on">Վահանակ</span><span>Առաքումներ</span><span>Հաճախորդներ</span><span>Հաշիվներ</span><span>Կարգավորումներ</span></aside><main>'+
+    '<div class="kpi"><div>Ակտիվ առաքումներ<b>128</b></div><div>Այսօր հանձնված<b>46</b></div><div>Ուշացող<b>3</b></div><div>Նոր հայտեր<b>19</b></div></div>'+
+    '<div class="chart">'+[40,55,48,70,62,80,74,90,68,84,95,88].map(function(h,i){return '<i style="height:'+h+'%;background:'+(i==10?p.c3:'#d9defa')+'"></i>'}).join('')+'</div>'+
+    '<table><tr><th>Համար</th><th>Ուղղություն</th><th>Հաճախորդ</th><th>Կարգավիճակ</th></tr>'+
+    [['CL-2041','Երևան → Գյումրի','Արմենիա ՍՊԸ','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2042','Երևան → Վանաձոր','Ararat Food','Հանձնված','#e3f7e9','#1d8a46'],['CL-2043','Երևան → Մոսկվա','Nairi Wear','Մաքսատանը','#fff1d6','#a06800'],['CL-2044','Գորիս → Երևան','Zangezur Agro','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2045','Երևան → Թբիլիսի','Dent Plus','Սպասում է','#f0f0f3','#555'],['CL-2046','Երևան → Աբովյան','Aroma Coffee','Հանձնված','#e3f7e9','#1d8a46'],['CL-2047','Երևան → Սևան','Lake House','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2048','Երևան → Դիլիջան','Forest Inn','Հանձնված','#e3f7e9','#1d8a46']]
+    .map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td><span class="st" style="background:'+r[4]+';color:'+r[5]+'">'+r[3]+'</span></td></tr>'}).join('')+
+    '</table><div class="chart" style="height:240px">'+[30,45,38,60,52,70,64,75,58,80,72,86].map(function(h){return '<i style="height:'+h+'%;background:#e7eaf8"></i>'}).join('')+'</div></main></div>';
+  if(p.type==='mob') return '<div class="pa">'+[0,1].map(function(k){return '<div class="pf2"><div class="in"><h4>'+(k?'Իմ մարզումները':'Բարև, Անի 👋')+'</h4>'+
+    '<div class="c" style="background:'+p.c3+';color:#fff">'+(k?'Այս շաբաթ':'Հաջորդ մարզումը')+'<b>'+(k?'4 / 5':'18:30')+'</b></div>'+
+    '<div class="r"><div style="background:#e7f8ec"></div><div style="background:#eef1ff"></div></div>'+
+    '<div class="c" style="background:#f3f4f7">Յոգա · Ժ. 19:00</div><div class="c" style="background:#f3f4f7">Crossfit · Ժ. 20:00</div><div class="c" style="background:#f3f4f7">Լողավազան · Ժ. 09:00</div></div></div>'}).join('')+'</div>';
+  if(p.type==='tg') return '<div class="tgm"><div class="h"><i style="background:'+p.c3+'"></i><span>'+p.name+' Bot<small>բոտ</small></span></div><div class="b">'+
+    '<div class="m">Բարև։ Ի՞նչ եք ցանկանում պատվիրել այսօր։</div><div class="kb"><span>📋 Մենյու</span><span>🛵 Առաքում</span><span>🕑 Նախնական պատվեր</span><span>📍 Հասցե</span></div>'+
+    '<div class="m me">Մենյու</div><div class="menu"><div><span>Կապուչինո</span><span>1 200 ֏</span></div><div><span>Լատե</span><span>1 400 ֏</span></div><div><span>Կրուասան</span><span>900 ֏</span></div><div><span>Չիզքեյք</span><span>1 800 ֏</span></div></div>'+
+    '<div class="m me">2 կապուչինո, 08:30-ին</div><div class="m">Պատվերն ընդունված է ✅ Պատրաստ կլինի 08:30-ին։ Վճարե՞լ հիմա։</div><div class="kb"><span>💳 Վճարել քարտով</span><span>💵 Տեղում</span></div>'+
+    '<div class="m me">Վճարել քարտով</div><div class="m">Շնորհակալություն։ Կսպասենք ձեզ 08:30-ին ☕</div></div></div>';
+  return '<div class="ms" style="background:'+p.c2+'"><nav style="color:'+p.c1+'"><b>'+p.name+'</b><div><span>Ծառայություններ</span><span>Մեր մասին</span><span>Կապ</span></div></nav>'+
+    '<div class="hero2" style="color:'+p.c1+'"><div><h2>'+(p.id==='dent'?'Առողջ ժպիտ՝ առանց հերթերի':'Նոր հավաքածու՝ արդեն կայքում')+'</h2><p>'+(p.id==='dent'?'Առցանց գրանցում, բժիշկների ժամանակացույց և SMS հիշեցում։':'Կատալոգ, զամբյուղ և առցանց վճարում։')+'</p><span class="cta" style="background:'+p.c3+';color:#fff">'+(p.id==='dent'?'Գրանցվել առցանց':'Դիտել կատալոգը')+'</span></div>'+
+    '<div class="art" style="background:'+p.c1+'"><i style="left:12%;top:12%;width:40%;height:40%;background:'+p.c3+'"></i><i style="left:46%;top:46%;width:42%;height:42%;background:'+p.c2+'"></i><i style="left:16%;top:62%;width:22%;height:22%;background:#fff;opacity:.6"></i></div></div>'+
+    '<div class="feats">'+['Արագ գրանցում','Հիշեցումներ','Առցանց վճարում'].map(function(t){return '<div style="background:#fff;color:'+p.c1+'">'+t+'<p>Հարմար է հեռախոսից և համակարգչից։</p></div>'}).join('')+'</div>'+
+    '<div class="band" style="background:'+p.c1+';color:#fff"><div><b>24/7</b><span>առցանց</span></div><div><b>3 քայլ</b><span>մինչև պատվեր</span></div><div><b>1 կայք</b><span>բոլոր սարքերի համար</span></div></div>'+
+    '<div class="gal"><i style="background:'+p.c3+'"></i><i style="background:'+p.c1+';opacity:.85"></i><i style="background:#fff"></i><i style="background:#fff"></i><i style="background:'+p.c1+';opacity:.5"></i></div>'+
+    '<div class="quote" style="color:'+p.c1+'">«Կայքը հիմա աշխատում է մեր փոխարեն, նույնիսկ գիշերը»։<small>Թեստային կարծիք</small></div>'+
+    '<div class="gal"><i style="background:#fff"></i><i style="background:'+p.c3+';opacity:.7"></i><i style="background:'+p.c1+';opacity:.3"></i><i style="background:#fff"></i><i style="background:'+p.c3+'"></i></div>'+
+    '<footer style="background:'+p.c1+';color:#fff"><span>'+p.name+'</span><span>BERD SOFT</span></footer></div>';
+}
+
+/* ---------- apps ---------- */
+var APPS = {
+  work:{w:900,h:570,x:190,y:70}, serv:{w:640,h:540,x:330,y:80}, proc:{w:760,h:540,x:260,y:76},
+  about:{w:700,h:580,x:300,y:60}, brief:{w:740,h:600,x:270,y:56}, chat:{w:470,h:620,x:740,y:52},
+  bot:{w:400,h:560,x:840,y:112}
+};
+var ORDER=['work','serv','proc','about','brief','chat'];
+function appTitle(id){return T().ui.apps[id]}
+
+/* scripted answers keyword routing — works for typed questions in all three languages */
+var QK=[['price',/գին|արժ|цен|стоим|price|cost|how much/i],['pay',/վճար|կանխ|оплат|предоплат|pay/i],['time',/ժամկետ|ժամանակ|օրում|շաբաթ|երբ|срок|сколько времени|когда|how long|timeline|when/i],
+  ['own',/պատկան|մուտք|կոդ|դոմեն|принадлеж|доступ|домен|own|access|domain/i],['sup',/աջակց|սպասարկ|поддерж|support|maintain/i],
+  ['start',/սկսել|սկսենք|начать|начинать|start|begin/i],['work',/աշխատանք|պորտֆոլ|օրինակ|նախագ|портфолио|работ|кейс|portfolio|work|project/i],
+  ['human',/մարդ|զանգ|կապ|մենեջեր|человек|менеджер|связ|позвон|human|person|call|contact/i],['serv',/ծառայ|կայք|հավելված|բոտ|услуг|сайт|приложен|бот|service|website|app|bot/i]];
+
+function body(id){
+  var t=T(),u=t.ui;
+  if(id==='work'){
+    var counts={all:PROJ.length};PROJ.forEach(function(p){counts[p.cat]=(counts[p.cat]||0)+1});
+    var h='<div class="pf"><aside><h5>'+esc(u.folders)+'</h5><button type="button" class="on" data-f="all">'+esc(u.all)+' <span>'+counts.all+'</span></button>';
+    Object.keys(t.cats).forEach(function(k){h+='<button type="button" data-f="'+k+'">'+esc(t.cats[k])+' <span>'+(counts[k]||0)+'</span></button>'});
+    h+='<p class="note">'+esc(u.worksNote)+'</p></aside><main><h3>'+esc(u.apps.work)+'</h3><p class="sub">'+esc(u.worksSub)+'</p><div class="grid">';
+    PROJ.forEach(function(x){var p=proj(x.id);h+='<button type="button" class="card" data-p="'+p.id+'" data-cat="'+p.cat+'">'+thumb(p)+'<span><b>'+esc(p.name)+'</b><small>'+esc(p.kind)+'</small></span></button>'});
+    return h+'</div></main></div>';
+  }
+  if(id==='serv'){
+    var colors=[['var(--blue)','#fff'],['var(--lime)','#111'],['var(--pink)','#fff'],['var(--amber)','#111'],['#121318','#CCFF00']];
+    return '<div class="pad"><h3>'+esc(t.services.title)+'</h3><p class="lead">'+esc(t.services.lead)+'</p><div class="svc">'+
+    t.services.items.map(function(r,i){return '<div class="row"><span class="sq" style="background:'+colors[i][0]+'"><svg viewBox="0 0 24 24" fill="none" stroke="'+colors[i][1]+'" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></span><span><b>'+esc(r[0])+'</b><p>'+esc(r[1])+'</p></span>'+(r[2]?'<button type="button" class="k" data-goto="'+r[2]+'">'+esc(u.seeWorks)+'</button>':'<span></span>')+'</div>'}).join('')+'</div></div>';
+  }
+  if(id==='proc') return '<div class="notes"><aside><div>'+esc(t.process.side)+'<small>'+esc(t.process.sideSub)+'</small></div></aside><main><h3>'+esc(t.process.title)+'</h3><p class="date">'+esc(t.process.sub)+'</p><ul class="steps">'+
+    t.process.steps.map(function(s){return '<li class="'+(s[3]?'done':'')+'"><span class="ck"></span><span><b>'+esc(s[0])+'</b><p>'+esc(s[1])+'</p></span><span class="d">'+esc(s[2])+'</span></li>'}).join('')+'</ul></main></div>';
+  if(id==='about') return '<div class="pad"><h3>'+esc(t.about.title)+'</h3><p class="lead">'+esc(t.about.lead)+'</p><div class="gua">'+
+    t.about.gua.map(function(g){return '<div><b>'+esc(g[0])+'</b><p>'+esc(g[1])+'</p></div>'}).join('')+'</div><div class="stack">'+['React','Next.js','TypeScript','Node.js','Python','PostgreSQL','React Native','Telegram Bot API','Docker'].map(function(s){return '<span>'+s+'</span>'}).join('')+'</div>'+
+    '<div class="about-cts"><h4>'+esc(t.about.contacts)+'</h4>'+contactsHTML()+'</div></div>';
+  if(id==='chat') return '<div class="chat"><div class="hd"><span class="av"><span class="mk"><i></i><i></i><i></i><i></i></span></span><span><b>BERD SOFT</b><small>'+esc(t.chat.online)+'</small></span></div>'+
+    '<div class="log" data-log><div class="msg in">'+esc(t.chat.greet1)+'</div><div class="msg in">'+esc(t.chat.greet2)+'</div></div>'+
+    '<form data-form novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><div class="two"><input id="c-name" placeholder="'+esc(t.chat.name)+'" aria-label="'+esc(t.chat.name)+'" autocomplete="name"><input id="c-contact" placeholder="'+esc(t.chat.contact)+'" aria-label="'+esc(t.chat.contact)+'" autocomplete="tel"></div>'+
+    '<div class="send"><textarea id="c-msg" rows="2" placeholder="'+esc(t.chat.msg)+'" aria-label="'+esc(t.chat.msg)+'"></textarea><button type="submit">'+esc(t.chat.send)+'</button></div>'+
+    '<span class="tg">'+esc(t.chat.direct)+' '+contactsHTML()+'</span></form></div>';
+  if(id==='bot') return '<div class="chat abot" data-bot><div class="hd"><span class="av rbav">'+ROBOT+'</span><span><b>'+esc(t.bot.name)+'</b><small>'+esc(t.bot.status)+'</small></span></div>'+
+    '<div class="log" data-log></div><div class="qs" data-qs></div>'+
+    '<form class="ask" data-ask><input id="bot-in" placeholder="'+esc(t.bot.ph)+'" aria-label="'+esc(t.bot.ph)+'" autocomplete="off"><button type="submit" aria-label="'+esc(t.chat.send)+'">➤</button></form></div>';
+  if(id==='brief') return '<div class="brief" data-brief></div>';
+  return '';
+}
+function browserBody(p){
+  var u=T().ui;
+  return '<div class="br"><div class="vp"><div class="addr"><span class="u"><i></i>'+esc(p.url)+'</span><span class="demo">'+esc(u.demo)+'</span></div><div class="view" data-view><div class="scroller">'+mock(p)+'</div><span class="shint" data-hint>'+esc(u.scrollHint)+'</span></div></div>'+
+    '<div class="info"><span class="cat">'+esc(T().cats[p.cat])+'</span><h3>'+esc(p.name)+'</h3><span class="t">'+esc(u.testProject)+'</span><dl><div><dt>'+esc(u.task)+'</dt><dd>'+esc(p.task)+'</dd></div><div><dt>'+esc(u.sol)+'</dt><dd>'+esc(p.sol)+'</dd></div><div><dt>'+esc(u.res)+'</dt><dd>'+esc(p.res)+'</dd></div></dl><div class="chips">'+p.stack.map(function(s){return '<span>'+esc(s)+'</span>'}).join('')+'</div></div></div>';
+}
+
+/* open "Our work" already filtered to one category */
+function goWork(cat){
+  var r;
+  if(phoneMode()){openSheet('work');r=$('#sheetBody')}else{api.open('work');r=openWins.work}
+  var b=r&&r.querySelector('[data-f="'+cat+'"]');if(b)b.click();
+}
+function hhmm(){var t=new Date();return ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2)}
+
+/* ---------- brief wizard ---------- */
+function initBrief(root){
+  var B=T().brief,steps=B.steps,n=steps.length+1,i=0,ans={},contact={name:'',contact:'',comment:''},status=null;
+  function render(){
+    if(status) return renderDone();
+    var isContact=i===steps.length,s=steps[i];
+    var h='<div class="bh"><small>'+esc(B.stepOf.replace('{i}',i+1).replace('{n}',n))+'</small><h3>'+esc(isContact?B.cq:s.q)+'</h3><p>'+esc(isContact?B.chint:(s.multi?B.manyHint:B.oneHint))+'</p><div class="prog"><i style="width:'+Math.round((i+1)/n*100)+'%"></i></div></div><div class="bb">';
+    if(!isContact){
+      var cur=ans[s.id]||(s.multi?[]:null);
+      h+='<div class="opts" role="group" aria-label="'+esc(s.q)+'">'+s.opts.map(function(o){var on=s.multi?cur.indexOf(o[0])>=0:cur===o[0];return '<button type="button" class="opt'+(s.multi?'':' one')+'" data-o="'+o[0]+'" aria-pressed="'+on+'"><span class="bx"></span>'+esc(o[1])+'</button>'}).join('')+'</div>';
+    }else{
+      h+='<div class="fields"><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'+
+        '<label>'+esc(B.name)+'<input id="b-name" autocomplete="name" value="'+esc(contact.name)+'"></label>'+
+        '<label>'+esc(B.contact)+'<input id="b-contact" autocomplete="tel" value="'+esc(contact.contact)+'"></label>'+
+        '<label>'+esc(B.comment)+'<textarea id="b-comment" rows="3">'+esc(contact.comment)+'</textarea></label>'+
+        '<p class="consent">'+esc(B.consent)+'</p></div>';
+    }
+    h+='<p class="err" data-err role="alert"></p></div><div class="bf"><button type="button" class="bk" data-bk'+(i===0?' disabled':'')+'>'+esc(B.back)+'</button><button type="button" class="nx" data-nx>'+esc(isContact?B.submit:B.next)+'</button></div>';
+    root.innerHTML=h;
+    root.querySelectorAll('[data-o]').forEach(function(b){b.addEventListener('click',function(){
+      var k=b.getAttribute('data-o');
+      if(s.multi){var a=ans[s.id]||[];var j=a.indexOf(k);if(j>=0)a.splice(j,1);else a.push(k);ans[s.id]=a;b.setAttribute('aria-pressed',j<0)}
+      else{ans[s.id]=k;root.querySelectorAll('[data-o]').forEach(function(x){x.setAttribute('aria-pressed',x===b)});setTimeout(next,RM?0:220)}
+      root.querySelector('[data-err]').textContent='';
+    })});
+    root.querySelector('[data-bk]').addEventListener('click',function(){save();if(i>0){i--;render()}});
+    root.querySelector('[data-nx]').addEventListener('click',next);
+  }
+  function save(){var f=root.querySelector('#b-name');if(f){contact.name=f.value.trim();contact.contact=root.querySelector('#b-contact').value.trim();contact.comment=root.querySelector('#b-comment').value.trim()}}
+  function err(m){var e=root.querySelector('[data-err]');e.textContent=m}
+  function next(){
+    if(i<steps.length){
+      var s=steps[i],v=ans[s.id];
+      if(s.multi?!(v&&v.length):!v)return err(s.multi?B.pickSome:B.pickOne);
+      if(i===0)track('brief_start');
+      track('brief_step',s.id);i++;return render();
+    }
+    save();
+    if(!contact.name){err(B.needName);root.querySelector('#b-name').focus();return}
+    if(!contact.contact){err(B.needContact);root.querySelector('#b-contact').focus();return}
+    var hp=root.querySelector('.hp');if(hp&&hp.value)return;
+    var btn=root.querySelector('[data-nx]');btn.disabled=true;btn.textContent=B.sending;
+    track('brief_submit',ans.type);
+    sendLead({type:'brief',answers:readable(),raw:ans,name:contact.name,contact:contact.contact,comment:contact.comment}).then(function(st){status=st;if(st!=='sent')track('lead_failed',st);render()});
+  }
+  function label(stepId,key){var s=steps.filter(function(x){return x.id===stepId})[0];var o=s&&s.opts.filter(function(x){return x[0]===key})[0];return o?o[1]:key}
+  function readable(){
+    var r={};steps.forEach(function(s){var v=ans[s.id];r[B.labels[s.id]]=s.multi?(v||[]).map(function(k){return label(s.id,k)}).join(', '):label(s.id,v)});return r;
+  }
+  function summaryText(){
+    var r=readable(),lines=['BERD SOFT — '+T().ui.apps.brief];
+    Object.keys(r).forEach(function(k){lines.push(k+': '+r[k])});
+    lines.push(B.labels.name+': '+contact.name,B.labels.contact+': '+contact.contact);
+    if(contact.comment)lines.push(B.labels.comment+': '+contact.comment);
+    return lines.join('\n');
+  }
+  function renderDone(){
+    var r=readable(),ok=status==='sent';
+    var title=ok?B.titleSent:status==='off'?B.titleOff:B.titleErr,msg=ok?B.doneSent:status==='off'?B.doneOff:B.doneErr;
+    var h='<div class="bh"><small>BERD SOFT</small><h3>'+esc(title)+'</h3><div class="prog"><i style="width:100%"></i></div></div><div class="bb"><div class="done"><span class="ok'+(ok?'':' warn')+'">'+(ok?'✓':'!')+'</span><p>'+esc(msg)+'</p>';
+    if(!ok)h+='<div>'+contactsHTML()+'</div>';
+    h+='<dl class="sum">'+Object.keys(r).map(function(k){return '<div><dt>'+esc(k)+'</dt><dd>'+esc(r[k])+'</dd></div>'}).join('')+
+      '<div><dt>'+esc(B.labels.name)+'</dt><dd>'+esc(contact.name)+'</dd></div><div><dt>'+esc(B.labels.contact)+'</dt><dd>'+esc(contact.contact)+'</dd></div>'+
+      (contact.comment?'<div><dt>'+esc(B.labels.comment)+'</dt><dd>'+esc(contact.comment)+'</dd></div>':'')+'</dl>';
+    h+='<div class="row2">'+(ok?'':'<button type="button" class="pri" data-copy>'+esc(B.copy)+'</button>')+(status==='error'?'<button type="button" data-retry>'+esc(B.retry)+'</button>':'')+'<button type="button" data-again>'+esc(B.again)+'</button></div></div></div><div class="bf" hidden></div>';
+    root.innerHTML=h;
+    var c=root.querySelector('[data-copy]');
+    if(c)c.addEventListener('click',function(){
+      var txt=summaryText();
+      var done=function(){c.textContent=B.copied};
+      try{navigator.clipboard.writeText(txt).then(done,function(){fallbackCopy(txt);done()})}catch(e){fallbackCopy(txt);done()}
+    });
+    var rt=root.querySelector('[data-retry]');if(rt)rt.addEventListener('click',function(){status=null;i=steps.length;render();root.querySelector('[data-nx]').click()});
+    root.querySelector('[data-again]').addEventListener('click',function(){status=null;i=0;ans={};contact={name:'',contact:'',comment:''};render()});
+  }
+  render();
+}
+function fallbackCopy(txt){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy')}catch(e){}ta.remove()}
+
+/* ---------- wiring shared by desktop windows and phone sheets ---------- */
+function wire(root, openProject){
+  var t=T();
+  root.querySelectorAll('[data-f]').forEach(function(b){b.addEventListener('click',function(){
+    root.querySelectorAll('[data-f]').forEach(function(x){x.classList.toggle('on',x===b)});
+    var f=b.getAttribute('data-f');root.querySelectorAll('[data-cat]').forEach(function(c){c.hidden=!(f==='all'||c.getAttribute('data-cat')===f)});
+  })});
+  root.querySelectorAll('[data-p]').forEach(function(c){c.addEventListener('click',function(){openProject(c.getAttribute('data-p'),c)})});
+  root.querySelectorAll('[data-goto]').forEach(function(b){b.addEventListener('click',function(){goWork(b.getAttribute('data-goto'))})});
+  root.querySelectorAll('[data-ct]').forEach(function(a){a.addEventListener('click',function(){track('contact_click',a.textContent.split(' ')[0])})});
+  var br=root.querySelector('[data-brief]');if(br)initBrief(br);
+
+  var form=root.querySelector('[data-form]');
+  if(form&&typeof liveChat==='function'&&CFG.leadEndpoint)liveChat(root,form);
+  else if(form) form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var log=root.querySelector('[data-log]'),m=root.querySelector('#c-msg'),n=root.querySelector('#c-name'),c=root.querySelector('#c-contact');
+    var txt=(m.value||'').trim(),name=(n.value||'').trim(),ct=(c.value||'').trim();
+    if(!txt){m.focus();m.placeholder=t.chat.needMsg;return}
+    if(!ct){c.focus();c.placeholder=t.chat.needContact;return}
+    if(form.querySelector('.hp').value)return;
+    var o=document.createElement('div');o.className='msg out';o.textContent=txt;var sm=document.createElement('small');sm.textContent=hhmm();o.appendChild(sm);log.appendChild(o);m.value='';
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;
+    sendLead({type:'message',name:name,contact:ct,message:txt}).then(function(st){
+      btn.disabled=false;
+      var r=document.createElement('div');r.className='msg in';
+      r.textContent=(st==='sent'?t.chat.sent:st==='off'?t.chat.off:t.chat.err).replace('{n}',name?', '+name:'');
+      var s2=document.createElement('small');s2.textContent=hhmm();r.appendChild(s2);log.appendChild(r);log.scrollTop=log.scrollHeight;
+    });
+    log.scrollTop=log.scrollHeight;
+  });
+
+  var bot=root.querySelector('[data-bot]');
+  if(bot){
+    var Q=t.bot.qa,blog=bot.querySelector('[data-log]'),qs=bot.querySelector('[data-qs]'),asked={},busy=false;
+    var say=function(text,who,act){
+      var m=document.createElement('div');m.className='msg '+(who==='me'?'out':'in');m.textContent=text;
+      if(act){var b=document.createElement('button');b.type='button';b.className='act';b.textContent=act[1]+' →';
+        b.addEventListener('click',function(){if(act[0]==='work')goWork('all');else api.open(act[0])});m.appendChild(b)}
+      var s=document.createElement('small');s.textContent=hhmm();m.appendChild(s);blog.appendChild(m);blog.scrollTop=blog.scrollHeight;
+    };
+    var typing=function(cb){
+      busy=true;var d=document.createElement('div');d.className='msg in typing';d.innerHTML='<i></i><i></i><i></i>';blog.appendChild(d);blog.scrollTop=blog.scrollHeight;
+      setTimeout(function(){d.remove();busy=false;cb()},RM?0:750);
+    };
+    var chips=function(){
+      qs.innerHTML='';qs.classList.remove('back');
+      var left=Q.filter(function(q){return !asked[q[0]]});if(!left.length){asked={};left=Q}
+      left.forEach(function(q){var c=document.createElement('button');c.type='button';c.textContent=q[1];c.addEventListener('click',function(){ask(q[0],q[1])});qs.appendChild(c)});
+      qs.hidden=false;blog.scrollTop=blog.scrollHeight;
+    };
+    var backBtn=function(){
+      qs.innerHTML='';qs.classList.add('back');
+      var b=document.createElement('button');b.type='button';b.textContent=t.bot.back;b.addEventListener('click',chips);qs.appendChild(b);
+      qs.hidden=false;blog.scrollTop=blog.scrollHeight;
+    };
+    var answer=function(text,act){qs.hidden=true;typing(function(){say(text,'bot',act);backBtn()})};
+    var ask=function(id,label){
+      if(busy)return;var q=Q.filter(function(x){return x[0]===id})[0];
+      asked[id]=1;track('bot_question',id);say(label,'me');answer(q[2],q[3]?[q[3],q[4]]:null);
+    };
+    bot.querySelector('[data-ask]').addEventListener('submit',function(e){
+      e.preventDefault();var inp=bot.querySelector('#bot-in'),v=(inp.value||'').trim();if(!v||busy)return;inp.value='';
+      var hit=QK.filter(function(k){return k[1].test(v)})[0];say(v,'me');
+      if(hit){var q=Q.filter(function(x){return x[0]===hit[0]})[0];asked[hit[0]]=1;track('bot_question',hit[0]);answer(q[2],q[3]?[q[3],q[4]]:null)}
+      else{track('bot_question','other');answer(t.bot.fallback,['chat',t.bot.fallbackAct])}
+    });
+    say(t.bot.hello,'bot');
+    setTimeout(function(){say(t.bot.pick,'bot');chips()},RM?0:450);
+  }
+
+  var view=root.querySelector('[data-view]'),hint=root.querySelector('[data-hint]');
+  if(view&&hint){var hideHint=function(){hint.classList.add('off')};view.addEventListener('scroll',hideHint,{once:true});(root.closest('.sbody')||root).addEventListener('scroll',hideHint,{once:true})}
+}
+
+/* ---------- desktop OS ---------- */
+var os=$('#os'),screenEl=$('#screen'),winsEl=$('#wins'),dock=$('#dock'),api={};
+var scale=1,zTop=200,openWins={};
+
+function fit(){
+  var wrap=$('#lwrap');if(!wrap||getComputedStyle($('#stage')).display==='none')return;
+  var W=wrap.clientWidth,H=wrap.clientHeight;
+  var big=document.body.classList.contains('zoom');
+  // whole laptop = screen × 1.19 wide (deck overhang) and × 0.72 tall (bezel + deck); zoom drops the deck
+  var sw=big?Math.min(W/1.045,H/0.665):Math.min((W-8)/1.19,(H-12)/0.72);
+  sw=Math.floor(Math.max(240,Math.min(sw,1600)));
+  scale=sw/1280;
+  $('#laptop').style.setProperty('--sw',sw+'px');
+  os.style.transform='scale('+scale+')';
+}
+window.addEventListener('resize',fit);
+
+function buildDesktop(){
+  dock.innerHTML='';
+  ORDER.forEach(function(id,i){
+    if(id==='brief'){var s=document.createElement('span');s.className='sep';dock.appendChild(s)}
+    var b=document.createElement('button');b.type='button';b.className='dk';b.dataset.app=id;b.setAttribute('aria-label',appTitle(id));
+    b.innerHTML='<span class="ico i-'+id+'">'+SV[id]+'</span><span class="tip">'+esc(appTitle(id))+'</span><span class="run"></span>';
+    b.addEventListener('click',function(){api.open(id)});dock.appendChild(b);
+  });
+  var di=$('#dicons');di.innerHTML='';
+  [['work',FOLDER],['brief',DOC]].forEach(function(d){
+    var b=document.createElement('button');b.type='button';b.className='dicon';
+    b.innerHTML='<span class="ico i-folder">'+d[1]+'</span><span>'+esc(appTitle(d[0]))+'</span>';
+    b.addEventListener('click',function(){api.open(d[0])});di.appendChild(b);
+  });
+  setRun();
+}
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){track('hero_click',b.getAttribute('data-open'));api.open(b.getAttribute('data-open'))})});
+['#botFab','#pBotFab'].forEach(function(s){var f=$(s);f.innerHTML='<span class="ring"></span>'+ROBOT;f.addEventListener('click',function(){$('#botBubble').classList.remove('show');track('bot_open');api.open('bot')})});
+
+function vRect(el){var r=el.getBoundingClientRect(),s=screenEl.getBoundingClientRect();return {x:(r.left-s.left)/scale,y:(r.top-s.top)/scale,w:r.width/scale,h:r.height/scale}}
+function genie(win,from,closing){
+  if(RM||!win.animate||!from) return Promise.resolve();
+  var r={x:win.offsetLeft,y:win.offsetTop,w:win.offsetWidth,h:win.offsetHeight};
+  var dx=(from.x+from.w/2)-(r.x+r.w/2),dy=(from.y+from.h/2)-(r.y+r.h/2),sx=from.w/r.w,sy=from.h/r.h;
+  var k=[
+    {transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')',clipPath:'polygon(35% 0,65% 0,55% 100%,45% 100%)',opacity:.2},
+    {transform:'translate('+dx*.35+'px,'+dy*.5+'px) scale(.62,.8)',clipPath:'polygon(4% 0,96% 0,72% 100%,28% 100%)',opacity:1,offset:.5},
+    {transform:'none',clipPath:'polygon(0 0,100% 0,100% 100%,0 100%)',opacity:1}
+  ];
+  if(closing)k.reverse();
+  return win.animate(k,{duration:closing?380:520,easing:'cubic-bezier(.2,.8,.2,1)'}).finished;
+}
+function syncMax(){os.classList.toggle('has-max',[].some.call(winsEl.children,function(w){return !w.hidden&&w.classList.contains('max')}))}
+function setRun(){syncMax();dock.querySelectorAll('.dk').forEach(function(d){d.classList.toggle('on',!!(openWins[d.dataset.app]&&!openWins[d.dataset.app].hidden))})}
+function toggleMax(w){w.classList.add('anim');w.classList.toggle('max');setRun();setTimeout(function(){w.classList.remove('anim')},360)}
+function focusWin(w){w.style.zIndex=++zTop}
+function makeWin(key,title,html,box,source){
+  var u=T().ui,w=document.createElement('section');w.className='win';w.dataset.key=key;w.setAttribute('aria-label',title);
+  w.style.cssText='left:'+box.x+'px;top:'+box.y+'px;width:'+box.w+'px;height:'+box.h+'px';
+  w.innerHTML='<div class="tbar"><span class="lights"><button type="button" class="c" aria-label="'+esc(u.close)+'">×</button><button type="button" class="m" aria-label="'+esc(u.min)+'">−</button><button type="button" class="x" aria-label="'+esc(u.max)+'">+</button></span><span class="tt">'+esc(title)+'</span></div><div class="wbody">'+html+'</div>';
+  winsEl.appendChild(w);focusWin(w);
+  w.addEventListener('pointerdown',function(){focusWin(w)});
+  var bar=w.querySelector('.tbar');
+  bar.addEventListener('pointerdown',function(e){
+    if(e.target.closest('button')||w.classList.contains('max'))return;
+    var sx=e.clientX,sy=e.clientY,ox=w.offsetLeft,oy=w.offsetTop;bar.setPointerCapture(e.pointerId);
+    function mv(ev){w.style.left=Math.min(1180,Math.max(-w.offsetWidth+120,ox+(ev.clientX-sx)/scale))+'px';w.style.top=Math.min(740,Math.max(28,oy+(ev.clientY-sy)/scale))+'px'}
+    function up(){bar.removeEventListener('pointermove',mv);bar.removeEventListener('pointerup',up)}
+    bar.addEventListener('pointermove',mv);bar.addEventListener('pointerup',up);
+  });
+  bar.addEventListener('dblclick',function(e){if(!e.target.closest('button'))toggleMax(w)});
+  w.querySelector('.x').addEventListener('click',function(){toggleMax(w)});
+  w.querySelector('.c').addEventListener('click',function(){winClosed(key);var tg=dockTarget(key);genie(w,tg,true).then(function(){w.remove();delete openWins[key];setRun()})});
+  w.querySelector('.m').addEventListener('click',function(){winClosed(key);var tg=dockTarget(key);genie(w,tg,true).then(function(){w.hidden=true;setRun()})});
+  wire(w,openProject);
+  openWins[key]=w;setRun();winOpened(key);
+  genie(w,source||dockTarget(key),false);
+  return w;
+}
+function dockTarget(key){var d=key==='bot'?$('#botFab'):dock.querySelector('[data-app="'+(APPS[key]&&key!=='bot'?key:'work')+'"]');return d?vRect(d):null}
+api.open=function(id){
+  if(!APPS[id])return;
+  track('app_open',id);
+  if(phoneMode()) return openSheet(id);
+  var w=openWins[id];
+  if(w){ if(w.hidden){w.hidden=false;focusWin(w);setRun();genie(w,dockTarget(id),false)} else focusWin(w); return }
+  var a=APPS[id];makeWin(id,appTitle(id),body(id),{x:a.x,y:a.y,w:a.w,h:a.h});
+};
+function openProject(pid,fromEl){
+  var p=proj(pid);if(!p)return;
+  track('project_open',pid);
+  if(phoneMode()) return openSheet('p:'+pid);
+  var key='p:'+pid,w=openWins[key];if(w){w.hidden=false;focusWin(w);setRun();return}
+  var n=Object.keys(openWins).filter(function(k){return k.indexOf('p:')===0}).length;
+  makeWin(key,p.name+' · '+p.url,browserBody(p),{x:120+n*28,y:48+n*24,w:1040,h:640},fromEl?vRect(fromEl):null);
+}
+
+/* clock */
+function tick(){var hm=hhmm();$('#clock').textContent=T().days[new Date().getDay()]+' '+hm;$('#pclock').textContent=hm}
+setInterval(tick,15000);
+
+$('#fsBtn').addEventListener('click',function(){document.body.classList.toggle('zoom');$('#deck').hidden=document.body.classList.contains('zoom');fit()});
+
+/* ---------- language ---------- */
+var menu=null;
+function closeMenu(){if(menu){menu.remove();menu=null;['#langBtn','#pLangBtn'].forEach(function(s){$(s).setAttribute('aria-expanded','false')})}}
+function openMenu(btn,host){
+  if(menu){closeMenu();return}
+  menu=document.createElement('div');menu.className='langmenu';menu.setAttribute('role','menu');menu.setAttribute('aria-label',T().ui.lang);
+  LANGS.forEach(function(l){var b=document.createElement('button');b.type='button';b.setAttribute('role','menuitemradio');b.setAttribute('aria-checked',l===L);b.textContent=CONTENT[l].name;
+    b.addEventListener('click',function(){closeMenu();setLang(l)});menu.appendChild(b)});
+  host.appendChild(menu);btn.setAttribute('aria-expanded','true');menu.querySelector('button').focus();
+}
+$('#langBtn').addEventListener('click',function(e){e.stopPropagation();openMenu(this,os)});
+$('#pLangBtn').addEventListener('click',function(e){e.stopPropagation();openMenu(this,$('#phone'))});
+document.addEventListener('click',function(e){if(menu&&!menu.contains(e.target))closeMenu()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenu()});
+
+function applyStatic(){
+  document.documentElement.lang=L;
+  if(T().meta)document.title=T().meta.title;
+  document.querySelectorAll('[data-t]').forEach(function(el){var v=get(el.getAttribute('data-t'));if(v!=null)el.innerHTML=v});
+  document.querySelectorAll('[data-ta]').forEach(function(el){var v=get(el.getAttribute('data-ta'));if(v!=null)el.setAttribute('aria-label',v)});
+  ['#langBtn','#pLangBtn'].forEach(function(s){var b=$(s);b.textContent=T().code;b.setAttribute('aria-label',T().ui.lang+': '+T().name)});
+}
+function setLang(l){
+  if(l===L||LANGS.indexOf(l)<0)return;
+  L=l;try{localStorage.setItem('berd-lang',l)}catch(e){}
+  Object.keys(openWins).forEach(function(k){openWins[k].remove();delete openWins[k]});
+  sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
+  applyStatic();buildDesktop();buildPhone();tick();
+  track('lang_change',l);
+  // on the published site each language has its own address (/, /ru/, /en/)
+  try{var su=new URL(CFG.siteUrl);if(location.origin===su.origin&&location.pathname.indexOf(su.pathname)===0)history.replaceState(null,'',su.pathname+(l==='hy'?'':l+'/')+location.hash)}catch(e){}
+}
+
+/* ---------- boot + lid opening ---------- */
+var boot=$('#boot'),lid=$('#lid'),power=$('#power'),booted=false,timers=[];
+function later(fn,ms){timers.push(setTimeout(fn,ms))}
+function endBoot(){
+  if(booted)return;booted=true;timers.forEach(clearTimeout);
+  power.classList.remove('on');power.hidden=true;
+  boot.classList.add('gone');setTimeout(function(){boot.remove()},500);
+  os.classList.add('ready');
+  setTimeout(function(){if(!openWins.bot)$('#botBubble').classList.add('show')},1600);
+  setTimeout(function(){$('#botBubble').classList.remove('show')},9000);
+  if(!phoneMode())setTimeout(openFromHash,450);
+}
+/* deep links: #work, #brief … open an app; #p-aroma opens that project */
+function openFromHash(){
+  var h=location.hash.replace('#','');
+  if(APPS[h])return api.open(h);
+  if(h.indexOf('p-')===0)openProject(h.slice(2));
+}
+
+/* ---------- phone mode ---------- */
+function phoneMode(){return matchMedia('(max-width:760px)').matches}
+var sheet=$('#sheet');
+function appTile(id,lbl){var b=document.createElement('button');b.type='button';b.className='app';b.innerHTML='<span class="ico i-'+id+'">'+SV[id]+'</span>'+(lbl?'<span>'+esc(appTitle(id))+'</span>':'');b.setAttribute('aria-label',appTitle(id));b.addEventListener('click',function(){api.open(id)});return b}
+function buildPhone(){
+  $('#papps').innerHTML='';$('#pdock').innerHTML='';$('#prail').innerHTML='';
+  ORDER.forEach(function(id){$('#papps').appendChild(appTile(id,true))});
+  ['work','brief','chat','serv'].forEach(function(id){$('#pdock').appendChild(appTile(id,false))});
+  PROJ.forEach(function(x){
+    var p=proj(x.id),c=document.createElement('button');c.type='button';c.className='card';
+    c.innerHTML=thumb(p)+'<span><b>'+esc(p.name)+'</b><small>'+esc(p.kind)+'</small></span>';
+    c.addEventListener('click',function(){openProject(p.id)});$('#prail').appendChild(c);
+  });
+}
+$('#featAll').addEventListener('click',function(){api.open('work')});
+function openSheet(id){
+  var title,html;
+  if(id.indexOf('p:')===0){var p=proj(id.slice(2));title=p.name;html=browserBody(p)}
+  else{title=appTitle(id);html=body(id)}
+  $('#sheetTitle').textContent=title;var sb=$('#sheetBody');sb.innerHTML=html;sb.scrollTop=0;
+  wire(sb,function(pid){openProject(pid)});
+  if(sheet.dataset.cur&&sheet.classList.contains('open'))winClosed(sheet.dataset.cur);
+  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');sheet.dataset.cur=id;winOpened(id);
+}
+$('#sheetBack').addEventListener('click',function(){
+  var cur=sheet.dataset.cur||'';winClosed(cur);if(cur.indexOf('p:')===0)return openSheet('work');
+  sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
+});
+
+/* ===================== features: estimator, before/after, live chat, time of day, game, blog ===================== */
+var BLOG = /*BLOG*/[{"slug":"website-cost","date":"2026-10-20","read":5,"color":"#1B36F5","hy":{"title":"Որքա՞ն արժե կայքը. ինչից է կախված գինը","desc":"Ինչու երկու կայքի գինը կարող է տասն անգամ տարբերվել, և ինչպես հասկանալ, թե ինչի համար եք վճարում։","body":"<p>«Որքա՞ն արժե կայքը» հարցին ազնիվ պատասխանը միշտ նույնն է. կախված է նրանից, թե ինչ պետք է անի կայքը։ Երկու կայք կարող են նման տեսք ունենալ, բայց մեկը պարզապես պատմում է ընկերության մասին, իսկ մյուսը ընդունում է պատվերներ, վճարումներ և ուղարկում է տվյալները CRM։ Ահա այն գործոնները, որոնք իրականում որոշում են գինը։</p>\n<h2>1. Կայքի տեսակը</h2>\n<p><strong>Լենդինգը</strong> մեկ էջ է՝ մեկ նպատակով, օրինակ՝ հայտ հավաքել գովազդից։ <strong>Կայքը</strong> մի քանի էջ է՝ ծառայություններ, աշխատանքներ, կապ։ <strong>Առցանց խանութը</strong> ավելացնում է կատալոգ, զամբյուղ և վճարում։ <strong>Վեբ հավելվածը</strong> (CRM, անձնական էջ, ամրագրում) արդեն ծրագիր է, որի մեջ կա բարդ տրամաբանություն։</p>\n<h2>2. Ֆունկցիաները</h2>\n<p>Ամեն ֆունկցիա աշխատանք է ոչ միայն դիզայնում, այլ նաև սերվերում.</p>\n<ul><li>առցանց վճարում և հաշիվ-ապրանքագրեր,</li><li>առցանց գրանցում՝ ժամանակացույցով և հիշեցումներով,</li><li>ադմին վահանակ, որ բովանդակությունը փոխեք ինքներդ,</li><li>ինտեգրում CRM-ի, 1C-ի կամ Telegram-ի հետ,</li><li>մի քանի լեզու։</li></ul>\n<h2>3. Դիզայնը. կաղապար թե անհատական</h2>\n<p>Պատրաստի կաղապարն ավելի էժան է, բայց ձեր կայքը նման կլինի հարյուրավոր ուրիշների։ Անհատական դիզայնը ստեղծվում է ձեր բրենդի և ձեր հաճախորդների համար։ Եթե կայքը պետք է վաճառի, տարբերությունը նկատելի է արդյունքում։</p>\n<h2>4. Ինչ է լինում գործարկումից հետո</h2>\n<p>Կայքին պետք են հոսթինգ, դոմեն, SSL, պահուստային պատճեններ և թարմացումներ։ Հարցրեք կապալառուին, թե ով է դրանց համար պատասխանատու և ում անունով են գրանցված դոմենն ու սերվերը։ BERD SOFT-ում դրանք միշտ գրանցվում են հաճախորդի անունով։</p>\n<h2>Ինչպես արագ իմանալ ձեր նախագծի գինը</h2>\n<p>Բացեք մեր կայքում «Հաշվիչ» ծրագիրը. ընտրեք տեսակն ու ֆունկցիաները, և կտեսնեք մոտավոր գինն ու ժամկետը։ Ճշգրիտ գինը ֆիքսում ենք բրիֆից հետո, անվճար, և այն այլևս չի աճում։</p>"},"ru":{"title":"Сколько стоит сайт: от чего зависит цена","desc":"Почему цены на два сайта могут отличаться в десять раз и как понять, за что вы платите.","body":"<p>На вопрос «сколько стоит сайт» честный ответ всегда один: зависит от того, что сайт должен делать. Два сайта могут выглядеть похоже, но один просто рассказывает о компании, а другой принимает заказы, оплату и передаёт данные в CRM. Вот факторы, которые на самом деле определяют цену.</p>\n<h2>1. Тип сайта</h2>\n<p><strong>Лендинг</strong> — одна страница с одной целью, например собрать заявки с рекламы. <strong>Сайт</strong> — несколько страниц: услуги, работы, контакты. <strong>Интернет-магазин</strong> добавляет каталог, корзину и оплату. <strong>Веб-приложение</strong> (CRM, личный кабинет, бронирование) — это уже программа со сложной логикой.</p>\n<h2>2. Функции</h2>\n<p>Каждая функция — это работа не только в дизайне, но и на сервере:</p>\n<ul><li>онлайн-оплата и счета,</li><li>онлайн-запись с расписанием и напоминаниями,</li><li>админ-панель, чтобы менять контент самостоятельно,</li><li>интеграция с CRM, 1С или Telegram,</li><li>несколько языков.</li></ul>\n<h2>3. Дизайн: шаблон или индивидуальный</h2>\n<p>Готовый шаблон дешевле, но ваш сайт будет похож на сотни других. Индивидуальный дизайн создаётся под ваш бренд и ваших клиентов. Если сайт должен продавать, разница заметна в результате.</p>\n<h2>4. Что происходит после запуска</h2>\n<p>Сайту нужны хостинг, домен, SSL, резервные копии и обновления. Спросите подрядчика, кто за это отвечает и на чьё имя оформлены домен и сервер. В BERD SOFT они всегда оформляются на клиента.</p>\n<h2>Как быстро узнать цену вашего проекта</h2>\n<p>Откройте на нашем сайте программу «Калькулятор»: выберите тип и функции, и вы увидите примерную цену и срок. Точную цену фиксируем после брифа, бесплатно, и она больше не растёт.</p>"},"en":{"title":"How much does a website cost? What drives the price","desc":"Why two websites can differ in price tenfold, and how to understand what you are paying for.","body":"<p>The honest answer to “how much does a website cost” is always the same: it depends on what the site has to do. Two sites can look alike, yet one simply describes a company while the other takes orders and payments and sends data to a CRM. These are the factors that actually set the price.</p>\n<h2>1. The type of site</h2>\n<p>A <strong>landing page</strong> is one page with one goal, such as collecting leads from ads. A <strong>website</strong> has several pages: services, work, contact. An <strong>online store</strong> adds a catalog, cart and checkout. A <strong>web app</strong> (CRM, client portal, booking) is already software with real business logic.</p>\n<h2>2. Features</h2>\n<p>Every feature is work in the design and on the server:</p>\n<ul><li>online payments and invoices,</li><li>online booking with schedules and reminders,</li><li>an admin panel so you can edit content yourself,</li><li>integration with a CRM, 1C or Telegram,</li><li>several languages.</li></ul>\n<h2>3. Design: template or custom</h2>\n<p>A ready-made template is cheaper, but your site will look like hundreds of others. A custom design is made for your brand and your customers. When a site has to sell, the difference shows in the results.</p>\n<h2>4. What happens after launch</h2>\n<p>A site needs hosting, a domain, SSL, backups and updates. Ask your contractor who is responsible for these and whose name the domain and server are registered in. At BERD SOFT they are always registered to the client.</p>\n<h2>How to get a quick estimate</h2>\n<p>Open the “Estimator” app on our site: pick the type and features to see an approximate price and timeline. We fix the exact price after the brief, for free, and it does not grow after that.</p>"}},{"slug":"telegram-bot-for-business","date":"2026-10-20","read":4,"color":"#E01060","hy":{"title":"Telegram-բոտ բիզնեսի համար. 6 գործնական կիրառություն","desc":"Որտեղ է բոտը փոխարինում կայքին կամ օպերատորին, և երբ այն իսկապես օգնում է վաճառքին։","body":"<p>Հայաստանում և ԱՊՀ-ում Telegram-ը օգտագործում են ամեն օր, ուստի բոտը հաճախ ամենակարճ ճանապարհն է հաճախորդից մինչև պատվեր։ Հաճախորդը ոչինչ չի տեղադրում և չի գրանցվում, պարզապես սեղմում է «Start»։ Ահա վեց իրավիճակ, որտեղ բոտը իրականում աշխատում է։</p>\n<h2>1. Նախնական պատվեր</h2>\n<p>Սրճարան, հացատուն, ռեստորան. հաճախորդը պատվիրում է մինչև գալը, իսկ դուք տեսնում եք պատվերը նախօրոք։ Ավելի քիչ հերթ, ավելի շատ պատվեր։</p>\n<h2>2. Առցանց գրանցում</h2>\n<p>Սրահ, կլինիկա, մարզասրահ. բոտը ցույց է տալիս ազատ ժամերը, գրանցում է և հիշեցնում այցի մասին։ Ադմինիստրատորը այլևս ժամեր չի ծախսում նամակագրության վրա։</p>\n<h2>3. Առաքում առանց միջնորդների</h2>\n<p>Սեփական բոտը՝ մենյուով, վճարումով և առաքման կարգավիճակով։ Պատվերի գումարը մնում է ձեզ, իսկ հաճախորդների բազան՝ ձեր ձեռքում։</p>\n<h2>4. Հայտեր կայքից</h2>\n<p>Կայքի յուրաքանչյուր հայտ միանգամից գալիս է ձեր Telegram-ին, և դուք պատասխանում եք րոպեների ընթացքում, ոչ թե հաջորդ օրը։ Հենց այսպես է աշխատում BERD SOFT-ի կայքի բրիֆը։</p>\n<h2>5. Ներքին գործընթացներ</h2>\n<p>Աշխատակիցների հաշվետվություններ, պահեստի մնացորդներ, ծանուցումներ նոր պատվերների մասին։ Բոտը կարող է լինել թիմի հարմար վահանակը։</p>\n<h2>6. Հաճախորդների աջակցություն</h2>\n<p>Հաճախ տրվող հարցերի պատասխաններ օրվա ցանկացած ժամի, իսկ բարդ հարցերը փոխանցվում են մարդուն։</p>\n<h2>Ինչից սկսել</h2>\n<p>Ընտրեք մեկ գործընթաց, որն այսօր ամենաշատ ժամանակն է խլում, և սկսեք դրանից։ Լավ բոտը պարզ է. երեք-չորս կոճակ և հստակ արդյունք։ Եթե ուզում եք քննարկել ձեր գաղափարը, լրացրեք բրիֆը մեր կայքում։</p>"},"ru":{"title":"Telegram-бот для бизнеса: 6 практических применений","desc":"Где бот заменяет сайт или оператора и когда он действительно помогает продажам.","body":"<p>В Армении и СНГ Telegram открывают каждый день, поэтому бот часто — самый короткий путь от клиента до заказа. Клиенту не нужно ничего устанавливать и регистрироваться: он просто нажимает «Start». Вот шесть ситуаций, где бот действительно работает.</p>\n<h2>1. Предзаказ</h2>\n<p>Кофейня, пекарня, ресторан: клиент заказывает до прихода, а вы видите заказ заранее. Меньше очередей, больше заказов.</p>\n<h2>2. Онлайн-запись</h2>\n<p>Салон, клиника, спортзал: бот показывает свободное время, записывает и напоминает о визите. Администратор больше не тратит часы на переписку.</p>\n<h2>3. Доставка без посредников</h2>\n<p>Собственный бот с меню, оплатой и статусом доставки. Сумма заказа остаётся вам, а база клиентов — в ваших руках.</p>\n<h2>4. Заявки с сайта</h2>\n<p>Каждая заявка с сайта сразу приходит в ваш Telegram, и вы отвечаете за минуты, а не на следующий день. Именно так работает бриф на сайте BERD SOFT.</p>\n<h2>5. Внутренние процессы</h2>\n<p>Отчёты сотрудников, остатки на складе, уведомления о новых заказах. Бот может стать удобной панелью для команды.</p>\n<h2>6. Поддержка клиентов</h2>\n<p>Ответы на частые вопросы в любое время суток, а сложные вопросы передаются человеку.</p>\n<h2>С чего начать</h2>\n<p>Выберите один процесс, который сегодня отнимает больше всего времени, и начните с него. Хороший бот прост: три-четыре кнопки и понятный результат. Если хотите обсудить идею, заполните бриф на нашем сайте.</p>"},"en":{"title":"Telegram bots for business: 6 practical uses","desc":"Where a bot replaces a website or an operator, and when it genuinely helps sales.","body":"<p>In Armenia and the CIS people open Telegram every day, so a bot is often the shortest path from a customer to an order. There is nothing to install and no sign-up: the customer just taps “Start”. Here are six situations where a bot really works.</p>\n<h2>1. Pre-orders</h2>\n<p>Cafés, bakeries, restaurants: customers order before they arrive and you see the order in advance. Shorter queues, more orders.</p>\n<h2>2. Online booking</h2>\n<p>Salons, clinics, gyms: the bot shows free slots, books the visit and sends a reminder. Staff stop spending hours in chat threads.</p>\n<h2>3. Delivery without middlemen</h2>\n<p>Your own bot with a menu, payments and delivery status. You keep the full order value and the customer base stays yours.</p>\n<h2>4. Leads from your website</h2>\n<p>Every request from your site lands in your Telegram instantly, so you reply within minutes, not the next day. That is exactly how the brief on the BERD SOFT site works.</p>\n<h2>5. Internal processes</h2>\n<p>Staff reports, stock levels, alerts about new orders. A bot can become a handy dashboard for your team.</p>\n<h2>6. Customer support</h2>\n<p>Answers to common questions at any hour, with complex questions handed over to a person.</p>\n<h2>Where to start</h2>\n<p>Pick the one process that eats the most time today and start there. A good bot is simple: three or four buttons and a clear outcome. If you want to discuss your idea, fill in the brief on our site.</p>"}},{"slug":"instagram-vs-website","date":"2026-10-20","read":4,"color":"#FFB800","hy":{"title":"Instagram-ը կայքի փոխարեն չէ. ինչու է բիզնեսին պետք երկուսը","desc":"Instagram-ը բերում է ուշադրություն, կայքը՝ վստահություն և պատվերներ։ Ինչպես են դրանք աշխատում միասին։","body":"<p>Շատ բիզնեսներ Հայաստանում սկսում են Instagram-ից, և դա ճիշտ է։ Բայց որոշ պահի հաճախորդները սկսում են կորչել նամակների մեջ, իսկ նոր հաճախորդները չեն գտնում ձեզ Google-ում։ Ահա թե ինչու Instagram-ն ու կայքը իրար չեն փոխարինում, այլ լրացնում են։</p>\n<h2>Instagram-ը ուշադրության համար է</h2>\n<p>Այն լավ է ցույց տալու, ոգեշնչելու և հիշեցնելու համար։ Բայց ալգորիթմը որոշում է, թե ով կտեսնի ձեր գրառումը, իսկ էջը կարող է արգելափակվել ցանկացած պահի։ Դա վարձակալված տարածք է։</p>\n<h2>Կայքը ձեր սեփականությունն է</h2>\n<p>Կայքը աշխատում է 24/7 և ենթակա չէ ալգորիթմներին։ Այնտեղ հաճախորդը գտնում է գներ, պայմաններ և պատվիրում է առանց սպասելու, որ ինչ-որ մեկը պատասխանի Direct-ում։</p>\n<h2>Google-ը որոնում է կայքեր</h2>\n<p>Երբ մարդը գրում է «ատամնաբույժ Երևան» կամ «կայքի պատրաստում», Google-ը ցույց է տալիս կայքեր, ոչ թե Instagram-ի գրառումներ։ Առանց կայքի դուք բացակայում եք այնտեղ, որտեղ ձեզ արդեն փնտրում են։</p>\n<h2>Վստահություն</h2>\n<p>Գործընկերները և խոշոր հաճախորդները նախքան պայմանագիր կնքելը ստուգում են կայքը։ Լավ կայքը ցույց է տալիս, որ բիզնեսը լուրջ է և երկարաժամկետ։</p>\n<h2>Ինչպես միացնել երկուսը</h2>\n<ul><li>Instagram-ի bio-ում դրեք կայքի հղումը,</li><li>կայքում ցույց տվեք ձեր աշխատանքները և ավելացրեք հայտի ձև,</li><li>հայտերը ուղարկեք Telegram, որ արագ պատասխանեք,</li><li>չափեք, թե Instagram-ից քանի մարդ է գալիս և ինչ է անում կայքում։</li></ul>\n<p>Այսպես Instagram-ը բերում է մարդկանց, իսկ կայքը նրանց դարձնում է հաճախորդներ։</p>"},"ru":{"title":"Instagram не заменяет сайт: зачем бизнесу и то, и другое","desc":"Instagram приносит внимание, сайт — доверие и заказы. Как они работают вместе.","body":"<p>Многие бизнесы в Армении начинают с Instagram, и это правильно. Но в какой-то момент клиенты начинают теряться в переписке, а новые не находят вас в Google. Вот почему Instagram и сайт не заменяют, а дополняют друг друга.</p>\n<h2>Instagram — для внимания</h2>\n<p>Он хорош, чтобы показывать, вдохновлять и напоминать о себе. Но кто увидит ваш пост, решает алгоритм, а аккаунт могут заблокировать в любой момент. Это арендованная площадка.</p>\n<h2>Сайт — ваша собственность</h2>\n<p>Сайт работает 24/7 и не зависит от алгоритмов. Там клиент находит цены и условия и оформляет заказ, не дожидаясь ответа в Direct.</p>\n<h2>Google ищет сайты</h2>\n<p>Когда человек пишет «стоматолог Ереван» или «разработка сайта», Google показывает сайты, а не посты в Instagram. Без сайта вас нет там, где вас уже ищут.</p>\n<h2>Доверие</h2>\n<p>Партнёры и крупные клиенты перед договором проверяют сайт. Хороший сайт показывает, что бизнес серьёзный и надолго.</p>\n<h2>Как соединить одно с другим</h2>\n<ul><li>поставьте ссылку на сайт в bio Instagram,</li><li>покажите на сайте свои работы и добавьте форму заявки,</li><li>отправляйте заявки в Telegram, чтобы быстро отвечать,</li><li>измеряйте, сколько людей приходит из Instagram и что они делают на сайте.</li></ul>\n<p>Так Instagram приводит людей, а сайт превращает их в клиентов.</p>"},"en":{"title":"Instagram is not a website: why a business needs both","desc":"Instagram brings attention, a website brings trust and orders. How they work together.","body":"<p>Many businesses in Armenia start on Instagram, and that is the right call. But at some point customers get lost in DMs and new ones cannot find you on Google. Here is why Instagram and a website complement each other rather than compete.</p>\n<h2>Instagram is for attention</h2>\n<p>It is great for showing, inspiring and staying top of mind. But an algorithm decides who sees your post, and an account can be blocked at any time. It is rented space.</p>\n<h2>Your website is yours</h2>\n<p>A website works 24/7 and does not depend on algorithms. Customers find prices and terms there and order without waiting for a DM reply.</p>\n<h2>Google searches websites</h2>\n<p>When someone types “dentist Yerevan” or “website development”, Google shows websites, not Instagram posts. Without a site you are missing exactly where people already look for you.</p>\n<h2>Trust</h2>\n<p>Partners and larger clients check your website before signing. A good site shows that the business is serious and here to stay.</p>\n<h2>How to connect the two</h2>\n<ul><li>put your website link in your Instagram bio,</li><li>show your work on the site and add a request form,</li><li>send requests to Telegram so you reply fast,</li><li>measure how many people come from Instagram and what they do on the site.</li></ul>\n<p>That way Instagram brings people in and your website turns them into customers.</p>"}}]/*/BLOG*/;
+var PR = Object.assign({
+  currency:'$',
+  types:{landing:[119,7],site:[239,14],shop:[419,21],webapp:[599,28],mobile:[959,35],bot:[179,7]}, // [from price, days]
+  pagesIncluded:{landing:1,site:5,shop:5,webapp:5,mobile:5,bot:0},
+  perPage:[30,1],
+  feats:{pay:[96,3],admin:[144,4],booking:[120,4],account:[180,5],crm:[180,5],seo:[72,2],tgbot:[179,5]},
+  perLang:[72,2],
+  spread:1.35
+}, CFG.pricing||{});
+
+APPS.calc={w:1040,h:650,x:120,y:44};
+APPS.blog={w:860,h:610,x:210,y:56};
+APPS.game={w:420,h:600,x:430,y:40};
+ORDER.splice(ORDER.indexOf('brief')+1,0,'calc');
+ORDER.splice(ORDER.indexOf('about')+1,0,'blog');
+SV.calc='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8"/><circle cx="9" cy="12" r=".6" fill="#fff"/><circle cx="12" cy="12" r=".6" fill="#fff"/><circle cx="15" cy="12" r=".6" fill="#fff"/><circle cx="9" cy="16" r=".6" fill="#fff"/><circle cx="12" cy="16" r=".6" fill="#fff"/><path d="M15 15v2" stroke="#CCFF00"/></svg>';
+SV.blog='<svg viewBox="0 0 24 24" fill="none" stroke="#1B36F5" stroke-width="2" stroke-linecap="round"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 15.5h8M8 19h5"/></svg>';
+SV.game='<svg viewBox="0 0 24 24"><rect x="3" y="3" width="8.5" height="8.5" fill="#1B36F5"/><rect x="12.5" y="3" width="8.5" height="8.5" fill="#CCFF00"/><rect x="3" y="12.5" width="8.5" height="8.5" fill="#E01060"/><rect x="12.5" y="12.5" width="8.5" height="8.5" fill="#FFB800"/></svg>';
+
+var _body=body;
+body=function(id){
+  if(id==='calc')return '<div class="calc" data-calc></div>';
+  if(id==='blog')return '<div class="blog" data-blog></div>';
+  if(id==='game')return '<div class="game" data-game tabindex="-1"></div>';
+  return _body(id);
+};
+var _wire=wire;
+wire=function(root,op){
+  _wire(root,op);
+  var x;
+  if((x=root.querySelector('[data-calc]')))initCalc(x);
+  if((x=root.querySelector('[data-blog]')))initBlog(x);
+  if((x=root.querySelector('[data-game]')))initGame(x);
+  if((x=root.querySelector('[data-batoggle]')))initBA(root);
+};
+
+/* ---------- estimator ---------- */
+function money(n){return PR.currency+Math.round(n).toLocaleString('en-US')}
+function initCalc(root){
+  var C=T().calc,st={type:'site',pages:5,feats:{},langs:['hy']},prev={},sent=null;
+  function estimate(){
+    var t=PR.types[st.type],price=t[0],days=t[1];
+    var inc=PR.pagesIncluded[st.type]||0,extra=st.type==='bot'||st.type==='landing'?0:Math.max(0,st.pages-inc);
+    price+=extra*PR.perPage[0];days+=extra*PR.perPage[1];
+    Object.keys(st.feats).forEach(function(k){if(st.feats[k]&&PR.feats[k]){price+=PR.feats[k][0];days+=PR.feats[k][1]}});
+    price+=(st.langs.length-1)*PR.perLang[0];days+=(st.langs.length-1)*PR.perLang[1];
+    var hi=Math.ceil(price*PR.spread/10)*10,dHi=Math.ceil(days*1.3);
+    var time=dHi<=10?days+'–'+dHi+' '+C.days:Math.max(1,Math.round(days/7))+'–'+Math.ceil(dHi/7)+' '+C.weeks;
+    return {lo:price,hi:hi,time:time};
+  }
+  function chip(group,key,label,on){return '<button type="button" class="cc'+(on?' on':'')+'" data-g="'+group+'" data-k="'+key+'" aria-pressed="'+!!on+'">'+esc(label)+'</button>'}
+  function controls(){
+    var h='<div class="cl"><h3>'+esc(C.title)+'</h3><p class="sub">'+esc(C.sub)+'</p>';
+    h+='<h4>'+esc(C.type)+'</h4><div class="cg">'+Object.keys(C.types).map(function(k){return chip('type',k,C.types[k],st.type===k)}).join('')+'</div>';
+    var showPages=!(st.type==='bot'||st.type==='landing');
+    h+='<div class="pg"'+(showPages?'':' hidden')+'><h4>'+esc(C.pages)+' <b data-pv>'+st.pages+'</b></h4><input type="range" id="calc-pages" min="1" max="20" value="'+st.pages+'" aria-label="'+esc(C.pages)+'"></div>';
+    h+='<h4>'+esc(C.features)+'</h4><div class="cg">'+Object.keys(C.feats).map(function(k){return chip('feat',k,C.feats[k],st.feats[k])}).join('')+'</div>';
+    h+='<h4>'+esc(C.langs)+'</h4><div class="cg">'+[['hy','Հայերեն'],['ru','Русский'],['en','English']].map(function(l){return chip('lang',l[0],l[1],st.langs.indexOf(l[0])>=0)}).join('')+'</div></div>';
+    return h;
+  }
+  function mockHTML(){
+    var M=C.mock,f=st.feats,keys=[],h='';
+    function blk(k,html){keys.push(k);return '<div class="mb'+(prev[k]?'':' pop')+'" data-mk="'+k+'">'+html+'</div>'}
+    var navItems=[M.home,M.about,M.catalog,M.contact].slice(0,Math.min(4,Math.max(1,st.type==='landing'?1:st.pages)));
+    if(st.type==='bot'){
+      h='<div class="dv tgv"><div class="tgh"><i></i><b>Your Bot</b></div><div class="tgb">'+
+        blk('m1','<div class="tm">👋 '+esc(M.home)+'</div>')+
+        blk('kb','<div class="tk"><span>'+esc(M.catalog)+'</span><span>'+esc(M.contact)+'</span>'+(f.booking?'<span>'+esc(M.book)+'</span>':'')+(f.pay?'<span>💳 '+esc(M.pay)+'</span>':'')+'</div>')+
+        (f.account?blk('acc','<div class="tm">👤 '+esc(M.login)+'</div>'):'')+(f.crm?blk('crm','<div class="tm me">CRM ✓</div>'):'')+
+        (st.langs.length>1?blk('lang','<div class="tm">🌐 '+st.langs.join(' · ').toUpperCase()+'</div>'):'')+
+        (f.admin?blk('adm','<div class="tm me">⚙︎ '+esc(M.admin)+'</div>'):'')+'</div></div>';
+    }else if(st.type==='mobile'){
+      h='<div class="dv phv"><div class="ph-in"><div class="isl"></div>'+
+        blk('hero','<div class="mh"><b></b><i></i><i style="width:60%"></i><u></u></div>')+
+        (f.booking?blk('book','<div class="cal">'+Array(14).join('<i></i>')+'<i class="on"></i></div>'):'')+
+        (f.pay?blk('pay','<div class="payc">•••• 4242 <u></u></div>'):'')+
+        (f.account?blk('acc','<div class="accr"><span></span><b></b></div>'):'')+
+        blk('tab','<div class="tabbar">'+Array(Math.min(5,Math.max(2,st.pages))+1).join('<i></i>')+'</div>')+'</div></div>';
+    }else{
+      var dash=st.type==='webapp';
+      h='<div class="dv brv"><div class="bt"><i></i><i></i><i></i><span>your-business.am</span></div><div class="bpage">'+
+        blk('nav','<div class="mnav"><b>LOGO</b>'+navItems.map(function(n){return '<span>'+esc(n)+'</span>'}).join('')+(st.pages>4&&st.type!=='landing'?'<span>+'+(st.pages-4)+'</span>':'')+
+          (st.langs.length>1?'<em>'+st.langs.join(' ').toUpperCase()+'</em>':'')+(f.account?'<span class="lg">'+esc(M.login)+'</span>':'')+((st.type==='shop'||f.pay)?'<span class="ct">🛒</span>':'')+'</div>')+
+        (dash?blk('dash','<div class="dsh"><aside><i></i><i></i><i></i><i></i></aside><div><div class="kp"><i></i><i></i><i></i></div><div class="tb">'+Array(6).join('<i></i>')+'</div></div></div>')
+             :blk('hero','<div class="mh"><b></b><i></i><i style="width:55%"></i><u></u></div>'))+
+        (st.type==='shop'?blk('cat','<div class="grid4">'+Array(9).join('<i></i>')+'</div>'):'')+
+        (f.booking?blk('book','<div class="cal">'+Array(14).join('<i></i>')+'<i class="on"></i></div>'):'')+
+        (f.pay?blk('pay','<div class="payc">•••• 4242 <u>'+esc(M.pay)+'</u></div>'):'')+
+        (f.seo?blk('seo','<div class="serp"><small>google.com</small><b>Your Business — '+esc(M.home)+'</b><i></i></div>'):'')+
+        (st.type!=='landing'&&!dash?blk('pages','<div class="pgs">'+Array(Math.min(st.pages,8)+1).join('<i></i>')+'</div>'):'')+
+        '</div>'+
+        (f.admin?blk('adm','<div class="admp"><b>'+esc(M.admin)+'</b><i></i><i></i><i></i></div>'):'')+
+        (f.tgbot?blk('tg','<div class="tgbub">✈︎ Bot</div>'):'')+
+        (f.crm?blk('crm','<div class="crmc">CRM ⇄</div>'):'')+'</div>';
+    }
+    var seen={};keys.forEach(function(k){seen[k]=1});prev=seen;
+    return h;
+  }
+  function render(){
+    var e=estimate();
+    root.innerHTML=controls()+'<div class="cr"><div class="stagebox">'+mockHTML()+'</div></div>'+
+      '<div class="cb"><div class="est"><span>'+esc(C.price)+'</span><b data-price>'+money(e.lo)+' – '+money(e.hi)+'</b></div><div class="est"><span>'+esc(C.time)+'</span><b>'+esc(e.time)+'</b></div>'+
+      '<form class="cf" data-cf novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><input id="calc-name" placeholder="'+esc(C.name)+'" aria-label="'+esc(C.name)+'" autocomplete="name"><input id="calc-contact" placeholder="'+esc(C.contact)+'" aria-label="'+esc(C.contact)+'" autocomplete="tel"><button type="submit">'+esc(C.send)+'</button></form>'+
+      '<p class="cn" data-cn>'+esc(sent==='sent'?C.sent:C.note)+'</p></div>';
+    root.querySelectorAll('[data-g]').forEach(function(b){b.addEventListener('click',function(){
+      var g=b.getAttribute('data-g'),k=b.getAttribute('data-k');
+      if(g==='type'){st.type=k;if(k==='landing')st.pages=1;else if(st.pages<3)st.pages=5}
+      else if(g==='feat')st.feats[k]=!st.feats[k];
+      else{var i=st.langs.indexOf(k);if(i>=0){if(st.langs.length>1)st.langs.splice(i,1)}else st.langs.push(k)}
+      track('calc_change',g+':'+k);keep(render);
+    })});
+    var r=root.querySelector('#calc-pages');
+    if(r)r.addEventListener('input',function(){st.pages=+r.value;root.querySelector('[data-pv]').textContent=st.pages;var ee=estimate();root.querySelector('[data-price]').textContent=money(ee.lo)+' – '+money(ee.hi);
+      root.querySelector('.stagebox').innerHTML=mockHTML();root.querySelectorAll('.cb .est b')[1].textContent=ee.time;fit()});
+    requestAnimationFrame(fit);
+    root.querySelector('[data-cf]').addEventListener('submit',function(ev){
+      ev.preventDefault();var f=ev.target,name=f.querySelector('#calc-name').value.trim(),ct=f.querySelector('#calc-contact').value.trim(),cn=root.querySelector('[data-cn]');
+      if(f.querySelector('.hp').value)return;
+      if(!ct){cn.textContent=C.needContact;cn.classList.add('bad');f.querySelector('#calc-contact').focus();return}
+      var ee=estimate(),ans={};
+      ans[C.type]=C.types[st.type];
+      if(!(st.type==='bot'||st.type==='landing'))ans[C.pages]=st.pages;
+      ans[C.features]=Object.keys(st.feats).filter(function(k){return st.feats[k]}).map(function(k){return C.feats[k]}).join(', ')||'—';
+      ans[C.langs]=st.langs.join(', ').toUpperCase();
+      ans[C.price]=money(ee.lo)+' – '+money(ee.hi);ans[C.time]=ee.time;
+      var btn=f.querySelector('button');btn.disabled=true;
+      sendLead({type:'calc',answers:ans,name:name,contact:ct}).then(function(s){
+        sent=s;btn.disabled=false;cn.classList.toggle('bad',s!=='sent');
+        if(s==='sent'){cn.textContent=C.sent;track('calc_submit',st.type)}else{cn.innerHTML=esc(C.failed)+' '+contactsHTML()}
+      });
+    });
+  }
+  /* the mockup scales down to always fit the stage */
+  function fit(){var cr=root.querySelector('.cr'),bx=root.querySelector('.stagebox');if(!cr||!bx)return;bx.style.transform='none';var sc=Math.min(1,(cr.clientHeight-36)/bx.scrollHeight,(cr.clientWidth-36)/bx.scrollWidth);bx.style.transform='scale('+Math.max(.4,sc)+')'}
+  /* re-render without losing typed name/contact */
+  function keep(fn){var n=root.querySelector('#calc-name'),c=root.querySelector('#calc-contact'),nv=n&&n.value,cv=c&&c.value;fn();if(nv)root.querySelector('#calc-name').value=nv;if(cv)root.querySelector('#calc-contact').value=cv}
+  render();
+}
+
+/* ---------- before / after ---------- */
+var BA={dent:1,nairi:1};
+var _bb=browserBody;
+browserBody=function(p){
+  var h=_bb(p);if(!BA[p.id])return h;
+  var B=T().ba;
+  h=h.replace('<span class="demo">','<button type="button" class="batab" data-batoggle aria-pressed="false">'+esc(B.tab)+'</button><span class="demo">');
+  var old='<div class="old"><div class="ot">'+esc(p.name.toUpperCase())+' — Official Web Site</div><marquee>*** Welcome to our website!!! Call us today ***</marquee>'+
+    '<table><tr><td>Home</td><td>About us</td><td>Services</td><td>Contacts</td></tr></table><div class="ob"><div class="oimg">IMAGE</div><p>We are the best company in the city. We provide high quality services for our clients since 2009. For more information please call or visit our office.</p></div>'+
+    '<p class="oc">Visitors: 000417 · Best viewed in Internet Explorer 6.0</p></div>';
+  var ba='<div class="ba" data-ba hidden><div class="bal">'+old+'</div><div class="bar2" data-baafter>'+mock(p)+'</div><span class="lb l">'+esc(B.before)+'</span><span class="lb r">'+esc(B.after)+'</span><span class="handle" data-bh></span>'+
+    '<input type="range" min="0" max="100" value="50" class="bars" data-bar aria-label="'+esc(B.hint)+'"><span class="bahint">'+esc(B.hint)+' · '+esc(B.sample)+'</span></div>';
+  return h.replace('<div class="view" data-view>','<div class="view" data-view>'+ba);
+};
+function initBA(root){
+  var t=root.querySelector('[data-batoggle]'),ba=root.querySelector('[data-ba]'),r=ba.querySelector('[data-bar]'),af=ba.querySelector('[data-baafter]'),hd=ba.querySelector('[data-bh]');
+  function set(v){af.style.clipPath='inset(0 0 0 '+v+'%)';hd.style.left=v+'%'}
+  set(50);
+  r.addEventListener('input',function(){set(r.value)});
+  t.addEventListener('click',function(){var on=ba.hidden;ba.hidden=!on;t.setAttribute('aria-pressed',on);if(on){track('before_after');r.value=50;set(50);
+    if(!RM&&af.animate){var v=50;var k=[50,18,82,50];k.forEach(function(x,i){setTimeout(function(){r.value=x;set(x)},i*420)})}}});
+}
+
+/* ---------- live chat (replies from Telegram appear here) ---------- */
+function getSid(){try{var s=localStorage.getItem('berd-chat-sid');if(!s){s=Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);localStorage.setItem('berd-chat-sid',s)}return s}catch(e){return window.__sid||(window.__sid=Math.random().toString(36).slice(2,12))}}
+function loadHist(){try{return JSON.parse(localStorage.getItem('berd-chat-log')||'[]')}catch(e){return []}}
+function saveHist(h){try{localStorage.setItem('berd-chat-log',JSON.stringify(h.slice(-60)))}catch(e){}}
+function liveChat(root,form){
+  var t=T(),Lv=t.live,log=root.querySelector('[data-log]'),ep=(CFG.leadEndpoint||'').replace(/\/$/,''),sid=getSid(),hist=loadHist(),timer=null,last=0,dead=false;
+  var cin=root.querySelector('#c-contact');cin.title=Lv.optional;
+  log.insertAdjacentHTML('beforeend','<div class="msg in">'+esc(Lv.intro)+'</div>');
+  function add(who,text,ts){
+    var m=document.createElement('div');m.className='msg '+(who==='me'?'out':'in')+(who==='team'?' team':'');
+    if(who==='team'){var b=document.createElement('b');b.textContent=Lv.team;m.appendChild(b)}
+    m.appendChild(document.createTextNode(text));var s=document.createElement('small');var d=new Date(ts||Date.now());s.textContent=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);m.appendChild(s);
+    log.appendChild(m);log.scrollTop=log.scrollHeight;
+  }
+  hist.forEach(function(m){add(m.w,m.x,m.t);if(m.w==='team')last=Math.max(last,m.t)});
+  function poll(){
+    if(dead||!ep)return;
+    if(!root.isConnected){clearInterval(timer);return}
+    if(document.hidden)return;
+    fetch(ep+'/chat?s='+encodeURIComponent(sid)+'&after='+last).then(function(r){if(r.status===404||r.status===501){dead=true;clearInterval(timer);return null}return r.ok?r.json():null}).then(function(j){
+      if(!j||!j.replies)return;
+      j.replies.forEach(function(rp){if(rp.t>last){last=rp.t;add('team',rp.text,rp.t);hist.push({w:'team',x:rp.text,t:rp.t});track('chat_reply_seen')}});
+      saveHist(hist);
+    }).catch(function(){});
+  }
+  function startPoll(){if(!timer&&ep){poll();timer=setInterval(poll,4000)}}
+  if(hist.length)startPoll();
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var m=root.querySelector('#c-msg'),n=root.querySelector('#c-name'),txt=(m.value||'').trim(),name=(n.value||'').trim(),ct=(cin.value||'').trim();
+    if(!txt){m.focus();m.placeholder=t.chat.needMsg;return}
+    if(form.querySelector('.hp').value)return;
+    var first=!hist.some(function(h){return h.w==='me'});
+    add('me',txt);hist.push({w:'me',x:txt,t:Date.now()});saveHist(hist);m.value='';
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;
+    sendLead({type:'chat',session:sid,name:name,contact:ct,message:txt}).then(function(st){
+      btn.disabled=false;
+      if(st==='sent'){if(first)add('team',Lv.sent);startPoll();track('chat_message')}
+      else add('team',(st==='off'?t.chat.off:t.chat.err).replace('{n}',name?', '+name:''));
+    });
+  });
+}
+
+/* ---------- time of day ---------- */
+function todNow(){var h=new Date().getHours();return h>=5&&h<12?'morning':h>=12&&h<18?'day':h>=18&&h<22?'evening':'night'}
+function applyTod(){
+  var d=todNow(),g=T().tod&&T().tod[d];
+  os.setAttribute('data-tod',d);$('#phone').setAttribute('data-tod',d);
+  var el=$('#todGreet');if(!el){el=document.createElement('p');el.id='todGreet';el.className='greet';var h=$('.hero h1');h.parentNode.insertBefore(el,h)}
+  el.textContent=g||'';
+  var pe=$('#pGreet');if(!pe){pe=document.createElement('p');pe.id='pGreet';pe.className='greet';var w=$('.phone .wid h1');w.parentNode.insertBefore(pe,w)}
+  pe.textContent=g||'';
+  if(!$('.stars')){var s=document.createElement('div');s.className='stars';s.innerHTML=Array(40).join('<i></i>');$('#wall').appendChild(s);
+    s.querySelectorAll('i').forEach(function(i){i.style.left=(Math.random()*100)+'%';i.style.top=(Math.random()*55)+'%';i.style.animationDelay=(Math.random()*3)+'s'})}
+}
+var _as=applyStatic;applyStatic=function(){_as();applyTod()};
+setInterval(applyTod,60000);
+
+/* ---------- hidden game: BERD Blocks ---------- */
+var gameFound=false;
+function openGame(src){
+  if(!gameFound){gameFound=true;track('easter_egg',src);toast(T().game.found)}
+  api.open('game');
+}
+function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=msg;(phoneMode()?document.body:os).appendChild(t);setTimeout(function(){t.classList.add('out')},2600);setTimeout(function(){t.remove()},3200)}
+(function triggers(){
+  var clicks=[],typed='';
+  function tap(){var now=Date.now();clicks=clicks.filter(function(c){return now-c<2500});clicks.push(now);if(clicks.length>=5){clicks=[];openGame('logo')}}
+  $('.menubar .mk').addEventListener('click',tap);
+  $('.phone .wid .mk').addEventListener('click',tap);
+  document.addEventListener('keydown',function(e){
+    var tg=e.target;if(tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'))return;
+    typed=(typed+(e.key||'')).slice(-4).toLowerCase();if(typed==='berd')openGame('typed');
+  });
+})();
+function initGame(root){
+  var G=T().game,W=10,H=20,S=21,COL=['#1B36F5','#CCFF00','#E01060','#FFB800','#ffffff'];
+  var SH=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]],[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]];
+  var best=0;try{best=+localStorage.getItem('berd-blocks-best')||0}catch(e){}
+  root.innerHTML='<div class="gtop"><div><small>'+esc(G.score)+'</small><b data-s>0</b></div><div><small>'+esc(G.lines)+'</small><b data-l>0</b></div><div><small>'+esc(G.best)+'</small><b data-b>'+best+'</b></div></div>'+
+    '<div class="gwrap"><canvas width="'+W*S+'" height="'+H*S+'" data-cv></canvas><div class="gov" data-ov><b>'+esc(G.title)+'</b><button type="button" data-go>'+esc(G.start)+'</button><small>'+esc(G.help)+'</small></div></div>'+
+    '<div class="gpad"><button type="button" data-a="left" aria-label="←">←</button><button type="button" data-a="rot" aria-label="↻">↻</button><button type="button" data-a="right" aria-label="→">→</button><button type="button" data-a="drop" aria-label="↓">⤓</button></div>';
+  var cv=root.querySelector('[data-cv]'),cx=cv.getContext('2d'),ov=root.querySelector('[data-ov]');
+  var grid,cur,score,lines,running=false,raf=0,acc=0,lastT=0;
+  function piece(){var s=SH[Math.random()*SH.length|0];return {m:s.map(function(r){return r.slice()}),x:3,y:0,c:COL[Math.random()*4|0]}}
+  function fits(p,dx,dy,m){m=m||p.m;for(var y=0;y<m.length;y++)for(var x=0;x<m[y].length;x++)if(m[y][x]){var nx=p.x+x+dx,ny=p.y+y+dy;if(nx<0||nx>=W||ny>=H||(ny>=0&&grid[ny][nx]))return false}return true}
+  function rot(m){return m[0].map(function(_,i){return m.map(function(r){return r[i]}).reverse()})}
+  function cell(x,y,c){cx.fillStyle=c;cx.fillRect(x*S+1,y*S+1,S-2,S-2);cx.fillStyle='rgba(255,255,255,.18)';cx.fillRect(x*S+1,y*S+1,S-2,4)}
+  function draw(){cx.fillStyle='#0d0e14';cx.fillRect(0,0,W*S,H*S);cx.strokeStyle='rgba(255,255,255,.04)';
+    for(var x=0;x<=W;x++){cx.beginPath();cx.moveTo(x*S,0);cx.lineTo(x*S,H*S);cx.stroke()}
+    grid.forEach(function(r,y){r.forEach(function(c,x){if(c)cell(x,y,c)})});
+    if(cur){var gy=0;while(fits(cur,0,gy+1))gy++;cur.m.forEach(function(r,y){r.forEach(function(v,x){if(v){cx.fillStyle='rgba(255,255,255,.08)';cx.fillRect((cur.x+x)*S+1,(cur.y+y+gy)*S+1,S-2,S-2)}})});
+      cur.m.forEach(function(r,y){r.forEach(function(v,x){if(v&&cur.y+y>=0)cell(cur.x+x,cur.y+y,cur.c)})})}}
+  function hud(){root.querySelector('[data-s]').textContent=score;root.querySelector('[data-l]').textContent=lines;root.querySelector('[data-b]').textContent=best}
+  function lock(){cur.m.forEach(function(r,y){r.forEach(function(v,x){if(v&&cur.y+y>=0)grid[cur.y+y][cur.x+x]=cur.c})});
+    var n=0;for(var y=H-1;y>=0;y--){if(grid[y].every(Boolean)){grid.splice(y,1);grid.unshift(Array(W).fill(0));n++;y++}}
+    if(n){lines+=n;score+=[0,100,300,500,800][n]}
+    cur=piece();if(!fits(cur,0,0))over();hud()}
+  function over(){running=false;cancelAnimationFrame(raf);if(score>best){best=score;try{localStorage.setItem('berd-blocks-best',best)}catch(e){}}hud();track('game_over',String(score));
+    ov.hidden=false;ov.querySelector('b').textContent=G.over+' · '+score;ov.querySelector('[data-go]').textContent=G.again}
+  function act(a){if(!running)return;if(a==='left'&&fits(cur,-1,0))cur.x--;else if(a==='right'&&fits(cur,1,0))cur.x++;else if(a==='rot'){var m=rot(cur.m);if(fits(cur,0,0,m))cur.m=m;else if(fits(cur,-1,0,m)){cur.x--;cur.m=m}else if(fits(cur,1,0,m)){cur.x++;cur.m=m}}
+    else if(a==='down'){if(fits(cur,0,1))cur.y++;else lock()}else if(a==='drop'){while(fits(cur,0,1)){cur.y++;score+=2}lock()}draw()}
+  function loop(t){if(!running)return;if(!root.isConnected){running=false;return}var sp=Math.max(110,620-lines*18);acc+=t-(lastT||t);lastT=t;if(acc>sp){acc=0;act('down')}raf=requestAnimationFrame(loop)}
+  function start(){grid=[];for(var i=0;i<H;i++)grid.push(Array(W).fill(0));cur=piece();score=0;lines=0;running=true;ov.hidden=true;hud();draw();lastT=0;acc=0;raf=requestAnimationFrame(loop);root.focus();track('game_start')}
+  ov.querySelector('[data-go]').addEventListener('click',start);
+  root.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){act(b.getAttribute('data-a'));root.focus()})});
+  root.addEventListener('keydown',function(e){var k={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'rot',ArrowDown:'down',' ':'drop'}[e.key];if(k){e.preventDefault();act(k)}});
+  grid=[];for(var i=0;i<H;i++)grid.push(Array(W).fill(0));draw();
+}
+
+/* ---------- blog ---------- */
+function blogUrl(slug){try{return new URL((L==='hy'?'':L+'/')+'blog/'+slug+'/',CFG.siteUrl).href}catch(e){return '#'}}
+function initBlog(root){
+  var B=T().blog;
+  function list(){
+    root.innerHTML='<div class="bl-h"><h3>'+esc(B.title)+'</h3><p>'+esc(B.sub)+'</p></div><div class="bl-list">'+BLOG.map(function(a){var x=a[L]||a.hy;
+      return '<button type="button" class="bl-card" data-slug="'+a.slug+'"><span class="bl-bar" style="background:'+a.color+'"></span><span class="bl-meta">'+a.date.split('-').reverse().join('.')+' · '+a.read+' '+esc(B.min)+'</span><b>'+esc(x.title)+'</b><span>'+esc(x.desc)+'</span><em>'+esc(B.read)+' →</em></button>'}).join('')+'</div>';
+    root.querySelectorAll('[data-slug]').forEach(function(b){b.addEventListener('click',function(){read(b.getAttribute('data-slug'))})});
+  }
+  function read(slug){
+    var a=BLOG.filter(function(x){return x.slug===slug})[0],x=a[L]||a.hy;track('blog_read',slug);
+    root.innerHTML='<div class="bl-r"><div class="bl-nav"><button type="button" data-back>'+esc(B.back)+'</button><a href="'+esc(blogUrl(slug))+'" target="_blank" rel="noopener">'+esc(B.open)+'</a></div>'+
+      '<article><span class="bl-meta"><i style="background:'+a.color+'"></i>'+a.date.split('-').reverse().join('.')+' · '+a.read+' '+esc(B.min)+'</span><h1>'+esc(x.title)+'</h1><p class="bl-lead">'+esc(x.desc)+'</p>'+x.body+'</article></div>';
+    root.querySelector('[data-back]').addEventListener('click',list);
+    var sc=root.closest('.wbody')||root.closest('.sbody');if(sc)sc.scrollTop=0;
+  }
+  list();
+}
+
+
+/* ---------- start ---------- */
+applyStatic();buildDesktop();buildPhone();tick();
+boot.addEventListener('click',endBoot);power.addEventListener('click',endBoot);
+fit();
+if(RM||!lid.animate){endBoot()}else{
+  // 1) the lid swings open, 2) the panel lights up, 3) the boot logo loads, 4) the desktop slides in
+  lid.animate([{transform:'rotateX(-88deg)',filter:'brightness(.55)'},{transform:'rotateX(6deg)',filter:'brightness(1)',offset:.78},{transform:'rotateX(0)'}],
+    {duration:1250,easing:'cubic-bezier(.25,.8,.25,1)',fill:'backwards'});
+  later(function(){power.classList.add('on')},1050);
+  later(endBoot,3300);
+}
+if(phoneMode())openFromHash();
+})();
+</script>
