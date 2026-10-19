@@ -208,3 +208,5 @@ body>.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px))}
 .pa.shots .pf2 .in{padding:0}
 .pa.shots .pf2 img{display:block;width:100%;height:100%;object-fit:cover}
 .sheet .pa.shots{grid-auto-flow:row}
+.br .view .scroller{min-height:100%;display:flex;flex-direction:column;justify-content:center}
+.sheet .br .view .scroller{min-height:0}

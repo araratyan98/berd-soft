@@ -69,7 +69,7 @@ function readable(l) {
   h.push('<h1>BERD SOFT — ' + esc(strip(t.hero.h1)) + '</h1><p>' + esc(t.hero.p) + '</p>');
   h.push('<h2>' + esc(t.services.title) + '</h2><p>' + esc(t.services.lead) + '</p><ul>' + t.services.items.map(s => '<li><strong>' + esc(s[0]) + '.</strong> ' + esc(s[1]) + '</li>').join('') + '</ul>');
   h.push('<h2>' + esc(t.ui.apps.work) + '</h2><ul>' + Object.entries(t.projects).map(([id, p]) => { const pr = projOf(id);
-    return '<li><a href="' + url(l) + '#p-' + id + '">' + esc(pr.name) + '</a> — ' + esc(p.kind) + '. ' + esc(p.task) + ' ' + esc(p.sol) +
+    return '<li><a href="' + url(l) + '#p-' + id + '">' + esc(p.name || pr.name) + '</a> — ' + esc(p.kind) + '. ' + esc(p.task) + ' ' + esc(p.sol) +
       (pr.link ? ' <a href="' + esc(pr.link) + '" rel="noopener">' + esc(pr.url) + '</a>' : '') + '</li>'; }).join('') + '</ul>');
   h.push('<h2>' + esc(t.process.title) + '</h2><ol>' + t.process.steps.map(s => '<li><strong>' + esc(s[0]) + '</strong> (' + esc(s[2]) + '). ' + esc(s[1]) + '</li>').join('') + '</ol>');
   h.push('<h2>' + esc(t.about.title) + '</h2><p>' + esc(t.about.lead) + '</p><ul>' + t.about.gua.map(g => '<li><strong>' + esc(g[0]) + '.</strong> ' + esc(g[1]) + '</li>').join('') + '</ul>');

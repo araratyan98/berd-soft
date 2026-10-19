@@ -187,16 +187,27 @@ var ROBOT='<svg viewBox="0 0 64 64" class="rb"><line x1="32" y1="5" x2="32" y2="
   '<path d="M26 47.5q6 3 12 0" stroke="#CCFF00" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
 
 /* ---------- projects (visual data; texts live in CONTENT[lang].projects) ----------
-   url: what the address bar shows ('' = no public address), link: opens the live project.
-   type 'shot': one page screenshot media/work/<id>.webp (h = its height at 1200px wide);
+   All of them are work we did for others. url: what the address bar shows ('' = no public address),
+   link: opens the live project. A text entry may also set `name` and `stack` per language.
+   type 'shot': one screenshot media/work/<id>.webp (w x h, w defaults to 1200);
    type 'phones': app screens media/work/<id>-1.webp, -2.webp. Card image: media/work/<id>-thumb.webp */
 var PROJ = [
   {id:'walletly',name:'Walletly',cat:'app',url:'walletly-am.up.railway.app',link:'https://walletly-am.up.railway.app',c1:'#1f1a16',c2:'#eee4d6',c3:'#bd5a3f',stack:['Next.js','TypeScript','libSQL','Apple Wallet','Google Wallet'],type:'shot',h:1470},
   {id:'mirror-booking',name:'MirrorBooking',cat:'mob',url:'mirrorbooking.com',link:'https://mirrorbooking.com',c1:'#1a1a2e',c2:'#f5f3ff',c3:'#7c3aed',stack:['React Native','Expo','Next.js','Node.js','MongoDB'],type:'phones'},
-  {id:'lezu',name:'Lezu',cat:'app',url:'',link:'',c1:'#16202c',c2:'#f5f6f8',c3:'#1f3a8a',stack:['Python','FastAPI','Claude API','SQLAlchemy'],type:'shot',h:750},
-  {id:'ararat-park',name:'Ararat Park',cat:'web',url:'',link:'',c1:'#0b120e',c2:'#d8cdb8',c3:'#186038',stack:['Next.js','TypeScript','Supabase','Three.js','MapLibre'],type:'shot',h:2700},
   {id:'the-face',name:'THE FACE',cat:'web',url:'theface.am',link:'https://www.theface.am/',c1:'#17140f',c2:'#f5f2ed',c3:'#a89478',stack:['Next.js','TypeScript','Supabase'],type:'shot',h:2700},
-  {id:'skinradar',name:'SkinRadar',cat:'bot',url:'',link:'',c1:'#0a0b0e',c2:'#15171d',c3:'#d8a94a',stack:['Node.js','TypeScript','Express','Steam OpenID','Telegram Bot API'],type:'shot',h:1053}
+  {id:'ararat-park',name:'Ararat Park',cat:'web',url:'',link:'',c1:'#0b120e',c2:'#d8cdb8',c3:'#186038',stack:['Next.js','TypeScript','Supabase','Three.js','MapLibre'],type:'shot',h:2700},
+  {id:'lezu',name:'Lezu',cat:'app',url:'',link:'',c1:'#16202c',c2:'#f5f6f8',c3:'#1f3a8a',stack:['Python','FastAPI','Claude API','SQLAlchemy'],type:'shot',h:750},
+  {id:'pharmacy-itops',name:'ITOps',cat:'app',url:'',link:'',c1:'#14532d',c2:'#f6f8f7',c3:'#16a34a',stack:[],type:'shot',h:750},
+  {id:'autohay',name:'AUTOHAY',cat:'web',url:'',link:'',c1:'#0d0f12',c2:'#14171c',c3:'#f97316',stack:['Next.js','TypeScript','MongoDB'],type:'shot',h:2700},
+  {id:'arxe',name:'ARXÉ',cat:'web',url:'',link:'',c1:'#0c1220',c2:'#0f1626',c3:'#7c8cf8',stack:['HTML','CSS','JavaScript'],type:'shot',h:2700},
+  {id:'dermond-clinic',name:'Dermond Clinic',cat:'bot',url:'',link:'',c1:'#0f1115',c2:'#f5f6f8',c3:'#2b5cff',stack:[],type:'shot',h:472},
+  {id:'shinbid',name:'ShinBid',cat:'bot',url:'',link:'',c1:'#111827',c2:'#ffffff',c3:'#facc15',stack:[],type:'shot',h:458},
+  {id:'earthtiles',name:'EarthTiles',cat:'app',url:'',link:'',c1:'#05070d',c2:'#0a0e18',c3:'#7c5cff',stack:['Next.js','Three.js','Prisma','Stripe'],type:'shot',w:929,h:861},
+  {id:'skinradar',name:'SkinRadar',cat:'bot',url:'',link:'',c1:'#0a0b0e',c2:'#15171d',c3:'#d8a94a',stack:['Node.js','TypeScript','Express','Steam OpenID','Telegram Bot API'],type:'shot',h:1053},
+  {id:'traderrealistic',name:'TraderRealistic',cat:'app',url:'',link:'',c1:'#0b0e14',c2:'#11151c',c3:'#3b82f6',stack:['Python','FastAPI','SQLAlchemy','Redis','Next.js'],type:'shot',h:750},
+  {id:'ai-assistant',name:'AI Assistant',cat:'bot',url:'',link:'',c1:'#0f1115',c2:'#f6f7fb',c3:'#1d4ed8',stack:[],type:'shot',h:542},
+  {id:'loyalty-wallet',name:'Loyalty Card',cat:'mob',url:'',link:'',c1:'#2a211c',c2:'#ffffff',c3:'#c9a26b',stack:[],type:'shot',h:820},
+  {id:'jarvis',name:'JARVIS',cat:'app',url:'',link:'',c1:'#0b1020',c2:'#0e1526',c3:'#3b9cff',stack:[],type:'shot',w:1080,h:580}
 ];
 /* images live next to the published pages: /berd-soft/media/ on Pages, /media/ in local preview */
 var MEDIA=(function(){try{var su=new URL(CFG.siteUrl);if(location.origin===su.origin&&location.pathname.indexOf(su.pathname)===0)return su.pathname+'media/work/'}catch(e){}return '/media/work/'})();
@@ -208,7 +219,7 @@ function thumb(p){
 function mock(p){
   var alt=esc(p.name);
   if(p.type==='phones') return '<div class="pa shots" style="background:'+p.c2+'">'+[1,2].map(function(k){return '<div class="pf2"><div class="in"><img src="'+MEDIA+p.id+'-'+k+'.webp" alt="'+alt+'" width="390" height="844" loading="lazy" decoding="async"></div></div>'}).join('')+'</div>';
-  return '<img class="shot" src="'+MEDIA+p.id+'.webp" alt="'+alt+'" width="1200" height="'+p.h+'" loading="lazy" decoding="async" style="background:'+p.c2+'">';
+  return '<img class="shot" src="'+MEDIA+p.id+'.webp" alt="'+alt+'" width="'+(p.w||1200)+'" height="'+p.h+'" loading="lazy" decoding="async" style="background:'+p.c2+'">';
 }
 
 /* ---------- apps ---------- */
@@ -261,7 +272,7 @@ function browserBody(p){
   var u=T().ui;
   var open=p.link?'<a class="open" href="'+esc(p.link)+'" target="_blank" rel="noopener" data-plink="'+p.id+'">'+esc(u.openSite)+'</a>':'';
   var row=function(k,v){return v?'<div><dt>'+esc(u[k])+'</dt><dd>'+esc(v)+'</dd></div>':''};
-  return '<div class="br"><div class="vp"><div class="addr"><span class="u'+(p.url?'':' nourl')+'"><i></i>'+esc(p.url||p.name)+'</span>'+open+'</div><div class="view" data-view><div class="scroller">'+mock(p)+'</div>'+(p.type==='shot'?'<span class="shint" data-hint>'+esc(u.scrollHint)+'</span>':'')+'</div></div>'+
+  return '<div class="br"><div class="vp"><div class="addr"><span class="u'+(p.url?'':' nourl')+'"><i></i>'+esc(p.url||p.name)+'</span>'+open+'</div><div class="view" data-view><div class="scroller" style="background:'+p.c2+'">'+mock(p)+'</div>'+(p.type==='shot'?'<span class="shint" data-hint>'+esc(u.scrollHint)+'</span>':'')+'</div></div>'+
     '<div class="info"><span class="cat">'+esc(T().cats[p.cat])+'</span><h3>'+esc(p.name)+'</h3><span class="t">'+esc(p.role)+'</span><dl>'+row('task',p.task)+row('sol',p.sol)+row('res',p.res)+'</dl><div class="chips">'+p.stack.map(function(s){return '<span>'+esc(s)+'</span>'}).join('')+'</div></div></div>';
 }
 
@@ -426,6 +437,9 @@ function wire(root, openProject){
 
   var view=root.querySelector('[data-view]'),hint=root.querySelector('[data-hint]');
   if(view&&hint){var hideHint=function(){hint.classList.add('off')};view.addEventListener('scroll',hideHint,{once:true});(root.closest('.sbody')||root).addEventListener('scroll',hideHint,{once:true})}
+  /* nothing to scroll through (a short shot in a window, a landscape shot on the phone): no hint */
+  var shot=view&&view.querySelector('img.shot');
+  if(shot&&hint){var inWin=getComputedStyle(view).overflowY==='auto',chk=function(){if(inWin?view.scrollHeight<=view.clientHeight+4:shot.naturalHeight<shot.naturalWidth)hint.classList.add('off')};if(shot.complete)chk();else shot.addEventListener('load',chk)}
 }
 
 /* ---------- desktop OS ---------- */
@@ -588,7 +602,7 @@ function buildPhone(){
   $('#papps').innerHTML='';$('#pdock').innerHTML='';$('#prail').innerHTML='';
   ORDER.forEach(function(id){$('#papps').appendChild(appTile(id,true))});
   ['work','brief','chat','serv'].forEach(function(id){$('#pdock').appendChild(appTile(id,false))});
-  PROJ.forEach(function(x){
+  PROJ.slice(0,6).forEach(function(x){
     var p=proj(x.id),c=document.createElement('button');c.type='button';c.className='card';
     c.innerHTML=thumb(p)+'<span><b>'+esc(p.name)+'</b><small>'+esc(p.kind)+'</small></span>';
     c.addEventListener('click',function(){openProject(p.id)});$('#prail').appendChild(c);
