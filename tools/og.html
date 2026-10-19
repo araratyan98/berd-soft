@@ -1,0 +1,56 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@500;800;900&family=Onest:wght@500;800&display=block">
+<style>
+/* 1200×630 link-preview card; ?l=hy|ru|en picks the language */
+*{box-sizing:border-box;margin:0}
+body{width:1200px;height:630px;overflow:hidden;background:radial-gradient(80% 90% at 70% 40%,#1d2133 0%,#0b0c10 70%);color:#fff;font-family:"Noto Sans Armenian","Onest",sans-serif;position:relative}
+.logo{position:absolute;left:64px;top:56px;display:flex;align-items:center;gap:14px;font:800 30px "Onest",sans-serif;letter-spacing:-.01em}
+.mk{display:grid;grid-template-columns:1fr 1fr;gap:4px;width:40px;height:40px}
+.mk i:nth-child(1){background:#1B36F5}.mk i:nth-child(2){background:#CCFF00}.mk i:nth-child(3){background:#E01060}.mk i:nth-child(4){background:#FFB800}
+h1{position:absolute;left:64px;top:170px;width:560px;font:900 64px/1.06 "Noto Sans Armenian","Onest",sans-serif;letter-spacing:-.025em}
+h1 em{font-style:normal;color:#CCFF00}
+p{position:absolute;left:64px;top:420px;width:520px;font:500 24px/1.45 "Noto Sans Armenian","Onest",sans-serif;color:#c3c8d8}
+.url{position:absolute;left:64px;bottom:50px;font:500 20px "Onest",sans-serif;color:#8d93a6}
+/* laptop */
+.lap{position:absolute;left:660px;top:110px;width:500px}
+.lid{background:#0c0c0e;border-radius:16px 16px 6px 6px;padding:12px 12px 16px;box-shadow:inset 0 0 0 1.5px #3a3b41,0 40px 70px -20px rgba(0,0,0,.8)}
+.scr{position:relative;height:296px;border-radius:4px;overflow:hidden;background:#101219}
+.scr i{position:absolute}
+.scr .sh{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,11,16,.85),rgba(10,11,16,.2) 55%,rgba(10,11,16,0))}
+.scr .bar{position:absolute;left:0;right:0;top:0;height:14px;background:rgba(18,19,26,.6)}
+.scr .h{position:absolute;left:22px;top:70px;width:200px;font:900 21px/1.1 "Noto Sans Armenian","Onest",sans-serif}
+.scr .h em{font-style:normal;color:#CCFF00}
+.scr .dock{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;gap:6px;padding:6px 8px;border-radius:12px;background:rgba(240,242,248,.2);border:1px solid rgba(255,255,255,.25)}
+.scr .dock b{width:22px;height:22px;border-radius:6px}
+.scr .win{position:absolute;left:150px;top:36px;width:250px;height:190px;border-radius:8px;background:#fbfbfc;box-shadow:0 14px 30px rgba(0,0,0,.5);overflow:hidden}
+.scr .win .t{height:16px;background:#f1f2f5;border-bottom:1px solid #dcdee4;display:flex;gap:4px;padding:5px 7px}
+.scr .win .t u{width:6px;height:6px;border-radius:50%}
+.scr .win .g{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;padding:10px}
+.scr .win .g s{height:56px;border-radius:7px}
+.deck{height:12px;margin:0 -36px;background:linear-gradient(180deg,#e2e4e8,#b3b6bd 55%,#6c6f77);border-radius:2px 2px 12px 12px}
+.robot{position:absolute;left:1092px;top:400px;width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#e9ebf3 70%);box-shadow:0 0 0 3px #CCFF00,0 14px 30px rgba(0,0,0,.5);display:grid;place-items:center}
+</style></head>
+<body>
+<div class="logo"><span class="mk"><i></i><i></i><i></i><i></i></span>BERD SOFT</div>
+<h1 id="h1"></h1>
+<p id="p"></p>
+<div class="url">araratyan98.github.io/berd-soft</div>
+<div class="lap"><div class="lid"><div class="scr">
+  <i style="left:250px;top:-20px;width:150px;height:150px;background:#1B36F5"></i><i style="left:408px;top:-20px;width:150px;height:150px;background:#CCFF00"></i>
+  <i style="left:250px;top:138px;width:150px;height:150px;background:#E01060"></i><i style="left:408px;top:138px;width:150px;height:150px;background:#FFB800"></i>
+  <span class="sh"></span><span class="bar"></span>
+  <div class="h" id="sh"></div>
+  <div class="win"><div class="t"><u style="background:#E01060"></u><u style="background:#FFB800"></u><u style="background:#CCFF00"></u></div>
+    <div class="g"><s style="background:#f4e7d7"></s><s style="background:#e8ebff"></s><s style="background:#e7f8ec"></s><s style="background:#eef8ff"></s><s style="background:#f6f3ee"></s><s style="background:#fff4ec"></s></div></div>
+  <div class="dock"><b style="background:#1B36F5"></b><b style="background:#CCFF00"></b><b style="background:#fff"></b><b style="background:#E01060"></b><b style="background:#2c3040"></b><b style="background:#FFB800"></b></div>
+</div></div><div class="deck"></div></div>
+<div class="robot"><svg viewBox="0 0 64 64" width="56" height="56"><line x1="32" y1="5" x2="32" y2="13" stroke="#c9ccd6" stroke-width="3"/><circle cx="32" cy="5" r="4" fill="#E01060"/><rect x="6" y="27" width="6" height="14" rx="3" fill="#FFB800"/><rect x="52" y="27" width="6" height="14" rx="3" fill="#FFB800"/><rect x="10" y="13" width="44" height="40" rx="18" fill="#16182a"/><rect x="15" y="20" width="34" height="22" rx="11" fill="#1B36F5"/><rect x="21" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/><rect x="36" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/><path d="M26 47.5q6 3 12 0" stroke="#CCFF00" stroke-width="2.4" fill="none"/></svg></div>
+<script>
+var T={hy:['Թվային <em>բերդ</em> ձեր բիզնեսի համար','Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։'],
+ru:['Цифровая <em>крепость</em> для вашего бизнеса','Сайты, приложения и Telegram-боты — надёжные, быстрые и работающие на вас.'],
+en:['A digital <em>fortress</em> for your business','Websites, apps and Telegram bots that are solid, fast and working for you.']};
+var l=(location.search.match(/l=(\w+)/)||[])[1]||'hy';
+document.getElementById('h1').innerHTML=T[l][0];document.getElementById('p').textContent=T[l][1];document.getElementById('sh').innerHTML=T[l][0];
+</script>
+</body></html>
