@@ -126,7 +126,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .dicon span{text-shadow:0 1px 3px rgba(0,0,0,.6)}
 
 /* dock */
-.dock{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:600;display:flex;align-items:flex-end;gap:10px;padding:9px 12px;
+.dock{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);transform-origin:50% 100%;transition:transform .35s cubic-bezier(.2,.8,.2,1),bottom .35s;z-index:4000;display:flex;align-items:flex-end;gap:10px;padding:9px 12px;
   border-radius:22px;background:rgba(240,242,248,.18);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .dock .sep{width:1px;align-self:stretch;margin:4px 2px;background:rgba(255,255,255,.25)}
 .dk{position:relative;width:58px;height:58px;transition:transform .18s cubic-bezier(.3,.7,.4,1.4)}
@@ -154,7 +154,11 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .win{position:absolute;display:flex;flex-direction:column;background:var(--win);border-radius:12px;overflow:hidden;z-index:100;
   box-shadow:0 0 0 1px rgba(0,0,0,.22),0 28px 70px rgba(0,0,0,.45);will-change:transform}
 .win[hidden]{display:none!important}
-.win.max{left:0!important;top:28px!important;width:1280px!important;height:772px!important;border-radius:0}
+.win.max{left:0!important;top:28px!important;width:1280px!important;height:712px!important;border-radius:0}
+/* a maximized window leaves a slim strip at the bottom; the dock shrinks into it and grows back when no window is maximized */
+.os.has-max .dock{transform:translateX(-50%) scale(.66);bottom:2px}
+.os.has-max .dock .dk:hover{transform:translateY(-8px) scale(1.2)}
+.win.anim{transition:left .32s cubic-bezier(.2,.8,.2,1),top .32s cubic-bezier(.2,.8,.2,1),width .32s cubic-bezier(.2,.8,.2,1),height .32s cubic-bezier(.2,.8,.2,1),border-radius .32s}
 .tbar{height:40px;flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--win-2);border-bottom:1px solid var(--line);cursor:grab;user-select:none}
 .tbar:active{cursor:grabbing}
 .lights{display:flex;gap:8px}
@@ -191,10 +195,9 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .br .addr .u{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:500 13px var(--f-lat);color:#444}
 .br .addr .u i{width:10px;height:12px;border:2px solid #22a35a;border-radius:3px;display:inline-block}
 .br .addr .demo{font:700 11px var(--f-ui);color:#8a5a00;background:#fff1c7;padding:4px 8px;border-radius:6px}
-.br .view{flex:1;position:relative;overflow:hidden}
-.br .scroller{position:absolute;left:0;right:0;top:0;animation:scrollsite var(--dur,16s) ease-in-out infinite alternate}
-.br .view:hover .scroller{animation-play-state:paused}
-@keyframes scrollsite{0%,8%{transform:translateY(0)}92%,100%{transform:translateY(var(--dist,-800px))}}
+.br .view{flex:1;position:relative;overflow-y:auto;overscroll-behavior:contain}
+.shint{position:sticky;display:block;width:max-content;margin:-46px auto 0;bottom:14px;padding:8px 14px;border-radius:999px;background:rgba(18,19,26,.82);color:#fff;font:600 12.5px var(--f-ui);pointer-events:none;transition:opacity .4s}
+.shint.off{opacity:0}
 .br .info{border-left:1px solid var(--line);padding:22px 20px;overflow:auto;background:#fff}
 .br .info .cat{font:700 11.5px var(--f-ui);letter-spacing:.06em;color:var(--blue);text-transform:uppercase}
 .br .info h3{margin:8px 0 6px;font:800 24px/1.15 var(--f-ui)}
@@ -313,7 +316,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sheet .pf main{padding:16px}
 .sheet .grid{grid-template-columns:1fr 1fr;gap:12px}
 .sheet .br{grid-template-columns:1fr;height:auto}
-.sheet .br .view{flex:none;height:62vh;min-height:360px}
+.sheet .br .view{flex:none;height:auto;overflow:visible}
 /* demo sites reflow like real mobile sites inside the phone browser */
 .sheet .ms nav div{display:none}
 .sheet .ms .hero2{grid-template-columns:1fr;padding:18px 20px 28px}
@@ -446,7 +449,6 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   .botfab,.botfab .ring,.rb-eyes,.rb-ant,.msg.typing i{animation:none}
   .boot .mk i,.boot .bar i{animation:none}.boot .bar i{width:100%}
-  .br .scroller{animation:none}
   .dk,.sheet{transition:none}
 }
 </style>
@@ -662,7 +664,7 @@ function body(id){
   return '';
 }
 function browserBody(p){
-  return '<div class="br"><div class="vp"><div class="addr"><span class="u"><i></i>'+p.url+'</span><span class="demo">Դեմո</span></div><div class="view" data-view><div class="scroller" data-sc>'+mock(p)+'</div></div></div>'+
+  return '<div class="br"><div class="vp"><div class="addr"><span class="u"><i></i>'+p.url+'</span><span class="demo">Դեմո</span></div><div class="view" data-view><div class="scroller" data-sc>'+mock(p)+'</div><span class="shint" data-hint>↓ Սքրոլեք՝ կայքը դիտելու համար</span></div></div>'+
     '<div class="info"><span class="cat">'+CATS[p.cat]+'</span><h3>'+p.name+'</h3><span class="t">Թեստային նախագիծ</span><dl><div><dt>Խնդիր</dt><dd>'+p.task+'</dd></div><div><dt>Լուծում</dt><dd>'+p.sol+'</dd></div><div><dt>Արդյունք</dt><dd>'+p.res+'</dd></div></dl><div class="chips">'+p.stack.map(function(s){return '<span>'+s+'</span>'}).join('')+'</div></div></div>';
 }
 
@@ -755,7 +757,9 @@ function wire(root, openProject){
     say('Բարև։ Ես BERD SOFT-ի օգնականն եմ 👋','bot');
     setTimeout(function(){say('Ընտրեք հարցը ներքևից կամ գրեք ձերը։','bot');chips()},RM?0:450);
   }
-  var sc=root.querySelector('[data-sc]'),view=root.querySelector('[data-view]');
+  var view=root.querySelector('[data-view]'),hint=root.querySelector('[data-hint]');
+  if(view&&hint){var hideHint=function(){hint.classList.add('off')};view.addEventListener('scroll',hideHint,{once:true});(root.closest('.sbody')||root).addEventListener('scroll',hideHint,{once:true})}
+  var sc=null;
   if(sc&&view) requestAnimationFrame(function(){var d=Math.max(0,sc.scrollHeight-view.clientHeight);sc.style.setProperty('--dist',-d+'px');sc.style.setProperty('--dur',Math.max(8,d/70)+'s')});
 }
 
@@ -805,7 +809,9 @@ function genie(win,from,closing){
   if(closing)k.reverse();
   return win.animate(k,{duration:closing?380:520,easing:'cubic-bezier(.2,.8,.2,1)'}).finished;
 }
-function setRun(){dock.querySelectorAll('.dk').forEach(function(d){d.classList.toggle('on',!!(openWins[d.dataset.app]&&!openWins[d.dataset.app].hidden))})}
+function setRun(){syncMax();dock.querySelectorAll('.dk').forEach(function(d){d.classList.toggle('on',!!(openWins[d.dataset.app]&&!openWins[d.dataset.app].hidden))})}
+function toggleMax(w){w.classList.add('anim');w.classList.toggle('max');setRun();setTimeout(function(){w.classList.remove('anim')},360)}
+function syncMax(){os.classList.toggle('has-max',[].some.call(winsEl.children,function(w){return !w.hidden&&w.classList.contains('max')}))}
 function focusWin(w){w.style.zIndex=++zTop}
 function makeWin(key,title,html,box,source){
   var w=document.createElement('section');w.className='win';w.dataset.key=key;w.dataset.title=title;w.setAttribute('aria-label',title);
@@ -821,8 +827,8 @@ function makeWin(key,title,html,box,source){
     function up(){bar.removeEventListener('pointermove',mv);bar.removeEventListener('pointerup',up)}
     bar.addEventListener('pointermove',mv);bar.addEventListener('pointerup',up);
   });
-  bar.addEventListener('dblclick',function(e){if(!e.target.closest('button'))w.classList.toggle('max')});
-  w.querySelector('.x').addEventListener('click',function(){w.classList.toggle('max')});
+  bar.addEventListener('dblclick',function(e){if(!e.target.closest('button'))toggleMax(w)});
+  w.querySelector('.x').addEventListener('click',function(){toggleMax(w)});
   w.querySelector('.c').addEventListener('click',function(){var t=dockTarget(key);genie(w,t,true).then(function(){w.remove();delete openWins[key];setRun()})});
   w.querySelector('.m').addEventListener('click',function(){var t=dockTarget(key);genie(w,t,true).then(function(){w.hidden=true;setRun()})});
   wire(w,openProject);
@@ -834,7 +840,7 @@ function dockTarget(key){var d=key==='bot'?$('#botFab'):dock.querySelector('[dat
 api.open=function(id){
   if(phoneMode()) return openSheet(id);
   var w=openWins[id];
-  if(w){ if(w.hidden){w.hidden=false;focusWin(w);genie(w,dockTarget(id),false)} else focusWin(w); return }
+  if(w){ if(w.hidden){w.hidden=false;focusWin(w);setRun();genie(w,dockTarget(id),false)} else focusWin(w); return }
   var a=APPS[id];makeWin(id,a.t,body(id),{x:a.x,y:a.y,w:a.w,h:a.h});
 };
 function openProject(pid,fromEl){
