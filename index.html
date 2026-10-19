@@ -542,6 +542,209 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .chat .tg .cts{margin-top:6px}
 .hp{position:absolute!important;left:-9999px;width:1px;height:1px;opacity:0}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* ===== icons for new apps ===== */
+.i-calc{background:linear-gradient(160deg,#8a6bff,#5a37e6 55%,#3a1fb0)}
+.i-blog{background:linear-gradient(160deg,#ffffff,#e9ecf6)}
+.i-game{background:#111319}
+.i-game svg{width:62%;height:62%}
+
+/* ===== estimator ===== */
+.calc{display:grid;grid-template-columns:360px minmax(0,1fr);grid-template-rows:minmax(0,1fr) auto;height:100%;background:#f6f7fb}
+.calc .cl{grid-row:1;overflow:auto;padding:20px 22px;border-right:1px solid var(--line);background:#fff;min-height:0}
+.calc h3{margin:0;font:800 22px/1.2 var(--f-ui);text-wrap:balance}
+.calc .sub{margin:6px 0 4px;color:var(--muted);font:500 13px/1.5 var(--f-ui)}
+.calc h4{margin:18px 0 8px;font:700 12px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:#6a6e7b;display:flex;justify-content:space-between}
+.calc h4 b{color:var(--blue);font:800 14px var(--f-lat)}
+.calc .cg{display:flex;flex-wrap:wrap;gap:7px}
+.calc .cc{padding:8px 12px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font:600 13px var(--f-ui);color:#2b2e38;transition:all .15s}
+.calc .cc:hover{border-color:#aab4ff}
+.calc .cc.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.calc input[type=range]{width:100%;accent-color:var(--blue)}
+.calc .cr{grid-row:1;display:grid;place-items:center;padding:22px;min-width:0;min-height:0;overflow:hidden;
+  background:radial-gradient(70% 70% at 50% 40%,#eef1ff,#f6f7fb 70%)}
+.calc .stagebox{width:100%;max-width:560px;display:grid;place-items:center;position:relative;transform-origin:50% 50%;transition:transform .25s}
+.calc .cb{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;padding:14px 22px;background:#121318;color:#fff}
+.calc .est{display:grid;gap:2px}
+.calc .est span{font:600 11px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:#9aa0b0}
+.calc .est b{font:800 22px var(--f-lat);color:var(--lime);font-variant-numeric:tabular-nums}
+.calc .cf{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.calc .cf input{width:150px;padding:10px 12px;border-radius:10px;border:1px solid #33364a;background:#1c1e27;color:#fff;font:500 13.5px var(--f-ui)}
+.calc .cf button{padding:10px 16px;border-radius:10px;background:var(--lime);color:#111;font:800 13.5px var(--f-ui)}
+.calc .cf button[disabled]{opacity:.6}
+.calc .cn{flex-basis:100%;margin:0;font:500 12px/1.45 var(--f-ui);color:#9aa0b0}
+.calc .cn.bad{color:#ffb3c8}
+.calc .cn .cts a{background:#262938;color:#fff}
+/* live mockup */
+.dv{position:relative;width:100%;transition:all .3s}
+.mb.pop{animation:mbpop .5s cubic-bezier(.2,.9,.3,1.25) both}
+@keyframes mbpop{from{opacity:0;transform:translateY(14px) scale(.92)}}
+.brv{border-radius:12px;background:#fff;box-shadow:0 30px 60px rgba(27,54,245,.16),0 0 0 1px rgba(0,0,0,.06)}
+.brv .bt{display:flex;align-items:center;gap:6px;padding:9px 12px;border-bottom:1px solid #eef0f5}
+.brv .bt i{width:9px;height:9px;border-radius:50%;background:#e2e4ea}
+.brv .bt i:nth-child(1){background:var(--pink)}.brv .bt i:nth-child(2){background:var(--amber)}.brv .bt i:nth-child(3){background:var(--lime)}
+.brv .bt span{margin-left:10px;flex:1;background:#f3f4f8;border-radius:6px;padding:4px 10px;font:500 11px var(--f-lat);color:#777}
+.bpage{padding:12px;display:grid;gap:10px}
+.mnav{display:flex;align-items:center;gap:10px;font:600 10.5px var(--f-ui);color:#555;flex-wrap:wrap}
+.mnav b{font:900 12px var(--f-lat);color:var(--ink);margin-right:auto}
+.mnav em{font-style:normal;font:700 9.5px var(--f-lat);padding:2px 6px;border-radius:5px;background:#eef1ff;color:var(--blue)}
+.mnav .lg{padding:3px 8px;border-radius:6px;background:var(--ink);color:#fff}
+.mnav .ct{font-size:13px}
+.mh{display:grid;gap:7px;padding:16px;border-radius:10px;background:linear-gradient(135deg,#eef1ff,#fdf0f5)}
+.mh b{display:block;height:14px;width:70%;border-radius:4px;background:var(--ink)}
+.mh i{display:block;height:7px;width:85%;border-radius:4px;background:#c9cee0}
+.mh u{display:block;width:80px;height:22px;border-radius:7px;background:var(--blue);margin-top:4px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.grid4 i{aspect-ratio:1.35;border-radius:8px;background:#f1f2f6;position:relative}
+.grid4 i::after{content:"";position:absolute;left:8px;right:8px;bottom:8px;height:5px;border-radius:3px;background:#d4d8e4}
+.grid4 i:nth-child(3n+1){background:#fff4d6}.grid4 i:nth-child(4n+2){background:#e8ebff}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:10px;border-radius:10px;background:#f7f8fb}
+.cal i{height:16px;border-radius:4px;background:#e4e7ef}
+.cal i.on{background:var(--pink)}
+.payc{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:10px;background:linear-gradient(120deg,#1B36F5,#6b4dff);color:#fff;font:700 12px var(--f-lat)}
+.payc u{text-decoration:none;background:var(--lime);color:#111;padding:4px 10px;border-radius:6px;font:800 11px var(--f-ui);min-width:30px;min-height:14px}
+.serp{display:grid;gap:3px;padding:10px 12px;border-radius:10px;border:1px solid #eef0f5}
+.serp small{font:500 9.5px var(--f-lat);color:#1a7f37}
+.serp b{font:600 12px var(--f-lat);color:#1a0dab}
+.serp i{height:6px;width:80%;border-radius:3px;background:#e1e4ec}
+.pgs{display:flex;gap:5px}
+.pgs i{flex:1;height:30px;border-radius:6px;background:#f1f2f6;border:1px dashed #d4d8e4}
+.dsh{display:grid;grid-template-columns:70px 1fr;gap:8px;min-height:150px}
+.dsh aside{display:grid;align-content:start;gap:6px;padding:8px;border-radius:8px;background:#141a33}
+.dsh aside i{height:8px;border-radius:4px;background:#3a4373}
+.dsh aside i:first-child{background:var(--lime)}
+.dsh .kp{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.dsh .kp i{height:38px;border-radius:8px;background:#eef1ff}
+.dsh .tb{display:grid;gap:5px;margin-top:8px}
+.dsh .tb i{height:10px;border-radius:4px;background:#f1f2f6}
+.admp{position:absolute;right:-26px;top:58px;width:120px;padding:10px;border-radius:10px;background:#121318;color:#fff;box-shadow:0 18px 30px rgba(0,0,0,.25);display:grid;gap:6px;font:800 11px var(--f-ui)}
+.admp i{height:7px;border-radius:4px;background:#3b3e4f}
+.admp i:nth-child(2){background:var(--lime);width:70%}
+.tgbub{position:absolute;left:-22px;bottom:30px;padding:8px 12px;border-radius:14px 14px 14px 4px;background:#2aabee;color:#fff;font:800 11px var(--f-lat);box-shadow:0 14px 24px rgba(42,171,238,.35)}
+.crmc{position:absolute;right:-18px;bottom:-14px;padding:7px 11px;border-radius:9px;background:var(--amber);color:#111;font:800 11px var(--f-lat);box-shadow:0 10px 20px rgba(0,0,0,.15)}
+.phv{width:230px;height:440px;border-radius:36px;background:#111;padding:9px;box-shadow:0 30px 60px rgba(27,54,245,.2)}
+.phv .ph-in{position:relative;height:100%;border-radius:28px;background:#fff;overflow:hidden;padding:34px 12px 12px;display:grid;align-content:start;gap:9px}
+.phv .isl{position:absolute;left:50%;top:9px;width:70px;height:18px;margin-left:-35px;border-radius:10px;background:#111}
+.tabbar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-around;padding:12px;border-top:1px solid #eef0f5;background:#fff}
+.tabbar i{width:18px;height:18px;border-radius:6px;background:#d8dbe6}
+.tabbar i:first-child{background:var(--blue)}
+.accr{display:flex;align-items:center;gap:8px;padding:10px;border-radius:10px;background:#f7f8fb}
+.accr span{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--amber))}
+.accr b{flex:1;height:8px;border-radius:4px;background:#d4d8e4}
+.tgv{max-width:340px;border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#cfe3c8,#a9c7a0);box-shadow:0 30px 60px rgba(0,0,0,.18)}
+.tgv .tgh{display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;font:700 13px var(--f-lat)}
+.tgv .tgh i{width:30px;height:30px;border-radius:50%;background:var(--blue)}
+.tgv .tgb{display:grid;gap:8px;padding:14px;min-height:260px;align-content:start}
+.tgv .tm{justify-self:start;max-width:80%;padding:8px 11px;border-radius:12px;background:#fff;font:600 12px var(--f-ui)}
+.tgv .tm.me{justify-self:end;background:#e2ffc7}
+.tgv .tk{display:grid;grid-template-columns:1fr 1fr;gap:5px;max-width:85%}
+.tgv .tk span{padding:8px;border-radius:9px;background:rgba(255,255,255,.8);text-align:center;font:600 11px var(--f-ui);color:#2b6cb0}
+.sheet .calc{grid-template-columns:1fr;grid-template-rows:auto auto auto;height:auto}
+.sheet .calc .cl,.sheet .calc .cr{grid-row:auto}
+.sheet .calc .cl{border-right:0;border-bottom:1px solid var(--line)}
+.sheet .calc .cr{min-height:340px}
+.sheet .calc .cr{padding:22px 34px}
+.sheet .calc .cf{margin-left:0;width:100%}
+.sheet .calc .cf input{flex:1;min-width:0;width:auto}
+.sheet .calc .cf button{width:100%}
+
+/* ===== before / after ===== */
+.batab{padding:5px 10px;border-radius:7px;background:var(--ink);color:#fff;font:700 11.5px var(--f-ui);white-space:nowrap}
+.batab[aria-pressed="true"]{background:var(--lime);color:#111}
+.ba{position:sticky;top:0;height:100%;min-height:420px;z-index:5;overflow:hidden;background:#fff}
+.sheet .ba{position:relative;height:70vh}
+.ba .bal,.ba .bar2{position:absolute;inset:0;overflow:hidden}
+.ba .bar2{will-change:clip-path}
+.old{min-height:100%;background:#c0c0c0;font-family:"Times New Roman",Times,serif;color:#000;padding:10px}
+.old .ot{background:#000080;color:#ff0;font:bold 22px "Comic Sans MS","Times New Roman",serif;padding:10px;text-align:center}
+.old marquee{background:#ff0;color:red;font:bold 14px Arial,sans-serif;padding:4px;margin:6px 0}
+.old table{width:100%;border:3px outset #fff;background:#d4d0c8;margin:6px 0}
+.old td{border:2px inset #fff;padding:6px;color:#00e;text-decoration:underline;font-size:14px}
+.old .ob{display:grid;grid-template-columns:140px 1fr;gap:12px;margin-top:10px}
+.old .oimg{height:110px;border:2px solid #808080;background:repeating-linear-gradient(45deg,#ddd 0 8px,#bbb 8px 16px);display:grid;place-items:center;font:bold 12px Arial;color:#666}
+.old p{margin:0;font-size:14px;line-height:1.35}
+.old .oc{margin-top:16px;text-align:center;font:11px Arial;color:#333}
+.ba .lb{position:absolute;top:12px;padding:5px 10px;border-radius:7px;font:800 12px var(--f-ui);z-index:3}
+.ba .lb.l{left:12px;background:#000080;color:#ff0}
+.ba .lb.r{right:12px;background:var(--lime);color:#111}
+.ba .handle{position:absolute;top:0;bottom:0;width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,.2);z-index:3;pointer-events:none}
+.ba .handle::after{content:"⇆";position:absolute;top:50%;left:50%;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;background:#fff;box-shadow:0 6px 16px rgba(0,0,0,.25);display:grid;place-items:center;font:900 16px var(--f-lat);color:#111}
+.ba .bars{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;z-index:4;margin:0}
+.ba .bahint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 12px;border-radius:999px;background:rgba(18,19,26,.8);color:#fff;font:600 11.5px var(--f-ui);z-index:3;white-space:nowrap;pointer-events:none}
+
+/* ===== live chat ===== */
+.msg.team{background:#eef1ff}
+.msg.team b{display:block;font:800 11px var(--f-lat);color:var(--blue);margin-bottom:2px}
+
+/* ===== time of day ===== */
+.greet{margin:0 0 -8px;font:600 15px var(--f-ui);color:var(--lime);letter-spacing:.01em}
+.phone .greet{margin:10px 0 -6px;font-size:13px}
+.wall::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;transition:background 1s}
+.wall .shade{z-index:1}
+.os[data-tod="morning"] .wall::before{background:linear-gradient(200deg,rgba(255,190,120,.28),rgba(255,190,120,0) 55%)}
+.os[data-tod="evening"] .wall::before{background:linear-gradient(200deg,rgba(255,110,60,.32),rgba(120,40,140,.25) 60%,rgba(0,0,0,0))}
+.os[data-tod="night"] .wall::before{background:linear-gradient(180deg,rgba(5,8,30,.55),rgba(5,8,30,.35))}
+.os[data-tod="night"] .wall .blk{filter:brightness(.55) saturate(.9)}
+.lamp{position:absolute;left:520px;bottom:96px;z-index:2;opacity:0;transform:translateY(10px);transition:opacity 1s,transform 1s;pointer-events:none}
+.lamp .beam{animation:flick 6s infinite}
+@keyframes flick{0%,100%{opacity:1}48%{opacity:.92}50%{opacity:.75}52%{opacity:.95}}
+.os[data-tod="night"] .lamp,.os[data-tod="evening"] .lamp{opacity:1;transform:none}
+.os[data-tod="evening"] .lamp .beam{opacity:.55}
+.stars{position:absolute;inset:0;z-index:1;opacity:0;transition:opacity 1s;pointer-events:none}
+.stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;animation:tw 3s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.2}50%{opacity:1}}
+.os[data-tod="night"] .stars{opacity:1}
+.phone[data-tod="night"]{background:radial-gradient(120% 60% at 20% 0%,#0f1a5c 0%,#0a0c1f 45%,#06070d 100%)}
+.phone[data-tod="evening"]{background:radial-gradient(120% 60% at 20% 0%,#7a2a6b 0%,#1a1030 45%,#0b0c10 100%)}
+.phone[data-tod="morning"]{background:radial-gradient(120% 60% at 20% 0%,#ff9a62 0%,#3a2a6b 40%,#0b0c10 100%)}
+
+/* ===== game ===== */
+.game{display:grid;justify-items:center;align-content:start;gap:10px;padding:12px;height:100%;box-sizing:border-box;background:#14151c;color:#fff;outline:none}
+.game .gtop{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:220px}
+.game .gtop div{text-align:center;padding:6px;border-radius:10px;background:#1d1f2a}
+.game .gtop small{display:block;font:600 10.5px var(--f-ui);color:#9aa0b0}
+.game .gtop b{font:800 18px var(--f-lat);color:var(--lime);font-variant-numeric:tabular-nums}
+.game .gwrap{position:relative}
+.game canvas{display:block;border-radius:10px;max-width:100%;height:auto;box-shadow:0 0 0 2px #2a2d3b}
+.game .gov{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:14px;background:rgba(10,11,16,.82);border-radius:10px;text-align:center;padding:16px}
+.game .gov b{font:900 22px var(--f-lat)}
+.game .gov button{padding:11px 22px;border-radius:10px;background:var(--lime);color:#111;font:800 15px var(--f-ui)}
+.game .gov small{font:500 11.5px/1.5 var(--f-ui);color:#aab0c0}
+.game .gpad{display:flex;gap:8px}
+.game .gpad button{width:50px;height:40px;border-radius:12px;background:#22252f;color:#fff;font:800 18px var(--f-lat)}
+.game .gpad button:active{background:var(--blue)}
+.toast{position:absolute;left:50%;top:44px;transform:translateX(-50%);z-index:7000;padding:10px 18px;border-radius:999px;background:var(--lime);color:#111;font:800 14px var(--f-ui);box-shadow:0 12px 30px rgba(0,0,0,.35);animation:tin .35s cubic-bezier(.2,.9,.3,1.3);transition:opacity .5s}
+body>.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px))}
+.toast.out{opacity:0}
+@keyframes tin{from{opacity:0;transform:translate(-50%,-12px)}}
+
+/* ===== blog ===== */
+.blog{height:100%;background:#fbfbfd}
+.bl-h{padding:22px 26px 6px}
+.bl-h h3{margin:0;font:800 26px var(--f-ui)}
+.bl-h p{margin:6px 0 0;color:var(--muted);font:500 14px var(--f-ui)}
+.bl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;padding:16px 26px 26px}
+.bl-card{position:relative;display:grid;align-content:start;gap:8px;text-align:left;padding:20px 18px 18px;border-radius:16px;background:#fff;border:1px solid var(--line);overflow:hidden;transition:transform .2s,box-shadow .2s}
+.bl-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(27,54,245,.12)}
+.bl-bar{position:absolute;left:0;top:0;right:0;height:5px}
+.bl-meta{display:flex;align-items:center;gap:8px;font:600 11.5px var(--f-lat);color:#8a8e9a}
+.bl-meta i{width:10px;height:10px;border-radius:3px}
+.bl-card b{font:800 17px/1.3 var(--f-ui);color:var(--text)}
+.bl-card span:not(.bl-bar):not(.bl-meta){font:500 13px/1.5 var(--f-ui);color:var(--muted)}
+.bl-card em{font-style:normal;font:700 13px var(--f-ui);color:var(--blue);margin-top:4px}
+.bl-r{max-width:680px;margin:0 auto;padding:16px 26px 40px}
+.bl-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.bl-nav button,.bl-nav a{font:700 13px var(--f-ui);color:var(--blue);text-decoration:none}
+.bl-r h1{margin:10px 0 0;font:800 30px/1.18 var(--f-ui);letter-spacing:-.01em;text-wrap:balance}
+.bl-lead{margin:12px 0 18px;font:500 17px/1.55 var(--f-ui);color:#4a4e5a}
+.bl-r h2{margin:26px 0 8px;font:800 19px/1.3 var(--f-ui)}
+.bl-r p,.bl-r li{font:400 15.5px/1.7 var(--f-ui);color:#22252e}
+.bl-r ul{padding-left:20px}
+.sheet .bl-list{padding:12px 16px 24px}
+.sheet .bl-h{padding:18px 16px 4px}
+.sheet .bl-r{padding:14px 16px 32px}
+
+@media (prefers-reduced-motion:reduce){.mb.pop,.stars i,.lamp .beam,.toast{animation:none}}
 </style>
 
 </head>
@@ -642,6 +845,11 @@ window.BERD_CONFIG = window.BERD_CONFIG || {
   },
   /* Cloudflare Worker URL that forwards requests to your Telegram (see worker/SETUP.md) */
   leadEndpoint: 'https://berd-leads.araratyanarmen398.workers.dev',
+  /* estimator prices: [from price in $, days]; edit freely */
+  pricing: {
+    types: { landing:[99,7], site:[199,14], shop:[349,21], webapp:[499,28], mobile:[799,35], bot:[149,7] },
+    feats: { pay:[80,3], admin:[120,4], booking:[100,4], account:[150,5], crm:[150,5], seo:[60,2], tgbot:[149,5] }
+  },
   /* analytics: leave '' to keep the site free of trackers (see ANALYTICS.md) */
   analytics: {
     ga4: 'G-4CBRGZZJ3Y', // Google Analytics 4 measurement id, e.g. 'G-XXXXXXXXXX'
@@ -657,221 +865,7 @@ window.BERD_CONFIG = window.BERD_CONFIG || {
 var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 var $ = function(s,r){return (r||document).querySelector(s)};
 var CFG = window.BERD_CONFIG||{}; CFG.contacts=CFG.contacts||{}; CFG.analytics=CFG.analytics||{};
-var CONTENT = /*CONTENT*/{
-hy:{
-  meta:{title:'BERD SOFT · Թվային բերդ ձեր բիզնեսի համար',desc:'BERD SOFT՝ կայքեր, վեբ և մոբայլ հավելվածներ, Telegram-բոտեր։ Դիզայնից մինչև գործարկում՝ մեկ թիմ։ Երևան։',ogAlt:'BERD SOFT կայքը նոութբուքի էկրանին'},
-  code:'ՀՅ',name:'Հայերեն',
-  ui:{protoNote:'Կայքի նախատիպ · նախագծերը թեստային են',hint:'Սեղմեք ներքևի <b>պատկերակներին</b>՝ ծրագրերը բացելու համար · պատուհանները կարելի է տեղաշարժել',skip:'Սեղմեք՝ բաց թողնելու համար',
-    bubble:'Հարցեր ունե՞ք։ Հարցրեք ինձ',back:'‹ Հետ',zoom:'Մեծացնել էկրանը',close:'Փակել',min:'Թաքցնել',max:'Մեծացնել',demo:'Դեմո',scrollHint:'↓ Սքրոլեք՝ կայքը դիտելու համար',
-    test:'Թեստային',testProject:'Թեստային նախագիծ',task:'Խնդիր',sol:'Լուծում',res:'Արդյունք',all:'Բոլորը',folders:'Թղթապանակներ',
-    worksSub:'Սեղմեք նախագծի վրա՝ այն «բրաուզերում» բացելու համար։',worksNote:'Սրանք թեստային նախագծեր են։ Իրական աշխատանքները կավելացվեն հետո։',
-    seeWorks:'Տեսնել աշխատանքները →',recent:'Վերջին աշխատանքները',allArrow:'Բոլորը →',dock:'Ծրագրեր',lang:'Լեզու',
-    apps:{work:'Աշխատանքներ',serv:'Ծառայություններ',proc:'Ինչպես ենք աշխատում',about:'Մեր մասին',brief:'Բրիֆ',chat:'Կապ',bot:'BERD Օգնական'},
-    noscript:'Կայքը աշխատելու համար անհրաժեշտ է JavaScript։'},
-  hero:{kick:'Վեբ ստուդիա · Երևան',h1:'Թվային <em>բերդ</em> ձեր բիզնեսի համար',p:'Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։',b1:'Բացել աշխատանքները →',b2:'Հաշվարկել նախագիծը'},
-  cats:{web:'Կայքեր',app:'Վեբ հավելվածներ',mob:'Մոբայլ',bot:'Բոտեր'},
-  services:{title:'Ծառայություններ',lead:'Հինգ ուղղություն՝ մեկ թիմ։ Կարիք չկա տարբեր մասնագետներ փնտրել և նրանց աշխատանքը համակարգել։',items:[
-    ['Կայքեր և լենդինգներ','Կայք, որը հինգ վայրկյանում բացատրում է ձեր բիզնեսը և բերում հայտեր։','web'],
-    ['Վեբ հավելվածներ','CRM, անձնական էջեր, ամրագրում, վճարումներ և ինտեգրումներ։','app'],
-    ['Մոբայլ հավելվածներ','Հավելվածներ iPhone-ի և Android-ի համար։ App Store-ում և Google Play-ում հրապարակումը մեր վրա է։','mob'],
-    ['Telegram-բոտեր','Պատվերներ, գրանցում և վճարում ուղիղ մեսենջերում։','bot'],
-    ['Սերվեր և աջակցություն','Դոմեն, SSL, պահուստավորում և մոնիտորինգ։ Մուտքերը ձերն են։','']]},
-  process:{side:'Ինչպես ենք աշխատում',sideSub:'5 փուլ',title:'Հինգ փուլ, յուրաքանչյուրը հաստատում եք դուք',sub:'Արդյունքը տեսնում եք յուրաքանչյուր քայլում',steps:[
-    ['Բրիֆ և գնահատում','Խորանում ենք խնդրի մեջ և վերադառնում աշխատանքների ցանկով ու ժամկետով։','Անվճար',1],
-    ['Նախատիպ և դիզայն','Սկզբում էկրանների կառուցվածքը, հետո՝ վիզուալը։ Հաստատում եք մինչև կոդը։','3–7 օր',1],
-    ['Մշակում','Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Ամեն շաբաթ ցույց ենք տալիս աշխատող տարբերակը թեստային հղումով։','1–4 շաբաթ',0],
-    ['Գործարկում','Դոմեն, սերվեր, SSL։ Բոլոր մուտքերը հանձնում ենք ձեզ։ Մնացած 70%-ը վճարում եք հանձնման ժամանակ։','1–2 օր',0],
-    ['Աջակցություն','Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ։','Մինչև 12 ամիս',0]]},
-  about:{title:'Մենք BERD SOFT-ն ենք',lead:'Լրիվ ցիկլի մշակման ստուդիա Երևանում։ Աշխատում ենք Հայաստանի, ԱՊՀ-ի և Եվրոպայի հաճախորդների հետ։ Ահա մեր չորս սկզբունքները.',contacts:'Կոնտակտներ',gua:[
-    ['30% հիմա, 70%՝ հանձնելիս','Դիզայնը հաստատելուց հետո՝ 30% կանխավճար, մնացած 70%-ը՝ պատրաստ նախագիծը հանձնելիս։'],
-    ['Դիզայնը դուր չեկա՞վ, մի վճարեք','Մակետները հաստատում եք մինչև մշակումը։'],
-    ['Բոլոր մուտքերը ձերն են','Դոմենն ու սերվերը ձեր անունով են, կոդը հանձնվում է։'],
-    ['Գինը չի աճի','Գնացուցակը ֆիքսվում է մինչև աշխատանքի մեկնարկը։']]},
-  chat:{online:'● Առցանց է',greet1:'Բարև։ Պատմեք ձեր նախագծի մասին. ինչ է պետք անել և երբ։',greet2:'Պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում, գնահատումն անվճար է։',
-    name:'Ձեր անունը',contact:'Հեռախոս կամ Telegram',msg:'Ինչ է պետք անել…',send:'Ուղարկել',needMsg:'Գրեք մի քանի բառ նախագծի մասին',needContact:'Նշեք հեռախոս կամ Telegram, որ կարողանանք պատասխանել',
-    sent:'Շնորհակալություն{n}։ Ստացանք ձեր հաղորդագրությունը և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։',
-    off:'Շնորհակալություն{n}։ Կայքը դեռ փորձնական ռեժիմում է, և հաղորդագրությունները ավտոմատ չեն ուղարկվում։ Խնդրում ենք գրել մեզ ուղիղ։',
-    err:'Չհաջողվեց ուղարկել։ Ստուգեք ինտերնետը և փորձեք կրկին կամ գրեք մեզ ուղիղ։',direct:'Կամ գրեք ուղիղ.',noContacts:'Կոնտակտները շուտով կավելացվեն։'},
-  bot:{name:'BERD Օգնական',status:'● Պատասխանում է միանգամից',hello:'Բարև։ Ես BERD SOFT-ի օգնականն եմ 👋',pick:'Ընտրեք հարցը ներքևից կամ գրեք ձերը։',back:'← Վերադառնալ հարցերին',ph:'Գրեք ձեր հարցը…',
-    fallback:'Այս հարցին ավելի լավ կպատասխանի մեր թիմը։ Գրեք մեզ, և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։',fallbackAct:'Բացել «Կապ»-ը',qa:[
-    ['serv','Ի՞նչ ծառայություններ եք մատուցում','Ստեղծում ենք կայքեր, վեբ հավելվածներ, iPhone-ի և Android-ի հավելվածներ և Telegram-բոտեր։ Նաև կարգավորում ենք դոմենը, սերվերը և աջակցում ենք գործարկումից հետո։','serv','Բացել ծառայությունները'],
-    ['price','Որքա՞ն արժե կայքը','Գինը կախված է նախագծից. էջերի քանակից, ֆունկցիաներից և ինտեգրումներից։ Լրացրեք բրիֆը, և անվճար կուղարկենք մանրամասն նախահաշիվ։ Գինը ֆիքսվում է մինչև աշխատանքի մեկնարկը։','brief','Լրացնել բրիֆը'],
-    ['time','Որքա՞ն ժամանակ է պետք','Դիզայնը սովորաբար 3–7 օր է, մշակումը՝ 1–4 շաբաթ՝ կախված ծավալից։ Ճշգրիտ ժամկետը նշում ենք բրիֆից հետո։'],
-    ['pay','Ինչպե՞ս է կատարվում վճարումը','Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Մնացած 70%-ը վճարում եք պատրաստ նախագիծը հանձնելիս։'],
-    ['own','Ո՞ւմ է պատկանում կայքը','Ձեզ։ Դոմենն ու սերվերը գրանցվում են ձեր անունով, կոդը և բոլոր մուտքերը հանձնում ենք ձեզ։'],
-    ['sup','Աջակցում եք գործարկումից հետո','Այո։ Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ՝ մինչև 12 ամիս՝ կախված փաթեթից։'],
-    ['work','Ցույց տվեք ձեր աշխատանքները','Իհարկե։ «Աշխատանքներ»-ում նախագծի վրա սեղմելով այն կբացվի բրաուզերում։','work','Բացել աշխատանքները'],
-    ['start','Ինչի՞ց սկսել','Լրացրեք կարճ բրիֆը՝ 1 րոպե։ Մենք կուսումնասիրենք այն և կուղարկենք անվճար նախահաշիվ ու ժամկետ։','brief','Լրացնել բրիֆը'],
-    ['human','Ուզում եմ խոսել մարդու հետ','Իհարկե։ Գրեք մեզ «Կապ» պատուհանում, պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում։','chat','Բացել «Կապ»-ը']]},
-  brief:{stepOf:'Քայլ {i} / {n}',next:'Հաջորդը →',back:'← Հետ',submit:'Ուղարկել հայտը',sending:'Ուղարկվում է…',
-    pickOne:'Ընտրեք տարբերակներից մեկը',pickSome:'Ընտրեք առնվազն մեկը',needName:'Գրեք ձեր անունը',needContact:'Նշեք հեռախոս կամ Telegram',
-    oneHint:'Ընտրեք մեկ տարբերակ',manyHint:'Կարող եք ընտրել մի քանիսը',
-    steps:[
-      {id:'type',q:'Ի՞նչ է պետք ստեղծել',multi:0,opts:[['site','Կայք կամ լենդինգ'],['shop','Առցանց խանութ'],['app','Վեբ հավելված (CRM, անձնական էջ)'],['mob','Մոբայլ հավելված'],['bot','Telegram-բոտ'],['unsure','Դեռ չգիտեմ, խորհուրդ է պետք']]},
-      {id:'feat',q:'Ի՞նչ պետք է կարողանա',multi:1,opts:[['book','Առցանց գրանցում կամ ամրագրում'],['pay','Առցանց վճարում'],['admin','Ադմին վահանակ՝ բովանդակությունը փոխելու համար'],['lang','Մի քանի լեզու'],['crm','Ինտեգրում CRM-ի կամ 1C-ի հետ'],['track','Պատվերների կամ առաքման հետևում'],['account','Անձնական էջ հաճախորդի համար'],['seo','Google-ում առաջխաղացում (SEO)']]},
-      {id:'design',q:'Ունե՞ք դիզայն կամ օրինակներ',multi:0,opts:[['ready','Այո, դիզայնը պատրաստ է'],['refs','Ունենք օրինակներ, որոնք դուր են գալիս'],['none','Ոչ, պետք է ստեղծել զրոյից']]},
-      {id:'time',q:'Ե՞րբ է պետք',multi:0,opts:[['asap','Որքան հնարավոր է շուտ'],['month','Մեկ ամսվա ընթացքում'],['quarter','2–3 ամսում'],['flex','Ժամկետը ճկուն է']]}],
-    cq:'Ինչպե՞ս կապվել ձեզ հետ',chint:'Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում և կուղարկենք անվճար նախահաշիվ։',
-    name:'Անուն',contact:'Հեռախոս կամ Telegram',comment:'Մի քանի բառ նախագծի մասին (ըստ ցանկության)',
-    consent:'Ուղարկելով՝ համաձայնում եք, որ մեր թիմը կապ հաստատի ձեզ հետ այս հայտի վերաբերյալ։',
-    doneSent:'Շնորհակալություն։ Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում և կուղարկենք անվճար նախահաշիվ։',
-    doneOff:'Կայքը դեռ փորձնական ռեժիմում է, և հայտը ավտոմատ չի ուղարկվել։ Պատճենեք այն և ուղարկեք մեզ ուղիղ։',
-    doneErr:'Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ պատճենեք հայտը և ուղարկեք մեզ ուղիղ։',
-    titleSent:'Հայտն ընդունված է',titleOff:'Հայտը պատրաստ է',titleErr:'Հայտը չուղարկվեց',
-    retry:'Փորձել կրկին',again:'Լրացնել նոր բրիֆ',copy:'Պատճենել հայտը',copied:'Պատճենված է ✓',
-    labels:{type:'Ինչ է պետք',feat:'Ֆունկցիաներ',design:'Դիզայն',time:'Ժամկետ',name:'Անուն',contact:'Կոնտակտ',comment:'Մեկնաբանություն'}},
-  projects:{
-    aroma:{kind:'Telegram-բոտ + կայք',task:'Առավոտյան հերթերը սրճարանում կորցնում էին հաճախորդներին։',sol:'Նախնական պատվեր Telegram-բոտով և պարզ կայք մենյուով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։'},
-    cargo:{kind:'Վեբ հավելված',task:'Բեռների կարգավիճակները վարում էին Excel-ում, մենեջերները ծանրաբեռնված էին զանգերով։',sol:'Հաճախորդի անձնական էջ՝ առաքումների հետևումով և ծանուցումներով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։'},
-    fitup:{kind:'iOS և Android հավելված',task:'Մարզումների գրանցումները վարում էին նամակագրությամբ, և դրանց մի մասը կորչում էր։',sol:'Մոբայլ հավելված՝ ժամանակացույցով, գրանցումով և հիշեցումներով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։'},
-    dent:{kind:'Կայք՝ առցանց գրանցումով',task:'Հիվանդները զանգում էին ոչ աշխատանքային ժամերին և չէին կարողանում գրանցվել։',sol:'Կայք՝ առցանց գրանցումով, բժիշկների ժամանակացույցով և SMS հիշեցումով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։'},
-    nairi:{kind:'Առցանց խանութ',task:'Վաճառում էին Instagram-ի նամակներով և պատվերներ էին կորցնում։',sol:'Առցանց խանութ՝ կատալոգով, զամբյուղով և առցանց վճարումով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։'},
-    tavern:{kind:'Առաքման բոտ',task:'Առաքման ծառայությունները պահում էին պատվերի գումարի զգալի մասը։',sol:'Սեփական Telegram-բոտ՝ մենյուով, վճարումով և առաքման հետևումով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։'}},
-  days:['Կիր','Երկ','Երք','Չրք','Հնգ','Ուրբ','Շբթ']
-},
-ru:{
-  meta:{title:'BERD SOFT · Цифровая крепость для вашего бизнеса',desc:'BERD SOFT — сайты, веб- и мобильные приложения, Telegram-боты. От дизайна до запуска — одна команда. Ереван.',ogAlt:'Сайт BERD SOFT на экране ноутбука'},
-  code:'RU',name:'Русский',
-  ui:{protoNote:'Прототип сайта · проекты тестовые',hint:'Нажимайте на <b>иконки</b> внизу, чтобы открыть программы · окна можно перетаскивать',skip:'Нажмите, чтобы пропустить',
-    bubble:'Есть вопросы? Спросите меня',back:'‹ Назад',zoom:'Развернуть экран',close:'Закрыть',min:'Свернуть',max:'Развернуть',demo:'Демо',scrollHint:'↓ Прокрутите, чтобы посмотреть сайт',
-    test:'Тест',testProject:'Тестовый проект',task:'Задача',sol:'Решение',res:'Результат',all:'Все',folders:'Папки',
-    worksSub:'Нажмите на проект, чтобы открыть его в «браузере».',worksNote:'Это тестовые проекты. Реальные работы добавим позже.',
-    seeWorks:'Смотреть работы →',recent:'Последние работы',allArrow:'Все →',dock:'Программы',lang:'Язык',
-    apps:{work:'Работы',serv:'Услуги',proc:'Как мы работаем',about:'О нас',brief:'Бриф',chat:'Связь',bot:'BERD Ассистент'},
-    noscript:'Для работы сайта нужен JavaScript.'},
-  hero:{kick:'Веб-студия · Ереван',h1:'Цифровая <em>крепость</em> для вашего бизнеса',p:'Сайты, приложения и Telegram-боты — надёжные, быстрые и работающие на вас.',b1:'Открыть работы →',b2:'Рассчитать проект'},
-  cats:{web:'Сайты',app:'Веб-приложения',mob:'Мобильные',bot:'Боты'},
-  services:{title:'Услуги',lead:'Пять направлений — одна команда. Не нужно искать разных специалистов и координировать их работу.',items:[
-    ['Сайты и лендинги','Сайт, который за пять секунд объясняет ваш бизнес и приносит заявки.','web'],
-    ['Веб-приложения','CRM, личные кабинеты, бронирование, оплаты и интеграции.','app'],
-    ['Мобильные приложения','Приложения для iPhone и Android. Публикацию в App Store и Google Play берём на себя.','mob'],
-    ['Telegram-боты','Заказы, запись и оплата прямо в мессенджере.','bot'],
-    ['Сервер и поддержка','Домен, SSL, резервные копии и мониторинг. Все доступы — ваши.','']]},
-  process:{side:'Как мы работаем',sideSub:'5 этапов',title:'Пять этапов, каждый вы утверждаете',sub:'Результат видите на каждом шаге',steps:[
-    ['Бриф и оценка','Разбираемся в задаче и возвращаемся со списком работ и сроками.','Бесплатно',1],
-    ['Прототип и дизайн','Сначала структура экранов, потом визуал. Утверждаете до начала кода.','3–7 дней',1],
-    ['Разработка','После утверждения дизайна вы вносите 30% предоплаты, и мы начинаем код. Каждую неделю показываем рабочую версию по тестовой ссылке.','1–4 недели',0],
-    ['Запуск','Домен, сервер, SSL. Передаём вам все доступы. Остальные 70% оплачиваются при сдаче.','1–2 дня',0],
-    ['Поддержка','Обновления, резервные копии, мониторинг и доработки.','До 12 месяцев',0]]},
-  about:{title:'Мы — BERD SOFT',lead:'Студия разработки полного цикла в Ереване. Работаем с клиентами из Армении, СНГ и Европы. Наши четыре принципа:',contacts:'Контакты',gua:[
-    ['30% сейчас, 70% при сдаче','После утверждения дизайна — 30% предоплаты, остальные 70% — при сдаче готового проекта.'],
-    ['Не понравился дизайн — не платите','Макеты утверждаются до начала разработки.'],
-    ['Все доступы ваши','Домен и сервер оформляются на вас, код передаётся.'],
-    ['Цена не вырастет','Смета фиксируется до начала работ.']]},
-  chat:{online:'● В сети',greet1:'Здравствуйте! Расскажите о вашем проекте: что нужно сделать и к какому сроку.',greet2:'Отвечаем в течение одного рабочего дня, оценка бесплатная.',
-    name:'Ваше имя',contact:'Телефон или Telegram',msg:'Что нужно сделать…',send:'Отправить',needMsg:'Напишите пару слов о проекте',needContact:'Укажите телефон или Telegram, чтобы мы могли ответить',
-    sent:'Спасибо{n}! Мы получили ваше сообщение и ответим в течение одного рабочего дня.',
-    off:'Спасибо{n}! Сайт пока работает в тестовом режиме, и сообщения не отправляются автоматически. Пожалуйста, напишите нам напрямую.',
-    err:'Не удалось отправить. Проверьте интернет и попробуйте снова или напишите нам напрямую.',direct:'Или напишите напрямую:',noContacts:'Контакты скоро появятся.'},
-  bot:{name:'BERD Ассистент',status:'● Отвечает сразу',hello:'Здравствуйте! Я ассистент BERD SOFT 👋',pick:'Выберите вопрос ниже или напишите свой.',back:'← Вернуться к вопросам',ph:'Напишите ваш вопрос…',
-    fallback:'На этот вопрос лучше ответит наша команда. Напишите нам, и мы ответим в течение одного рабочего дня.',fallbackAct:'Открыть «Связь»',qa:[
-    ['serv','Какие услуги вы оказываете?','Создаём сайты, веб-приложения, приложения для iPhone и Android и Telegram-боты. Также настраиваем домен и сервер и поддерживаем проект после запуска.','serv','Открыть услуги'],
-    ['price','Сколько стоит сайт?','Цена зависит от проекта: количества страниц, функций и интеграций. Заполните бриф, и мы бесплатно пришлём подробную смету. Цена фиксируется до начала работ.','brief','Заполнить бриф'],
-    ['time','Сколько времени нужно?','Дизайн обычно занимает 3–7 дней, разработка — 1–4 недели в зависимости от объёма. Точный срок называем после брифа.'],
-    ['pay','Как происходит оплата?','После утверждения дизайна вы вносите 30% предоплаты, и мы начинаем код. Остальные 70% оплачиваются при сдаче готового проекта.'],
-    ['own','Кому принадлежит сайт?','Вам. Домен и сервер оформляются на ваше имя, код и все доступы передаём вам.'],
-    ['sup','Поддерживаете после запуска?','Да. Обновления, резервные копии, мониторинг и доработки — до 12 месяцев в зависимости от пакета.'],
-    ['work','Покажите ваши работы','Конечно. В разделе «Работы» нажмите на проект, и он откроется в браузере.','work','Открыть работы'],
-    ['start','С чего начать?','Заполните короткий бриф — это займёт минуту. Мы изучим его и пришлём бесплатную смету и сроки.','brief','Заполнить бриф'],
-    ['human','Хочу поговорить с человеком','Конечно. Напишите нам в окне «Связь» — отвечаем в течение одного рабочего дня.','chat','Открыть «Связь»']]},
-  brief:{stepOf:'Шаг {i} из {n}',next:'Далее →',back:'← Назад',submit:'Отправить заявку',sending:'Отправляем…',
-    pickOne:'Выберите один из вариантов',pickSome:'Выберите хотя бы один вариант',needName:'Напишите ваше имя',needContact:'Укажите телефон или Telegram',
-    oneHint:'Выберите один вариант',manyHint:'Можно выбрать несколько',
-    steps:[
-      {id:'type',q:'Что нужно создать?',multi:0,opts:[['site','Сайт или лендинг'],['shop','Интернет-магазин'],['app','Веб-приложение (CRM, личный кабинет)'],['mob','Мобильное приложение'],['bot','Telegram-бот'],['unsure','Пока не знаю, нужен совет']]},
-      {id:'feat',q:'Что он должен уметь?',multi:1,opts:[['book','Онлайн-запись или бронирование'],['pay','Онлайн-оплата'],['admin','Админ-панель для изменения контента'],['lang','Несколько языков'],['crm','Интеграция с CRM или 1С'],['track','Отслеживание заказов или доставки'],['account','Личный кабинет клиента'],['seo','Продвижение в Google (SEO)']]},
-      {id:'design',q:'Есть ли дизайн или примеры?',multi:0,opts:[['ready','Да, дизайн готов'],['refs','Есть примеры, которые нравятся'],['none','Нет, нужно создать с нуля']]},
-      {id:'time',q:'Когда нужно?',multi:0,opts:[['asap','Как можно скорее'],['month','В течение месяца'],['quarter','Через 2–3 месяца'],['flex','Сроки гибкие']]}],
-    cq:'Как с вами связаться?',chint:'Ответим в течение одного рабочего дня и пришлём бесплатную смету.',
-    name:'Имя',contact:'Телефон или Telegram',comment:'Пара слов о проекте (по желанию)',
-    consent:'Отправляя заявку, вы соглашаетесь, что наша команда свяжется с вами по этому запросу.',
-    doneSent:'Спасибо! Мы ответим в течение одного рабочего дня и пришлём бесплатную смету.',
-    doneOff:'Сайт пока работает в тестовом режиме, и заявка не отправилась автоматически. Скопируйте её и отправьте нам напрямую.',
-    doneErr:'Не удалось отправить. Попробуйте снова или скопируйте заявку и отправьте нам напрямую.',
-    titleSent:'Заявка принята',titleOff:'Заявка готова',titleErr:'Заявка не отправлена',
-    retry:'Попробовать снова',again:'Заполнить новый бриф',copy:'Скопировать заявку',copied:'Скопировано ✓',
-    labels:{type:'Что нужно',feat:'Функции',design:'Дизайн',time:'Сроки',name:'Имя',contact:'Контакт',comment:'Комментарий'}},
-  projects:{
-    aroma:{kind:'Telegram-бот + сайт',task:'Из-за утренних очередей кофейня теряла клиентов.',sol:'Предзаказ через Telegram-бота и простой сайт с меню.',res:'Тестовый проект: реальный результат добавим позже.'},
-    cargo:{kind:'Веб-приложение',task:'Статусы грузов вели в Excel, менеджеры тонули в звонках.',sol:'Личный кабинет клиента с отслеживанием доставок и уведомлениями.',res:'Тестовый проект: реальный результат добавим позже.'},
-    fitup:{kind:'Приложение для iOS и Android',task:'Записи на тренировки вели в переписке, и часть из них терялась.',sol:'Мобильное приложение с расписанием, записью и напоминаниями.',res:'Тестовый проект: реальный результат добавим позже.'},
-    dent:{kind:'Сайт с онлайн-записью',task:'Пациенты звонили в нерабочее время и не могли записаться.',sol:'Сайт с онлайн-записью, расписанием врачей и SMS-напоминаниями.',res:'Тестовый проект: реальный результат добавим позже.'},
-    nairi:{kind:'Интернет-магазин',task:'Продавали через сообщения в Instagram и теряли заказы.',sol:'Интернет-магазин с каталогом, корзиной и онлайн-оплатой.',res:'Тестовый проект: реальный результат добавим позже.'},
-    tavern:{kind:'Бот для доставки',task:'Сервисы доставки забирали значительную часть суммы заказа.',sol:'Собственный Telegram-бот с меню, оплатой и отслеживанием доставки.',res:'Тестовый проект: реальный результат добавим позже.'}},
-  days:['Вс','Пн','Вт','Ср','Чт','Пт','Сб']
-},
-en:{
-  meta:{title:'BERD SOFT · A digital fortress for your business',desc:'BERD SOFT builds websites, web and mobile apps and Telegram bots. One team from design to launch. Yerevan, Armenia.',ogAlt:'The BERD SOFT website on a laptop screen'},
-  code:'EN',name:'English',
-  ui:{protoNote:'Website prototype · projects are placeholders',hint:'Click the <b>icons</b> below to open apps · windows can be dragged around',skip:'Click to skip',
-    bubble:'Got questions? Ask me',back:'‹ Back',zoom:'Enlarge screen',close:'Close',min:'Minimize',max:'Maximize',demo:'Demo',scrollHint:'↓ Scroll to explore the site',
-    test:'Sample',testProject:'Sample project',task:'Challenge',sol:'Solution',res:'Result',all:'All',folders:'Folders',
-    worksSub:'Click a project to open it in the “browser”.',worksNote:'These are sample projects. Real case studies are coming soon.',
-    seeWorks:'See our work →',recent:'Latest work',allArrow:'All →',dock:'Apps',lang:'Language',
-    apps:{work:'Our work',serv:'Services',proc:'How we work',about:'About us',brief:'Brief',chat:'Contact',bot:'BERD Assistant'},
-    noscript:'This website needs JavaScript to run.'},
-  hero:{kick:'Web studio · Yerevan',h1:'A digital <em>fortress</em> for your business',p:'Websites, apps and Telegram bots that are solid, fast and working for you.',b1:'See our work →',b2:'Estimate a project'},
-  cats:{web:'Websites',app:'Web apps',mob:'Mobile',bot:'Bots'},
-  services:{title:'Services',lead:'Five disciplines, one team. No need to hire separate specialists and coordinate them.',items:[
-    ['Websites and landing pages','A site that explains your business in five seconds and brings in leads.','web'],
-    ['Web applications','CRMs, client portals, booking, payments and integrations.','app'],
-    ['Mobile apps','Apps for iPhone and Android. We handle publishing to the App Store and Google Play.','mob'],
-    ['Telegram bots','Orders, bookings and payments right inside the messenger.','bot'],
-    ['Hosting and support','Domain, SSL, backups and monitoring. Every login stays yours.','']]},
-  process:{side:'How we work',sideSub:'5 stages',title:'Five stages, and you approve each one',sub:'You see the result at every step',steps:[
-    ['Brief and estimate','We dig into the task and come back with a scope of work and a timeline.','Free',1],
-    ['Prototype and design','Screen structure first, then visuals. You approve before any code is written.','3–7 days',1],
-    ['Development','Once the design is approved you pay a 30% deposit and we start coding. Every week you see a working version on a test link.','1–4 weeks',0],
-    ['Launch','Domain, server, SSL. We hand over every login. The remaining 70% is paid on delivery.','1–2 days',0],
-    ['Support','Updates, backups, monitoring and improvements.','Up to 12 months',0]]},
-  about:{title:'We are BERD SOFT',lead:'A full-cycle development studio in Yerevan. We work with clients across Armenia, the CIS and Europe. Our four principles:',contacts:'Contacts',gua:[
-    ['30% now, 70% on delivery','A 30% deposit after the design is approved, the remaining 70% when the finished project is delivered.'],
-    ['Don’t like the design? Don’t pay','Mockups are approved before development starts.'],
-    ['Every login is yours','The domain and server are registered in your name, and the code is handed over.'],
-    ['The price won’t grow','The estimate is fixed before work begins.']]},
-  chat:{online:'● Online',greet1:'Hi! Tell us about your project: what needs to be built and by when.',greet2:'We reply within one business day, and the estimate is free.',
-    name:'Your name',contact:'Phone or Telegram',msg:'What do you need…',send:'Send',needMsg:'Write a few words about the project',needContact:'Add a phone or Telegram so we can reply',
-    sent:'Thank you{n}! We got your message and will reply within one business day.',
-    off:'Thank you{n}! The site is still in test mode and messages are not sent automatically yet. Please write to us directly.',
-    err:'Couldn’t send. Check your connection and try again, or write to us directly.',direct:'Or write directly:',noContacts:'Contacts are coming soon.'},
-  bot:{name:'BERD Assistant',status:'● Replies instantly',hello:'Hi! I’m the BERD SOFT assistant 👋',pick:'Pick a question below or type your own.',back:'← Back to questions',ph:'Type your question…',
-    fallback:'Our team can answer this one better. Write to us and we’ll reply within one business day.',fallbackAct:'Open “Contact”',qa:[
-    ['serv','What services do you offer?','We build websites, web applications, iPhone and Android apps and Telegram bots. We also set up the domain and server and support the project after launch.','serv','Open services'],
-    ['price','How much does a website cost?','It depends on the project: the number of pages, features and integrations. Fill in the brief and we’ll send a detailed estimate for free. The price is fixed before work begins.','brief','Fill in the brief'],
-    ['time','How long does it take?','Design usually takes 3–7 days and development 1–4 weeks, depending on scope. We give an exact timeline after the brief.'],
-    ['pay','How does payment work?','Once the design is approved you pay a 30% deposit and we start coding. The remaining 70% is paid when the finished project is delivered.'],
-    ['own','Who owns the website?','You do. The domain and server are registered in your name, and we hand over the code and every login.'],
-    ['sup','Do you support it after launch?','Yes. Updates, backups, monitoring and improvements for up to 12 months, depending on the package.'],
-    ['work','Show me your work','Sure. In “Our work”, click a project and it opens in the browser.','work','Open our work'],
-    ['start','Where do I start?','Fill in the short brief, it takes a minute. We’ll review it and send a free estimate and timeline.','brief','Fill in the brief'],
-    ['human','I want to talk to a person','Of course. Write to us in the “Contact” window and we’ll reply within one business day.','chat','Open “Contact”']]},
-  brief:{stepOf:'Step {i} of {n}',next:'Next →',back:'← Back',submit:'Send request',sending:'Sending…',
-    pickOne:'Pick one of the options',pickSome:'Pick at least one option',needName:'Enter your name',needContact:'Add a phone or Telegram',
-    oneHint:'Pick one option',manyHint:'You can pick several',
-    steps:[
-      {id:'type',q:'What do you need?',multi:0,opts:[['site','Website or landing page'],['shop','Online store'],['app','Web app (CRM, client portal)'],['mob','Mobile app'],['bot','Telegram bot'],['unsure','Not sure yet, I need advice']]},
-      {id:'feat',q:'What should it be able to do?',multi:1,opts:[['book','Online booking'],['pay','Online payments'],['admin','Admin panel to edit content'],['lang','Several languages'],['crm','CRM or 1C integration'],['track','Order or delivery tracking'],['account','Client account area'],['seo','Google ranking (SEO)']]},
-      {id:'design',q:'Do you have a design or examples?',multi:0,opts:[['ready','Yes, the design is ready'],['refs','We have examples we like'],['none','No, it needs to be designed from scratch']]},
-      {id:'time',q:'When do you need it?',multi:0,opts:[['asap','As soon as possible'],['month','Within a month'],['quarter','In 2–3 months'],['flex','The timeline is flexible']]}],
-    cq:'How can we reach you?',chint:'We’ll reply within one business day and send a free estimate.',
-    name:'Name',contact:'Phone or Telegram',comment:'A few words about the project (optional)',
-    consent:'By sending, you agree that our team may contact you about this request.',
-    doneSent:'Thank you! We’ll reply within one business day and send a free estimate.',
-    doneOff:'The site is still in test mode, so the request was not sent automatically. Copy it and send it to us directly.',
-    doneErr:'Couldn’t send. Try again, or copy the request and send it to us directly.',
-    titleSent:'Request received',titleOff:'Your request is ready',titleErr:'Request not sent',
-    retry:'Try again',again:'Fill in a new brief',copy:'Copy request',copied:'Copied ✓',
-    labels:{type:'What',feat:'Features',design:'Design',time:'Timeline',name:'Name',contact:'Contact',comment:'Comment'}},
-  projects:{
-    aroma:{kind:'Telegram bot + website',task:'Morning queues were costing the café customers.',sol:'Pre-ordering through a Telegram bot and a simple website with the menu.',res:'Sample project: the real result will be added later.'},
-    cargo:{kind:'Web application',task:'Shipment statuses lived in Excel and managers were swamped with calls.',sol:'A client portal with shipment tracking and notifications.',res:'Sample project: the real result will be added later.'},
-    fitup:{kind:'iOS and Android app',task:'Class bookings happened in chat threads and some got lost.',sol:'A mobile app with schedules, booking and reminders.',res:'Sample project: the real result will be added later.'},
-    dent:{kind:'Website with online booking',task:'Patients called after hours and couldn’t book an appointment.',sol:'A website with online booking, doctors’ schedules and SMS reminders.',res:'Sample project: the real result will be added later.'},
-    nairi:{kind:'Online store',task:'They sold through Instagram DMs and lost orders along the way.',sol:'An online store with a catalog, cart and online payments.',res:'Sample project: the real result will be added later.'},
-    tavern:{kind:'Delivery bot',task:'Delivery platforms kept a large share of every order.',sol:'Their own Telegram bot with a menu, payments and delivery tracking.',res:'Sample project: the real result will be added later.'}},
-  days:['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
-}
-}/*/CONTENT*/;
+var CONTENT = /*CONTENT*/{"hy":{"meta":{"title":"BERD SOFT · Թվային բերդ ձեր բիզնեսի համար","desc":"BERD SOFT՝ կայքեր, վեբ և մոբայլ հավելվածներ, Telegram-բոտեր։ Դիզայնից մինչև գործարկում՝ մեկ թիմ։ Երևան։","ogAlt":"BERD SOFT կայքը նոութբուքի էկրանին"},"code":"ՀՅ","name":"Հայերեն","ui":{"protoNote":"Կայքի նախատիպ · նախագծերը թեստային են","hint":"Սեղմեք ներքևի <b>պատկերակներին</b>՝ ծրագրերը բացելու համար · պատուհանները կարելի է տեղաշարժել","skip":"Սեղմեք՝ բաց թողնելու համար","bubble":"Հարցեր ունե՞ք։ Հարցրեք ինձ","back":"‹ Հետ","zoom":"Մեծացնել էկրանը","close":"Փակել","min":"Թաքցնել","max":"Մեծացնել","demo":"Դեմո","scrollHint":"↓ Սքրոլեք՝ կայքը դիտելու համար","test":"Թեստային","testProject":"Թեստային նախագիծ","task":"Խնդիր","sol":"Լուծում","res":"Արդյունք","all":"Բոլորը","folders":"Թղթապանակներ","worksSub":"Սեղմեք նախագծի վրա՝ այն «բրաուզերում» բացելու համար։","worksNote":"Սրանք թեստային նախագծեր են։ Իրական աշխատանքները կավելացվեն հետո։","seeWorks":"Տեսնել աշխատանքները →","recent":"Վերջին աշխատանքները","allArrow":"Բոլորը →","dock":"Ծրագրեր","lang":"Լեզու","apps":{"work":"Աշխատանքներ","serv":"Ծառայություններ","proc":"Ինչպես ենք աշխատում","about":"Մեր մասին","brief":"Բրիֆ","chat":"Կապ","bot":"BERD Օգնական","calc":"Հաշվիչ","blog":"Բլոգ","game":"BERD Blocks"},"noscript":"Կայքը աշխատելու համար անհրաժեշտ է JavaScript։"},"hero":{"kick":"Վեբ ստուդիա · Երևան","h1":"Թվային <em>բերդ</em> ձեր բիզնեսի համար","p":"Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։","b1":"Բացել աշխատանքները →","b2":"Հաշվարկել նախագիծը"},"cats":{"web":"Կայքեր","app":"Վեբ հավելվածներ","mob":"Մոբայլ","bot":"Բոտեր"},"services":{"title":"Ծառայություններ","lead":"Հինգ ուղղություն՝ մեկ թիմ։ Կարիք չկա տարբեր մասնագետներ փնտրել և նրանց աշխատանքը համակարգել։","items":[["Կայքեր և լենդինգներ","Կայք, որը հինգ վայրկյանում բացատրում է ձեր բիզնեսը և բերում հայտեր։","web"],["Վեբ հավելվածներ","CRM, անձնական էջեր, ամրագրում, վճարումներ և ինտեգրումներ։","app"],["Մոբայլ հավելվածներ","Հավելվածներ iPhone-ի և Android-ի համար։ App Store-ում և Google Play-ում հրապարակումը մեր վրա է։","mob"],["Telegram-բոտեր","Պատվերներ, գրանցում և վճարում ուղիղ մեսենջերում։","bot"],["Սերվեր և աջակցություն","Դոմեն, SSL, պահուստավորում և մոնիտորինգ։ Մուտքերը ձերն են։",""]]},"process":{"side":"Ինչպես ենք աշխատում","sideSub":"5 փուլ","title":"Հինգ փուլ, յուրաքանչյուրը հաստատում եք դուք","sub":"Արդյունքը տեսնում եք յուրաքանչյուր քայլում","steps":[["Բրիֆ և գնահատում","Խորանում ենք խնդրի մեջ և վերադառնում աշխատանքների ցանկով ու ժամկետով։","Անվճար",1],["Նախատիպ և դիզայն","Սկզբում էկրանների կառուցվածքը, հետո՝ վիզուալը։ Հաստատում եք մինչև կոդը։","3–7 օր",1],["Մշակում","Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Ամեն շաբաթ ցույց ենք տալիս աշխատող տարբերակը թեստային հղումով։","1–4 շաբաթ",0],["Գործարկում","Դոմեն, սերվեր, SSL։ Բոլոր մուտքերը հանձնում ենք ձեզ։ Մնացած 70%-ը վճարում եք հանձնման ժամանակ։","1–2 օր",0],["Աջակցություն","Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ։","Մինչև 12 ամիս",0]]},"about":{"title":"Մենք BERD SOFT-ն ենք","lead":"Լրիվ ցիկլի մշակման ստուդիա Երևանում։ Աշխատում ենք Հայաստանի, ԱՊՀ-ի և Եվրոպայի հաճախորդների հետ։ Ահա մեր չորս սկզբունքները.","contacts":"Կոնտակտներ","gua":[["30% հիմա, 70%՝ հանձնելիս","Դիզայնը հաստատելուց հետո՝ 30% կանխավճար, մնացած 70%-ը՝ պատրաստ նախագիծը հանձնելիս։"],["Դիզայնը դուր չեկա՞վ, մի վճարեք","Մակետները հաստատում եք մինչև մշակումը։"],["Բոլոր մուտքերը ձերն են","Դոմենն ու սերվերը ձեր անունով են, կոդը հանձնվում է։"],["Գինը չի աճի","Գնացուցակը ֆիքսվում է մինչև աշխատանքի մեկնարկը։"]]},"chat":{"online":"● Առցանց է","greet1":"Բարև։ Պատմեք ձեր նախագծի մասին. ինչ է պետք անել և երբ։","greet2":"Պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում, գնահատումն անվճար է։","name":"Ձեր անունը","contact":"Հեռախոս կամ Telegram","msg":"Ինչ է պետք անել…","send":"Ուղարկել","needMsg":"Գրեք մի քանի բառ նախագծի մասին","needContact":"Նշեք հեռախոս կամ Telegram, որ կարողանանք պատասխանել","sent":"Շնորհակալություն{n}։ Ստացանք ձեր հաղորդագրությունը և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։","off":"Շնորհակալություն{n}։ Կայքը դեռ փորձնական ռեժիմում է, և հաղորդագրությունները ավտոմատ չեն ուղարկվում։ Խնդրում ենք գրել մեզ ուղիղ։","err":"Չհաջողվեց ուղարկել։ Ստուգեք ինտերնետը և փորձեք կրկին կամ գրեք մեզ ուղիղ։","direct":"Կամ գրեք ուղիղ.","noContacts":"Կոնտակտները շուտով կավելացվեն։"},"bot":{"name":"BERD Օգնական","status":"● Պատասխանում է միանգամից","hello":"Բարև։ Ես BERD SOFT-ի օգնականն եմ 👋","pick":"Ընտրեք հարցը ներքևից կամ գրեք ձերը։","back":"← Վերադառնալ հարցերին","ph":"Գրեք ձեր հարցը…","fallback":"Այս հարցին ավելի լավ կպատասխանի մեր թիմը։ Գրեք մեզ, և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։","fallbackAct":"Բացել «Կապ»-ը","qa":[["serv","Ի՞նչ ծառայություններ եք մատուցում","Ստեղծում ենք կայքեր, վեբ հավելվածներ, iPhone-ի և Android-ի հավելվածներ և Telegram-բոտեր։ Նաև կարգավորում ենք դոմենը, սերվերը և աջակցում ենք գործարկումից հետո։","serv","Բացել ծառայությունները"],["price","Որքա՞ն արժե կայքը","Գինը կախված է նախագծից. էջերի քանակից, ֆունկցիաներից և ինտեգրումներից։ Լրացրեք բրիֆը, և անվճար կուղարկենք մանրամասն նախահաշիվ։ Գինը ֆիքսվում է մինչև աշխատանքի մեկնարկը։","brief","Լրացնել բրիֆը"],["time","Որքա՞ն ժամանակ է պետք","Դիզայնը սովորաբար 3–7 օր է, մշակումը՝ 1–4 շաբաթ՝ կախված ծավալից։ Ճշգրիտ ժամկետը նշում ենք բրիֆից հետո։"],["pay","Ինչպե՞ս է կատարվում վճարումը","Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Մնացած 70%-ը վճարում եք պատրաստ նախագիծը հանձնելիս։"],["own","Ո՞ւմ է պատկանում կայքը","Ձեզ։ Դոմենն ու սերվերը գրանցվում են ձեր անունով, կոդը և բոլոր մուտքերը հանձնում ենք ձեզ։"],["sup","Աջակցում եք գործարկումից հետո","Այո։ Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ՝ մինչև 12 ամիս՝ կախված փաթեթից։"],["work","Ցույց տվեք ձեր աշխատանքները","Իհարկե։ «Աշխատանքներ»-ում նախագծի վրա սեղմելով այն կբացվի բրաուզերում։","work","Բացել աշխատանքները"],["start","Ինչի՞ց սկսել","Լրացրեք կարճ բրիֆը՝ 1 րոպե։ Մենք կուսումնասիրենք այն և կուղարկենք անվճար նախահաշիվ ու ժամկետ։","brief","Լրացնել բրիֆը"],["human","Ուզում եմ խոսել մարդու հետ","Իհարկե։ Գրեք մեզ «Կապ» պատուհանում, պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում։","chat","Բացել «Կապ»-ը"]]},"brief":{"stepOf":"Քայլ {i} / {n}","next":"Հաջորդը →","back":"← Հետ","submit":"Ուղարկել հայտը","sending":"Ուղարկվում է…","pickOne":"Ընտրեք տարբերակներից մեկը","pickSome":"Ընտրեք առնվազն մեկը","needName":"Գրեք ձեր անունը","needContact":"Նշեք հեռախոս կամ Telegram","oneHint":"Ընտրեք մեկ տարբերակ","manyHint":"Կարող եք ընտրել մի քանիսը","steps":[{"id":"type","q":"Ի՞նչ է պետք ստեղծել","multi":0,"opts":[["site","Կայք կամ լենդինգ"],["shop","Առցանց խանութ"],["app","Վեբ հավելված (CRM, անձնական էջ)"],["mob","Մոբայլ հավելված"],["bot","Telegram-բոտ"],["unsure","Դեռ չգիտեմ, խորհուրդ է պետք"]]},{"id":"feat","q":"Ի՞նչ պետք է կարողանա","multi":1,"opts":[["book","Առցանց գրանցում կամ ամրագրում"],["pay","Առցանց վճարում"],["admin","Ադմին վահանակ՝ բովանդակությունը փոխելու համար"],["lang","Մի քանի լեզու"],["crm","Ինտեգրում CRM-ի կամ 1C-ի հետ"],["track","Պատվերների կամ առաքման հետևում"],["account","Անձնական էջ հաճախորդի համար"],["seo","Google-ում առաջխաղացում (SEO)"]]},{"id":"design","q":"Ունե՞ք դիզայն կամ օրինակներ","multi":0,"opts":[["ready","Այո, դիզայնը պատրաստ է"],["refs","Ունենք օրինակներ, որոնք դուր են գալիս"],["none","Ոչ, պետք է ստեղծել զրոյից"]]},{"id":"time","q":"Ե՞րբ է պետք","multi":0,"opts":[["asap","Որքան հնարավոր է շուտ"],["month","Մեկ ամսվա ընթացքում"],["quarter","2–3 ամսում"],["flex","Ժամկետը ճկուն է"]]}],"cq":"Ինչպե՞ս կապվել ձեզ հետ","chint":"Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում և կուղարկենք անվճար նախահաշիվ։","name":"Անուն","contact":"Հեռախոս կամ Telegram","comment":"Մի քանի բառ նախագծի մասին (ըստ ցանկության)","consent":"Ուղարկելով՝ համաձայնում եք, որ մեր թիմը կապ հաստատի ձեզ հետ այս հայտի վերաբերյալ։","doneSent":"Շնորհակալություն։ Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում և կուղարկենք անվճար նախահաշիվ։","doneOff":"Կայքը դեռ փորձնական ռեժիմում է, և հայտը ավտոմատ չի ուղարկվել։ Պատճենեք այն և ուղարկեք մեզ ուղիղ։","doneErr":"Չհաջողվեց ուղարկել։ Փորձեք կրկին կամ պատճենեք հայտը և ուղարկեք մեզ ուղիղ։","titleSent":"Հայտն ընդունված է","titleOff":"Հայտը պատրաստ է","titleErr":"Հայտը չուղարկվեց","retry":"Փորձել կրկին","again":"Լրացնել նոր բրիֆ","copy":"Պատճենել հայտը","copied":"Պատճենված է ✓","labels":{"type":"Ինչ է պետք","feat":"Ֆունկցիաներ","design":"Դիզայն","time":"Ժամկետ","name":"Անուն","contact":"Կոնտակտ","comment":"Մեկնաբանություն"}},"projects":{"aroma":{"kind":"Telegram-բոտ + կայք","task":"Առավոտյան հերթերը սրճարանում կորցնում էին հաճախորդներին։","sol":"Նախնական պատվեր Telegram-բոտով և պարզ կայք մենյուով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"cargo":{"kind":"Վեբ հավելված","task":"Բեռների կարգավիճակները վարում էին Excel-ում, մենեջերները ծանրաբեռնված էին զանգերով։","sol":"Հաճախորդի անձնական էջ՝ առաքումների հետևումով և ծանուցումներով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"fitup":{"kind":"iOS և Android հավելված","task":"Մարզումների գրանցումները վարում էին նամակագրությամբ, և դրանց մի մասը կորչում էր։","sol":"Մոբայլ հավելված՝ ժամանակացույցով, գրանցումով և հիշեցումներով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"dent":{"kind":"Կայք՝ առցանց գրանցումով","task":"Հիվանդները զանգում էին ոչ աշխատանքային ժամերին և չէին կարողանում գրանցվել։","sol":"Կայք՝ առցանց գրանցումով, բժիշկների ժամանակացույցով և SMS հիշեցումով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"nairi":{"kind":"Առցանց խանութ","task":"Վաճառում էին Instagram-ի նամակներով և պատվերներ էին կորցնում։","sol":"Առցանց խանութ՝ կատալոգով, զամբյուղով և առցանց վճարումով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"},"tavern":{"kind":"Առաքման բոտ","task":"Առաքման ծառայությունները պահում էին պատվերի գումարի զգալի մասը։","sol":"Սեփական Telegram-բոտ՝ մենյուով, վճարումով և առաքման հետևումով։","res":"Թեստային նախագիծ. իրական արդյունքը կավելացվի։"}},"days":["Կիր","Երկ","Երք","Չրք","Հնգ","Ուրբ","Շբթ"],"tod":{"morning":"Բարի առավոտ","day":"Բարի օր","evening":"Բարի երեկո","night":"Բարի գիշեր"},"calc":{"title":"Հավաքեք ձեր նախագիծը","sub":"Ընտրեք, թե ինչ է պետք. նախագիծը կհավաքվի աջ կողմում, իսկ ներքևում կտեսնեք մոտավոր գինն ու ժամկետը։","type":"Ինչ ենք ստեղծում","pages":"Էջերի քանակ","features":"Ֆունկցիաներ","langs":"Լեզուներ","types":{"landing":"Լենդինգ","site":"Կայք","shop":"Խանութ","webapp":"Վեբ հավելված","mobile":"Մոբայլ հավելված","bot":"Telegram-բոտ"},"feats":{"pay":"Առցանց վճարում","admin":"Ադմին վահանակ","booking":"Առցանց գրանցում","account":"Անձնական էջ","crm":"CRM / 1C ինտեգրում","seo":"SEO առաջխաղացում","tgbot":"Telegram-բոտ կայքին"},"price":"Մոտավոր գին","time":"Ժամկետ","days":"օր","weeks":"շաբաթ","from":"մոտ","note":"Սա նախնական գնահատական է։ Ճշգրիտ գինը ֆիքսում ենք բրիֆից հետո, անվճար։","send":"Ուղարկել այս նախագիծը","name":"Անուն","contact":"Հեռախոս կամ Telegram","needContact":"Նշեք հեռախոս կամ Telegram","sent":"Ստացանք ձեր նախագիծը։ Կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։","failed":"Չհաջողվեց ուղարկել։ Գրեք մեզ ուղիղ.","mock":{"home":"Գլխավոր","about":"Մեր մասին","catalog":"Կատալոգ","contact":"Կապ","book":"Գրանցվել","cart":"Զամբյուղ","login":"Մուտք","pay":"Վճարել","admin":"Ադմին","dash":"Վահանակ","orders":"Պատվերներ"}},"ba":{"tab":"Առաջ / Հետո","before":"Առաջ","after":"Հետո","hint":"Քաշեք սահիչը՝ համեմատելու համար","sample":"Թեստային օրինակ"},"live":{"intro":"Գրեք մեզ, և կպատասխանենք հենց այստեղ, այս չատում։","optional":"Կոնտակտը՝ ըստ ցանկության, եթե ուզում եք պատասխան ստանալ նաև կայքից դուրս","sent":"Ուղարկված է։ Մեր թիմը կպատասխանի այստեղ, սովորաբար մի քանի րոպեում աշխատանքային ժամերին։","team":"BERD SOFT"},"game":{"title":"BERD Blocks","score":"Միավոր","best":"Լավագույն","lines":"Տողեր","start":"Սկսել","again":"Նորից","over":"Խաղն ավարտվեց","help":"← → շարժել · ↑ պտտել · ↓ արագ · Space՝ ցած","found":"Դուք գտաք թաքնված խաղը 🎮","paused":"Դադար"},"blog":{"title":"Բլոգ","sub":"Հոդվածներ կայքերի, հավելվածների և բոտերի մասին՝ բիզնեսի համար","read":"Կարդալ","min":"րոպե","back":"← Բոլոր հոդվածները","open":"Բացել առանձին էջով ↗"}},"ru":{"meta":{"title":"BERD SOFT · Цифровая крепость для вашего бизнеса","desc":"BERD SOFT — сайты, веб- и мобильные приложения, Telegram-боты. От дизайна до запуска — одна команда. Ереван.","ogAlt":"Сайт BERD SOFT на экране ноутбука"},"code":"RU","name":"Русский","ui":{"protoNote":"Прототип сайта · проекты тестовые","hint":"Нажимайте на <b>иконки</b> внизу, чтобы открыть программы · окна можно перетаскивать","skip":"Нажмите, чтобы пропустить","bubble":"Есть вопросы? Спросите меня","back":"‹ Назад","zoom":"Развернуть экран","close":"Закрыть","min":"Свернуть","max":"Развернуть","demo":"Демо","scrollHint":"↓ Прокрутите, чтобы посмотреть сайт","test":"Тест","testProject":"Тестовый проект","task":"Задача","sol":"Решение","res":"Результат","all":"Все","folders":"Папки","worksSub":"Нажмите на проект, чтобы открыть его в «браузере».","worksNote":"Это тестовые проекты. Реальные работы добавим позже.","seeWorks":"Смотреть работы →","recent":"Последние работы","allArrow":"Все →","dock":"Программы","lang":"Язык","apps":{"work":"Работы","serv":"Услуги","proc":"Как мы работаем","about":"О нас","brief":"Бриф","chat":"Связь","bot":"BERD Ассистент","calc":"Калькулятор","blog":"Блог","game":"BERD Blocks"},"noscript":"Для работы сайта нужен JavaScript."},"hero":{"kick":"Веб-студия · Ереван","h1":"Цифровая <em>крепость</em> для вашего бизнеса","p":"Сайты, приложения и Telegram-боты — надёжные, быстрые и работающие на вас.","b1":"Открыть работы →","b2":"Рассчитать проект"},"cats":{"web":"Сайты","app":"Веб-приложения","mob":"Мобильные","bot":"Боты"},"services":{"title":"Услуги","lead":"Пять направлений — одна команда. Не нужно искать разных специалистов и координировать их работу.","items":[["Сайты и лендинги","Сайт, который за пять секунд объясняет ваш бизнес и приносит заявки.","web"],["Веб-приложения","CRM, личные кабинеты, бронирование, оплаты и интеграции.","app"],["Мобильные приложения","Приложения для iPhone и Android. Публикацию в App Store и Google Play берём на себя.","mob"],["Telegram-боты","Заказы, запись и оплата прямо в мессенджере.","bot"],["Сервер и поддержка","Домен, SSL, резервные копии и мониторинг. Все доступы — ваши.",""]]},"process":{"side":"Как мы работаем","sideSub":"5 этапов","title":"Пять этапов, каждый вы утверждаете","sub":"Результат видите на каждом шаге","steps":[["Бриф и оценка","Разбираемся в задаче и возвращаемся со списком работ и сроками.","Бесплатно",1],["Прототип и дизайн","Сначала структура экранов, потом визуал. Утверждаете до начала кода.","3–7 дней",1],["Разработка","После утверждения дизайна вы вносите 30% предоплаты, и мы начинаем код. Каждую неделю показываем рабочую версию по тестовой ссылке.","1–4 недели",0],["Запуск","Домен, сервер, SSL. Передаём вам все доступы. Остальные 70% оплачиваются при сдаче.","1–2 дня",0],["Поддержка","Обновления, резервные копии, мониторинг и доработки.","До 12 месяцев",0]]},"about":{"title":"Мы — BERD SOFT","lead":"Студия разработки полного цикла в Ереване. Работаем с клиентами из Армении, СНГ и Европы. Наши четыре принципа:","contacts":"Контакты","gua":[["30% сейчас, 70% при сдаче","После утверждения дизайна — 30% предоплаты, остальные 70% — при сдаче готового проекта."],["Не понравился дизайн — не платите","Макеты утверждаются до начала разработки."],["Все доступы ваши","Домен и сервер оформляются на вас, код передаётся."],["Цена не вырастет","Смета фиксируется до начала работ."]]},"chat":{"online":"● В сети","greet1":"Здравствуйте! Расскажите о вашем проекте: что нужно сделать и к какому сроку.","greet2":"Отвечаем в течение одного рабочего дня, оценка бесплатная.","name":"Ваше имя","contact":"Телефон или Telegram","msg":"Что нужно сделать…","send":"Отправить","needMsg":"Напишите пару слов о проекте","needContact":"Укажите телефон или Telegram, чтобы мы могли ответить","sent":"Спасибо{n}! Мы получили ваше сообщение и ответим в течение одного рабочего дня.","off":"Спасибо{n}! Сайт пока работает в тестовом режиме, и сообщения не отправляются автоматически. Пожалуйста, напишите нам напрямую.","err":"Не удалось отправить. Проверьте интернет и попробуйте снова или напишите нам напрямую.","direct":"Или напишите напрямую:","noContacts":"Контакты скоро появятся."},"bot":{"name":"BERD Ассистент","status":"● Отвечает сразу","hello":"Здравствуйте! Я ассистент BERD SOFT 👋","pick":"Выберите вопрос ниже или напишите свой.","back":"← Вернуться к вопросам","ph":"Напишите ваш вопрос…","fallback":"На этот вопрос лучше ответит наша команда. Напишите нам, и мы ответим в течение одного рабочего дня.","fallbackAct":"Открыть «Связь»","qa":[["serv","Какие услуги вы оказываете?","Создаём сайты, веб-приложения, приложения для iPhone и Android и Telegram-боты. Также настраиваем домен и сервер и поддерживаем проект после запуска.","serv","Открыть услуги"],["price","Сколько стоит сайт?","Цена зависит от проекта: количества страниц, функций и интеграций. Заполните бриф, и мы бесплатно пришлём подробную смету. Цена фиксируется до начала работ.","brief","Заполнить бриф"],["time","Сколько времени нужно?","Дизайн обычно занимает 3–7 дней, разработка — 1–4 недели в зависимости от объёма. Точный срок называем после брифа."],["pay","Как происходит оплата?","После утверждения дизайна вы вносите 30% предоплаты, и мы начинаем код. Остальные 70% оплачиваются при сдаче готового проекта."],["own","Кому принадлежит сайт?","Вам. Домен и сервер оформляются на ваше имя, код и все доступы передаём вам."],["sup","Поддерживаете после запуска?","Да. Обновления, резервные копии, мониторинг и доработки — до 12 месяцев в зависимости от пакета."],["work","Покажите ваши работы","Конечно. В разделе «Работы» нажмите на проект, и он откроется в браузере.","work","Открыть работы"],["start","С чего начать?","Заполните короткий бриф — это займёт минуту. Мы изучим его и пришлём бесплатную смету и сроки.","brief","Заполнить бриф"],["human","Хочу поговорить с человеком","Конечно. Напишите нам в окне «Связь» — отвечаем в течение одного рабочего дня.","chat","Открыть «Связь»"]]},"brief":{"stepOf":"Шаг {i} из {n}","next":"Далее →","back":"← Назад","submit":"Отправить заявку","sending":"Отправляем…","pickOne":"Выберите один из вариантов","pickSome":"Выберите хотя бы один вариант","needName":"Напишите ваше имя","needContact":"Укажите телефон или Telegram","oneHint":"Выберите один вариант","manyHint":"Можно выбрать несколько","steps":[{"id":"type","q":"Что нужно создать?","multi":0,"opts":[["site","Сайт или лендинг"],["shop","Интернет-магазин"],["app","Веб-приложение (CRM, личный кабинет)"],["mob","Мобильное приложение"],["bot","Telegram-бот"],["unsure","Пока не знаю, нужен совет"]]},{"id":"feat","q":"Что он должен уметь?","multi":1,"opts":[["book","Онлайн-запись или бронирование"],["pay","Онлайн-оплата"],["admin","Админ-панель для изменения контента"],["lang","Несколько языков"],["crm","Интеграция с CRM или 1С"],["track","Отслеживание заказов или доставки"],["account","Личный кабинет клиента"],["seo","Продвижение в Google (SEO)"]]},{"id":"design","q":"Есть ли дизайн или примеры?","multi":0,"opts":[["ready","Да, дизайн готов"],["refs","Есть примеры, которые нравятся"],["none","Нет, нужно создать с нуля"]]},{"id":"time","q":"Когда нужно?","multi":0,"opts":[["asap","Как можно скорее"],["month","В течение месяца"],["quarter","Через 2–3 месяца"],["flex","Сроки гибкие"]]}],"cq":"Как с вами связаться?","chint":"Ответим в течение одного рабочего дня и пришлём бесплатную смету.","name":"Имя","contact":"Телефон или Telegram","comment":"Пара слов о проекте (по желанию)","consent":"Отправляя заявку, вы соглашаетесь, что наша команда свяжется с вами по этому запросу.","doneSent":"Спасибо! Мы ответим в течение одного рабочего дня и пришлём бесплатную смету.","doneOff":"Сайт пока работает в тестовом режиме, и заявка не отправилась автоматически. Скопируйте её и отправьте нам напрямую.","doneErr":"Не удалось отправить. Попробуйте снова или скопируйте заявку и отправьте нам напрямую.","titleSent":"Заявка принята","titleOff":"Заявка готова","titleErr":"Заявка не отправлена","retry":"Попробовать снова","again":"Заполнить новый бриф","copy":"Скопировать заявку","copied":"Скопировано ✓","labels":{"type":"Что нужно","feat":"Функции","design":"Дизайн","time":"Сроки","name":"Имя","contact":"Контакт","comment":"Комментарий"}},"projects":{"aroma":{"kind":"Telegram-бот + сайт","task":"Из-за утренних очередей кофейня теряла клиентов.","sol":"Предзаказ через Telegram-бота и простой сайт с меню.","res":"Тестовый проект: реальный результат добавим позже."},"cargo":{"kind":"Веб-приложение","task":"Статусы грузов вели в Excel, менеджеры тонули в звонках.","sol":"Личный кабинет клиента с отслеживанием доставок и уведомлениями.","res":"Тестовый проект: реальный результат добавим позже."},"fitup":{"kind":"Приложение для iOS и Android","task":"Записи на тренировки вели в переписке, и часть из них терялась.","sol":"Мобильное приложение с расписанием, записью и напоминаниями.","res":"Тестовый проект: реальный результат добавим позже."},"dent":{"kind":"Сайт с онлайн-записью","task":"Пациенты звонили в нерабочее время и не могли записаться.","sol":"Сайт с онлайн-записью, расписанием врачей и SMS-напоминаниями.","res":"Тестовый проект: реальный результат добавим позже."},"nairi":{"kind":"Интернет-магазин","task":"Продавали через сообщения в Instagram и теряли заказы.","sol":"Интернет-магазин с каталогом, корзиной и онлайн-оплатой.","res":"Тестовый проект: реальный результат добавим позже."},"tavern":{"kind":"Бот для доставки","task":"Сервисы доставки забирали значительную часть суммы заказа.","sol":"Собственный Telegram-бот с меню, оплатой и отслеживанием доставки.","res":"Тестовый проект: реальный результат добавим позже."}},"days":["Вс","Пн","Вт","Ср","Чт","Пт","Сб"],"tod":{"morning":"Доброе утро","day":"Добрый день","evening":"Добрый вечер","night":"Доброй ночи"},"calc":{"title":"Соберите свой проект","sub":"Выберите, что нужно: проект соберётся справа, а внизу вы увидите примерную цену и срок.","type":"Что создаём","pages":"Количество страниц","features":"Функции","langs":"Языки","types":{"landing":"Лендинг","site":"Сайт","shop":"Магазин","webapp":"Веб-приложение","mobile":"Мобильное приложение","bot":"Telegram-бот"},"feats":{"pay":"Онлайн-оплата","admin":"Админ-панель","booking":"Онлайн-запись","account":"Личный кабинет","crm":"Интеграция CRM / 1С","seo":"SEO-продвижение","tgbot":"Telegram-бот к сайту"},"price":"Примерная цена","time":"Срок","days":"дн.","weeks":"нед.","from":"около","note":"Это предварительная оценка. Точную цену фиксируем после брифа, бесплатно.","send":"Отправить этот проект","name":"Имя","contact":"Телефон или Telegram","needContact":"Укажите телефон или Telegram","sent":"Мы получили ваш проект и ответим в течение одного рабочего дня.","failed":"Не удалось отправить. Напишите нам напрямую:","mock":{"home":"Главная","about":"О нас","catalog":"Каталог","contact":"Контакты","book":"Записаться","cart":"Корзина","login":"Войти","pay":"Оплатить","admin":"Админ","dash":"Панель","orders":"Заказы"}},"ba":{"tab":"До / После","before":"До","after":"После","hint":"Двигайте ползунок, чтобы сравнить","sample":"Тестовый пример"},"live":{"intro":"Напишите нам, и мы ответим прямо здесь, в этом чате.","optional":"Контакт — по желанию, если хотите получить ответ и вне сайта","sent":"Отправлено. Наша команда ответит здесь, обычно за несколько минут в рабочее время.","team":"BERD SOFT"},"game":{"title":"BERD Blocks","score":"Очки","best":"Рекорд","lines":"Линии","start":"Начать","again":"Ещё раз","over":"Игра окончена","help":"← → двигать · ↑ повернуть · ↓ быстрее · Space — вниз","found":"Вы нашли скрытую игру 🎮","paused":"Пауза"},"blog":{"title":"Блог","sub":"Статьи о сайтах, приложениях и ботах для бизнеса","read":"Читать","min":"мин","back":"← Все статьи","open":"Открыть отдельной страницей ↗"}},"en":{"meta":{"title":"BERD SOFT · A digital fortress for your business","desc":"BERD SOFT builds websites, web and mobile apps and Telegram bots. One team from design to launch. Yerevan, Armenia.","ogAlt":"The BERD SOFT website on a laptop screen"},"code":"EN","name":"English","ui":{"protoNote":"Website prototype · projects are placeholders","hint":"Click the <b>icons</b> below to open apps · windows can be dragged around","skip":"Click to skip","bubble":"Got questions? Ask me","back":"‹ Back","zoom":"Enlarge screen","close":"Close","min":"Minimize","max":"Maximize","demo":"Demo","scrollHint":"↓ Scroll to explore the site","test":"Sample","testProject":"Sample project","task":"Challenge","sol":"Solution","res":"Result","all":"All","folders":"Folders","worksSub":"Click a project to open it in the “browser”.","worksNote":"These are sample projects. Real case studies are coming soon.","seeWorks":"See our work →","recent":"Latest work","allArrow":"All →","dock":"Apps","lang":"Language","apps":{"work":"Our work","serv":"Services","proc":"How we work","about":"About us","brief":"Brief","chat":"Contact","bot":"BERD Assistant","calc":"Estimator","blog":"Blog","game":"BERD Blocks"},"noscript":"This website needs JavaScript to run."},"hero":{"kick":"Web studio · Yerevan","h1":"A digital <em>fortress</em> for your business","p":"Websites, apps and Telegram bots that are solid, fast and working for you.","b1":"See our work →","b2":"Estimate a project"},"cats":{"web":"Websites","app":"Web apps","mob":"Mobile","bot":"Bots"},"services":{"title":"Services","lead":"Five disciplines, one team. No need to hire separate specialists and coordinate them.","items":[["Websites and landing pages","A site that explains your business in five seconds and brings in leads.","web"],["Web applications","CRMs, client portals, booking, payments and integrations.","app"],["Mobile apps","Apps for iPhone and Android. We handle publishing to the App Store and Google Play.","mob"],["Telegram bots","Orders, bookings and payments right inside the messenger.","bot"],["Hosting and support","Domain, SSL, backups and monitoring. Every login stays yours.",""]]},"process":{"side":"How we work","sideSub":"5 stages","title":"Five stages, and you approve each one","sub":"You see the result at every step","steps":[["Brief and estimate","We dig into the task and come back with a scope of work and a timeline.","Free",1],["Prototype and design","Screen structure first, then visuals. You approve before any code is written.","3–7 days",1],["Development","Once the design is approved you pay a 30% deposit and we start coding. Every week you see a working version on a test link.","1–4 weeks",0],["Launch","Domain, server, SSL. We hand over every login. The remaining 70% is paid on delivery.","1–2 days",0],["Support","Updates, backups, monitoring and improvements.","Up to 12 months",0]]},"about":{"title":"We are BERD SOFT","lead":"A full-cycle development studio in Yerevan. We work with clients across Armenia, the CIS and Europe. Our four principles:","contacts":"Contacts","gua":[["30% now, 70% on delivery","A 30% deposit after the design is approved, the remaining 70% when the finished project is delivered."],["Don’t like the design? Don’t pay","Mockups are approved before development starts."],["Every login is yours","The domain and server are registered in your name, and the code is handed over."],["The price won’t grow","The estimate is fixed before work begins."]]},"chat":{"online":"● Online","greet1":"Hi! Tell us about your project: what needs to be built and by when.","greet2":"We reply within one business day, and the estimate is free.","name":"Your name","contact":"Phone or Telegram","msg":"What do you need…","send":"Send","needMsg":"Write a few words about the project","needContact":"Add a phone or Telegram so we can reply","sent":"Thank you{n}! We got your message and will reply within one business day.","off":"Thank you{n}! The site is still in test mode and messages are not sent automatically yet. Please write to us directly.","err":"Couldn’t send. Check your connection and try again, or write to us directly.","direct":"Or write directly:","noContacts":"Contacts are coming soon."},"bot":{"name":"BERD Assistant","status":"● Replies instantly","hello":"Hi! I’m the BERD SOFT assistant 👋","pick":"Pick a question below or type your own.","back":"← Back to questions","ph":"Type your question…","fallback":"Our team can answer this one better. Write to us and we’ll reply within one business day.","fallbackAct":"Open “Contact”","qa":[["serv","What services do you offer?","We build websites, web applications, iPhone and Android apps and Telegram bots. We also set up the domain and server and support the project after launch.","serv","Open services"],["price","How much does a website cost?","It depends on the project: the number of pages, features and integrations. Fill in the brief and we’ll send a detailed estimate for free. The price is fixed before work begins.","brief","Fill in the brief"],["time","How long does it take?","Design usually takes 3–7 days and development 1–4 weeks, depending on scope. We give an exact timeline after the brief."],["pay","How does payment work?","Once the design is approved you pay a 30% deposit and we start coding. The remaining 70% is paid when the finished project is delivered."],["own","Who owns the website?","You do. The domain and server are registered in your name, and we hand over the code and every login."],["sup","Do you support it after launch?","Yes. Updates, backups, monitoring and improvements for up to 12 months, depending on the package."],["work","Show me your work","Sure. In “Our work”, click a project and it opens in the browser.","work","Open our work"],["start","Where do I start?","Fill in the short brief, it takes a minute. We’ll review it and send a free estimate and timeline.","brief","Fill in the brief"],["human","I want to talk to a person","Of course. Write to us in the “Contact” window and we’ll reply within one business day.","chat","Open “Contact”"]]},"brief":{"stepOf":"Step {i} of {n}","next":"Next →","back":"← Back","submit":"Send request","sending":"Sending…","pickOne":"Pick one of the options","pickSome":"Pick at least one option","needName":"Enter your name","needContact":"Add a phone or Telegram","oneHint":"Pick one option","manyHint":"You can pick several","steps":[{"id":"type","q":"What do you need?","multi":0,"opts":[["site","Website or landing page"],["shop","Online store"],["app","Web app (CRM, client portal)"],["mob","Mobile app"],["bot","Telegram bot"],["unsure","Not sure yet, I need advice"]]},{"id":"feat","q":"What should it be able to do?","multi":1,"opts":[["book","Online booking"],["pay","Online payments"],["admin","Admin panel to edit content"],["lang","Several languages"],["crm","CRM or 1C integration"],["track","Order or delivery tracking"],["account","Client account area"],["seo","Google ranking (SEO)"]]},{"id":"design","q":"Do you have a design or examples?","multi":0,"opts":[["ready","Yes, the design is ready"],["refs","We have examples we like"],["none","No, it needs to be designed from scratch"]]},{"id":"time","q":"When do you need it?","multi":0,"opts":[["asap","As soon as possible"],["month","Within a month"],["quarter","In 2–3 months"],["flex","The timeline is flexible"]]}],"cq":"How can we reach you?","chint":"We’ll reply within one business day and send a free estimate.","name":"Name","contact":"Phone or Telegram","comment":"A few words about the project (optional)","consent":"By sending, you agree that our team may contact you about this request.","doneSent":"Thank you! We’ll reply within one business day and send a free estimate.","doneOff":"The site is still in test mode, so the request was not sent automatically. Copy it and send it to us directly.","doneErr":"Couldn’t send. Try again, or copy the request and send it to us directly.","titleSent":"Request received","titleOff":"Your request is ready","titleErr":"Request not sent","retry":"Try again","again":"Fill in a new brief","copy":"Copy request","copied":"Copied ✓","labels":{"type":"What","feat":"Features","design":"Design","time":"Timeline","name":"Name","contact":"Contact","comment":"Comment"}},"projects":{"aroma":{"kind":"Telegram bot + website","task":"Morning queues were costing the café customers.","sol":"Pre-ordering through a Telegram bot and a simple website with the menu.","res":"Sample project: the real result will be added later."},"cargo":{"kind":"Web application","task":"Shipment statuses lived in Excel and managers were swamped with calls.","sol":"A client portal with shipment tracking and notifications.","res":"Sample project: the real result will be added later."},"fitup":{"kind":"iOS and Android app","task":"Class bookings happened in chat threads and some got lost.","sol":"A mobile app with schedules, booking and reminders.","res":"Sample project: the real result will be added later."},"dent":{"kind":"Website with online booking","task":"Patients called after hours and couldn’t book an appointment.","sol":"A website with online booking, doctors’ schedules and SMS reminders.","res":"Sample project: the real result will be added later."},"nairi":{"kind":"Online store","task":"They sold through Instagram DMs and lost orders along the way.","sol":"An online store with a catalog, cart and online payments.","res":"Sample project: the real result will be added later."},"tavern":{"kind":"Delivery bot","task":"Delivery platforms kept a large share of every order.","sol":"Their own Telegram bot with a menu, payments and delivery tracking.","res":"Sample project: the real result will be added later."}},"days":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"tod":{"morning":"Good morning","day":"Good afternoon","evening":"Good evening","night":"Good night"},"calc":{"title":"Build your project","sub":"Pick what you need: the project assembles on the right, and below you see an approximate price and timeline.","type":"What are we building","pages":"Number of pages","features":"Features","langs":"Languages","types":{"landing":"Landing page","site":"Website","shop":"Online store","webapp":"Web app","mobile":"Mobile app","bot":"Telegram bot"},"feats":{"pay":"Online payments","admin":"Admin panel","booking":"Online booking","account":"Client account","crm":"CRM / 1C integration","seo":"SEO","tgbot":"Telegram bot for the site"},"price":"Approximate price","time":"Timeline","days":"days","weeks":"weeks","from":"about","note":"This is a rough estimate. We fix the exact price after the brief, for free.","send":"Send this project","name":"Name","contact":"Phone or Telegram","needContact":"Add a phone or Telegram","sent":"We got your project and will reply within one business day.","failed":"Couldn’t send. Write to us directly:","mock":{"home":"Home","about":"About","catalog":"Catalog","contact":"Contact","book":"Book","cart":"Cart","login":"Log in","pay":"Pay","admin":"Admin","dash":"Dashboard","orders":"Orders"}},"ba":{"tab":"Before / After","before":"Before","after":"After","hint":"Drag the slider to compare","sample":"Sample"},"live":{"intro":"Write to us and we’ll reply right here in this chat.","optional":"Contact is optional, add it if you want a reply outside the site too","sent":"Sent. Our team will reply here, usually within minutes during business hours.","team":"BERD SOFT"},"game":{"title":"BERD Blocks","score":"Score","best":"Best","lines":"Lines","start":"Start","again":"Play again","over":"Game over","help":"← → move · ↑ rotate · ↓ faster · Space drop","found":"You found the hidden game 🎮","paused":"Paused"},"blog":{"title":"Blog","sub":"Articles about websites, apps and bots for business","read":"Read","min":"min","back":"← All articles","open":"Open as a page ↗"}}}/*/CONTENT*/;
 var LANGS = ['hy','ru','en'];
 var L = pickLang();
 function T(){return CONTENT[L]}
@@ -1151,7 +1145,8 @@ function wire(root, openProject){
   var br=root.querySelector('[data-brief]');if(br)initBrief(br);
 
   var form=root.querySelector('[data-form]');
-  if(form) form.addEventListener('submit',function(e){
+  if(form&&typeof liveChat==='function'&&CFG.leadEndpoint)liveChat(root,form);
+  else if(form) form.addEventListener('submit',function(e){
     e.preventDefault();
     var log=root.querySelector('[data-log]'),m=root.querySelector('#c-msg'),n=root.querySelector('#c-name'),c=root.querySelector('#c-contact');
     var txt=(m.value||'').trim(),name=(n.value||'').trim(),ct=(c.value||'').trim();
@@ -1392,6 +1387,304 @@ $('#sheetBack').addEventListener('click',function(){
   var cur=sheet.dataset.cur||'';winClosed(cur);if(cur.indexOf('p:')===0)return openSheet('work');
   sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
 });
+
+/* ===================== features: estimator, before/after, live chat, time of day, game, blog ===================== */
+var BLOG = /*BLOG*/[{"slug":"website-cost","date":"2026-10-20","read":5,"color":"#1B36F5","hy":{"title":"Որքա՞ն արժե կայքը. ինչից է կախված գինը","desc":"Ինչու երկու կայքի գինը կարող է տասն անգամ տարբերվել, և ինչպես հասկանալ, թե ինչի համար եք վճարում։","body":"<p>«Որքա՞ն արժե կայքը» հարցին ազնիվ պատասխանը միշտ նույնն է. կախված է նրանից, թե ինչ պետք է անի կայքը։ Երկու կայք կարող են նման տեսք ունենալ, բայց մեկը պարզապես պատմում է ընկերության մասին, իսկ մյուսը ընդունում է պատվերներ, վճարումներ և ուղարկում է տվյալները CRM։ Ահա այն գործոնները, որոնք իրականում որոշում են գինը։</p>\n<h2>1. Կայքի տեսակը</h2>\n<p><strong>Լենդինգը</strong> մեկ էջ է՝ մեկ նպատակով, օրինակ՝ հայտ հավաքել գովազդից։ <strong>Կայքը</strong> մի քանի էջ է՝ ծառայություններ, աշխատանքներ, կապ։ <strong>Առցանց խանութը</strong> ավելացնում է կատալոգ, զամբյուղ և վճարում։ <strong>Վեբ հավելվածը</strong> (CRM, անձնական էջ, ամրագրում) արդեն ծրագիր է, որի մեջ կա բարդ տրամաբանություն։</p>\n<h2>2. Ֆունկցիաները</h2>\n<p>Ամեն ֆունկցիա աշխատանք է ոչ միայն դիզայնում, այլ նաև սերվերում.</p>\n<ul><li>առցանց վճարում և հաշիվ-ապրանքագրեր,</li><li>առցանց գրանցում՝ ժամանակացույցով և հիշեցումներով,</li><li>ադմին վահանակ, որ բովանդակությունը փոխեք ինքներդ,</li><li>ինտեգրում CRM-ի, 1C-ի կամ Telegram-ի հետ,</li><li>մի քանի լեզու։</li></ul>\n<h2>3. Դիզայնը. կաղապար թե անհատական</h2>\n<p>Պատրաստի կաղապարն ավելի էժան է, բայց ձեր կայքը նման կլինի հարյուրավոր ուրիշների։ Անհատական դիզայնը ստեղծվում է ձեր բրենդի և ձեր հաճախորդների համար։ Եթե կայքը պետք է վաճառի, տարբերությունը նկատելի է արդյունքում։</p>\n<h2>4. Ինչ է լինում գործարկումից հետո</h2>\n<p>Կայքին պետք են հոսթինգ, դոմեն, SSL, պահուստային պատճեններ և թարմացումներ։ Հարցրեք կապալառուին, թե ով է դրանց համար պատասխանատու և ում անունով են գրանցված դոմենն ու սերվերը։ BERD SOFT-ում դրանք միշտ գրանցվում են հաճախորդի անունով։</p>\n<h2>Ինչպես արագ իմանալ ձեր նախագծի գինը</h2>\n<p>Բացեք մեր կայքում «Հաշվիչ» ծրագիրը. ընտրեք տեսակն ու ֆունկցիաները, և կտեսնեք մոտավոր գինն ու ժամկետը։ Ճշգրիտ գինը ֆիքսում ենք բրիֆից հետո, անվճար, և այն այլևս չի աճում։</p>"},"ru":{"title":"Сколько стоит сайт: от чего зависит цена","desc":"Почему цены на два сайта могут отличаться в десять раз и как понять, за что вы платите.","body":"<p>На вопрос «сколько стоит сайт» честный ответ всегда один: зависит от того, что сайт должен делать. Два сайта могут выглядеть похоже, но один просто рассказывает о компании, а другой принимает заказы, оплату и передаёт данные в CRM. Вот факторы, которые на самом деле определяют цену.</p>\n<h2>1. Тип сайта</h2>\n<p><strong>Лендинг</strong> — одна страница с одной целью, например собрать заявки с рекламы. <strong>Сайт</strong> — несколько страниц: услуги, работы, контакты. <strong>Интернет-магазин</strong> добавляет каталог, корзину и оплату. <strong>Веб-приложение</strong> (CRM, личный кабинет, бронирование) — это уже программа со сложной логикой.</p>\n<h2>2. Функции</h2>\n<p>Каждая функция — это работа не только в дизайне, но и на сервере:</p>\n<ul><li>онлайн-оплата и счета,</li><li>онлайн-запись с расписанием и напоминаниями,</li><li>админ-панель, чтобы менять контент самостоятельно,</li><li>интеграция с CRM, 1С или Telegram,</li><li>несколько языков.</li></ul>\n<h2>3. Дизайн: шаблон или индивидуальный</h2>\n<p>Готовый шаблон дешевле, но ваш сайт будет похож на сотни других. Индивидуальный дизайн создаётся под ваш бренд и ваших клиентов. Если сайт должен продавать, разница заметна в результате.</p>\n<h2>4. Что происходит после запуска</h2>\n<p>Сайту нужны хостинг, домен, SSL, резервные копии и обновления. Спросите подрядчика, кто за это отвечает и на чьё имя оформлены домен и сервер. В BERD SOFT они всегда оформляются на клиента.</p>\n<h2>Как быстро узнать цену вашего проекта</h2>\n<p>Откройте на нашем сайте программу «Калькулятор»: выберите тип и функции, и вы увидите примерную цену и срок. Точную цену фиксируем после брифа, бесплатно, и она больше не растёт.</p>"},"en":{"title":"How much does a website cost? What drives the price","desc":"Why two websites can differ in price tenfold, and how to understand what you are paying for.","body":"<p>The honest answer to “how much does a website cost” is always the same: it depends on what the site has to do. Two sites can look alike, yet one simply describes a company while the other takes orders and payments and sends data to a CRM. These are the factors that actually set the price.</p>\n<h2>1. The type of site</h2>\n<p>A <strong>landing page</strong> is one page with one goal, such as collecting leads from ads. A <strong>website</strong> has several pages: services, work, contact. An <strong>online store</strong> adds a catalog, cart and checkout. A <strong>web app</strong> (CRM, client portal, booking) is already software with real business logic.</p>\n<h2>2. Features</h2>\n<p>Every feature is work in the design and on the server:</p>\n<ul><li>online payments and invoices,</li><li>online booking with schedules and reminders,</li><li>an admin panel so you can edit content yourself,</li><li>integration with a CRM, 1C or Telegram,</li><li>several languages.</li></ul>\n<h2>3. Design: template or custom</h2>\n<p>A ready-made template is cheaper, but your site will look like hundreds of others. A custom design is made for your brand and your customers. When a site has to sell, the difference shows in the results.</p>\n<h2>4. What happens after launch</h2>\n<p>A site needs hosting, a domain, SSL, backups and updates. Ask your contractor who is responsible for these and whose name the domain and server are registered in. At BERD SOFT they are always registered to the client.</p>\n<h2>How to get a quick estimate</h2>\n<p>Open the “Estimator” app on our site: pick the type and features to see an approximate price and timeline. We fix the exact price after the brief, for free, and it does not grow after that.</p>"}},{"slug":"telegram-bot-for-business","date":"2026-10-20","read":4,"color":"#E01060","hy":{"title":"Telegram-բոտ բիզնեսի համար. 6 գործնական կիրառություն","desc":"Որտեղ է բոտը փոխարինում կայքին կամ օպերատորին, և երբ այն իսկապես օգնում է վաճառքին։","body":"<p>Հայաստանում և ԱՊՀ-ում Telegram-ը օգտագործում են ամեն օր, ուստի բոտը հաճախ ամենակարճ ճանապարհն է հաճախորդից մինչև պատվեր։ Հաճախորդը ոչինչ չի տեղադրում և չի գրանցվում, պարզապես սեղմում է «Start»։ Ահա վեց իրավիճակ, որտեղ բոտը իրականում աշխատում է։</p>\n<h2>1. Նախնական պատվեր</h2>\n<p>Սրճարան, հացատուն, ռեստորան. հաճախորդը պատվիրում է մինչև գալը, իսկ դուք տեսնում եք պատվերը նախօրոք։ Ավելի քիչ հերթ, ավելի շատ պատվեր։</p>\n<h2>2. Առցանց գրանցում</h2>\n<p>Սրահ, կլինիկա, մարզասրահ. բոտը ցույց է տալիս ազատ ժամերը, գրանցում է և հիշեցնում այցի մասին։ Ադմինիստրատորը այլևս ժամեր չի ծախսում նամակագրության վրա։</p>\n<h2>3. Առաքում առանց միջնորդների</h2>\n<p>Սեփական բոտը՝ մենյուով, վճարումով և առաքման կարգավիճակով։ Պատվերի գումարը մնում է ձեզ, իսկ հաճախորդների բազան՝ ձեր ձեռքում։</p>\n<h2>4. Հայտեր կայքից</h2>\n<p>Կայքի յուրաքանչյուր հայտ միանգամից գալիս է ձեր Telegram-ին, և դուք պատասխանում եք րոպեների ընթացքում, ոչ թե հաջորդ օրը։ Հենց այսպես է աշխատում BERD SOFT-ի կայքի բրիֆը։</p>\n<h2>5. Ներքին գործընթացներ</h2>\n<p>Աշխատակիցների հաշվետվություններ, պահեստի մնացորդներ, ծանուցումներ նոր պատվերների մասին։ Բոտը կարող է լինել թիմի հարմար վահանակը։</p>\n<h2>6. Հաճախորդների աջակցություն</h2>\n<p>Հաճախ տրվող հարցերի պատասխաններ օրվա ցանկացած ժամի, իսկ բարդ հարցերը փոխանցվում են մարդուն։</p>\n<h2>Ինչից սկսել</h2>\n<p>Ընտրեք մեկ գործընթաց, որն այսօր ամենաշատ ժամանակն է խլում, և սկսեք դրանից։ Լավ բոտը պարզ է. երեք-չորս կոճակ և հստակ արդյունք։ Եթե ուզում եք քննարկել ձեր գաղափարը, լրացրեք բրիֆը մեր կայքում։</p>"},"ru":{"title":"Telegram-бот для бизнеса: 6 практических применений","desc":"Где бот заменяет сайт или оператора и когда он действительно помогает продажам.","body":"<p>В Армении и СНГ Telegram открывают каждый день, поэтому бот часто — самый короткий путь от клиента до заказа. Клиенту не нужно ничего устанавливать и регистрироваться: он просто нажимает «Start». Вот шесть ситуаций, где бот действительно работает.</p>\n<h2>1. Предзаказ</h2>\n<p>Кофейня, пекарня, ресторан: клиент заказывает до прихода, а вы видите заказ заранее. Меньше очередей, больше заказов.</p>\n<h2>2. Онлайн-запись</h2>\n<p>Салон, клиника, спортзал: бот показывает свободное время, записывает и напоминает о визите. Администратор больше не тратит часы на переписку.</p>\n<h2>3. Доставка без посредников</h2>\n<p>Собственный бот с меню, оплатой и статусом доставки. Сумма заказа остаётся вам, а база клиентов — в ваших руках.</p>\n<h2>4. Заявки с сайта</h2>\n<p>Каждая заявка с сайта сразу приходит в ваш Telegram, и вы отвечаете за минуты, а не на следующий день. Именно так работает бриф на сайте BERD SOFT.</p>\n<h2>5. Внутренние процессы</h2>\n<p>Отчёты сотрудников, остатки на складе, уведомления о новых заказах. Бот может стать удобной панелью для команды.</p>\n<h2>6. Поддержка клиентов</h2>\n<p>Ответы на частые вопросы в любое время суток, а сложные вопросы передаются человеку.</p>\n<h2>С чего начать</h2>\n<p>Выберите один процесс, который сегодня отнимает больше всего времени, и начните с него. Хороший бот прост: три-четыре кнопки и понятный результат. Если хотите обсудить идею, заполните бриф на нашем сайте.</p>"},"en":{"title":"Telegram bots for business: 6 practical uses","desc":"Where a bot replaces a website or an operator, and when it genuinely helps sales.","body":"<p>In Armenia and the CIS people open Telegram every day, so a bot is often the shortest path from a customer to an order. There is nothing to install and no sign-up: the customer just taps “Start”. Here are six situations where a bot really works.</p>\n<h2>1. Pre-orders</h2>\n<p>Cafés, bakeries, restaurants: customers order before they arrive and you see the order in advance. Shorter queues, more orders.</p>\n<h2>2. Online booking</h2>\n<p>Salons, clinics, gyms: the bot shows free slots, books the visit and sends a reminder. Staff stop spending hours in chat threads.</p>\n<h2>3. Delivery without middlemen</h2>\n<p>Your own bot with a menu, payments and delivery status. You keep the full order value and the customer base stays yours.</p>\n<h2>4. Leads from your website</h2>\n<p>Every request from your site lands in your Telegram instantly, so you reply within minutes, not the next day. That is exactly how the brief on the BERD SOFT site works.</p>\n<h2>5. Internal processes</h2>\n<p>Staff reports, stock levels, alerts about new orders. A bot can become a handy dashboard for your team.</p>\n<h2>6. Customer support</h2>\n<p>Answers to common questions at any hour, with complex questions handed over to a person.</p>\n<h2>Where to start</h2>\n<p>Pick the one process that eats the most time today and start there. A good bot is simple: three or four buttons and a clear outcome. If you want to discuss your idea, fill in the brief on our site.</p>"}},{"slug":"instagram-vs-website","date":"2026-10-20","read":4,"color":"#FFB800","hy":{"title":"Instagram-ը կայքի փոխարեն չէ. ինչու է բիզնեսին պետք երկուսը","desc":"Instagram-ը բերում է ուշադրություն, կայքը՝ վստահություն և պատվերներ։ Ինչպես են դրանք աշխատում միասին։","body":"<p>Շատ բիզնեսներ Հայաստանում սկսում են Instagram-ից, և դա ճիշտ է։ Բայց որոշ պահի հաճախորդները սկսում են կորչել նամակների մեջ, իսկ նոր հաճախորդները չեն գտնում ձեզ Google-ում։ Ահա թե ինչու Instagram-ն ու կայքը իրար չեն փոխարինում, այլ լրացնում են։</p>\n<h2>Instagram-ը ուշադրության համար է</h2>\n<p>Այն լավ է ցույց տալու, ոգեշնչելու և հիշեցնելու համար։ Բայց ալգորիթմը որոշում է, թե ով կտեսնի ձեր գրառումը, իսկ էջը կարող է արգելափակվել ցանկացած պահի։ Դա վարձակալված տարածք է։</p>\n<h2>Կայքը ձեր սեփականությունն է</h2>\n<p>Կայքը աշխատում է 24/7 և ենթակա չէ ալգորիթմներին։ Այնտեղ հաճախորդը գտնում է գներ, պայմաններ և պատվիրում է առանց սպասելու, որ ինչ-որ մեկը պատասխանի Direct-ում։</p>\n<h2>Google-ը որոնում է կայքեր</h2>\n<p>Երբ մարդը գրում է «ատամնաբույժ Երևան» կամ «կայքի պատրաստում», Google-ը ցույց է տալիս կայքեր, ոչ թե Instagram-ի գրառումներ։ Առանց կայքի դուք բացակայում եք այնտեղ, որտեղ ձեզ արդեն փնտրում են։</p>\n<h2>Վստահություն</h2>\n<p>Գործընկերները և խոշոր հաճախորդները նախքան պայմանագիր կնքելը ստուգում են կայքը։ Լավ կայքը ցույց է տալիս, որ բիզնեսը լուրջ է և երկարաժամկետ։</p>\n<h2>Ինչպես միացնել երկուսը</h2>\n<ul><li>Instagram-ի bio-ում դրեք կայքի հղումը,</li><li>կայքում ցույց տվեք ձեր աշխատանքները և ավելացրեք հայտի ձև,</li><li>հայտերը ուղարկեք Telegram, որ արագ պատասխանեք,</li><li>չափեք, թե Instagram-ից քանի մարդ է գալիս և ինչ է անում կայքում։</li></ul>\n<p>Այսպես Instagram-ը բերում է մարդկանց, իսկ կայքը նրանց դարձնում է հաճախորդներ։</p>"},"ru":{"title":"Instagram не заменяет сайт: зачем бизнесу и то, и другое","desc":"Instagram приносит внимание, сайт — доверие и заказы. Как они работают вместе.","body":"<p>Многие бизнесы в Армении начинают с Instagram, и это правильно. Но в какой-то момент клиенты начинают теряться в переписке, а новые не находят вас в Google. Вот почему Instagram и сайт не заменяют, а дополняют друг друга.</p>\n<h2>Instagram — для внимания</h2>\n<p>Он хорош, чтобы показывать, вдохновлять и напоминать о себе. Но кто увидит ваш пост, решает алгоритм, а аккаунт могут заблокировать в любой момент. Это арендованная площадка.</p>\n<h2>Сайт — ваша собственность</h2>\n<p>Сайт работает 24/7 и не зависит от алгоритмов. Там клиент находит цены и условия и оформляет заказ, не дожидаясь ответа в Direct.</p>\n<h2>Google ищет сайты</h2>\n<p>Когда человек пишет «стоматолог Ереван» или «разработка сайта», Google показывает сайты, а не посты в Instagram. Без сайта вас нет там, где вас уже ищут.</p>\n<h2>Доверие</h2>\n<p>Партнёры и крупные клиенты перед договором проверяют сайт. Хороший сайт показывает, что бизнес серьёзный и надолго.</p>\n<h2>Как соединить одно с другим</h2>\n<ul><li>поставьте ссылку на сайт в bio Instagram,</li><li>покажите на сайте свои работы и добавьте форму заявки,</li><li>отправляйте заявки в Telegram, чтобы быстро отвечать,</li><li>измеряйте, сколько людей приходит из Instagram и что они делают на сайте.</li></ul>\n<p>Так Instagram приводит людей, а сайт превращает их в клиентов.</p>"},"en":{"title":"Instagram is not a website: why a business needs both","desc":"Instagram brings attention, a website brings trust and orders. How they work together.","body":"<p>Many businesses in Armenia start on Instagram, and that is the right call. But at some point customers get lost in DMs and new ones cannot find you on Google. Here is why Instagram and a website complement each other rather than compete.</p>\n<h2>Instagram is for attention</h2>\n<p>It is great for showing, inspiring and staying top of mind. But an algorithm decides who sees your post, and an account can be blocked at any time. It is rented space.</p>\n<h2>Your website is yours</h2>\n<p>A website works 24/7 and does not depend on algorithms. Customers find prices and terms there and order without waiting for a DM reply.</p>\n<h2>Google searches websites</h2>\n<p>When someone types “dentist Yerevan” or “website development”, Google shows websites, not Instagram posts. Without a site you are missing exactly where people already look for you.</p>\n<h2>Trust</h2>\n<p>Partners and larger clients check your website before signing. A good site shows that the business is serious and here to stay.</p>\n<h2>How to connect the two</h2>\n<ul><li>put your website link in your Instagram bio,</li><li>show your work on the site and add a request form,</li><li>send requests to Telegram so you reply fast,</li><li>measure how many people come from Instagram and what they do on the site.</li></ul>\n<p>That way Instagram brings people in and your website turns them into customers.</p>"}}]/*/BLOG*/;
+var PR = Object.assign({
+  currency:'$',
+  types:{landing:[99,7],site:[199,14],shop:[349,21],webapp:[499,28],mobile:[799,35],bot:[149,7]}, // [from price, days]
+  pagesIncluded:{landing:1,site:5,shop:5,webapp:5,mobile:5,bot:0},
+  perPage:[25,1],
+  feats:{pay:[80,3],admin:[120,4],booking:[100,4],account:[150,5],crm:[150,5],seo:[60,2],tgbot:[149,5]},
+  perLang:[60,2],
+  spread:1.35
+}, CFG.pricing||{});
+
+APPS.calc={w:1040,h:650,x:120,y:44};
+APPS.blog={w:860,h:610,x:210,y:56};
+APPS.game={w:420,h:600,x:430,y:40};
+ORDER.splice(ORDER.indexOf('brief')+1,0,'calc');
+ORDER.splice(ORDER.indexOf('about')+1,0,'blog');
+SV.calc='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2.5"/><path d="M8 7h8"/><circle cx="9" cy="12" r=".6" fill="#fff"/><circle cx="12" cy="12" r=".6" fill="#fff"/><circle cx="15" cy="12" r=".6" fill="#fff"/><circle cx="9" cy="16" r=".6" fill="#fff"/><circle cx="12" cy="16" r=".6" fill="#fff"/><path d="M15 15v2" stroke="#CCFF00"/></svg>';
+SV.blog='<svg viewBox="0 0 24 24" fill="none" stroke="#1B36F5" stroke-width="2" stroke-linecap="round"><path d="M5 4h10l4 4v12H5z"/><path d="M15 4v4h4M8 12h8M8 15.5h8M8 19h5"/></svg>';
+SV.game='<svg viewBox="0 0 24 24"><rect x="3" y="3" width="8.5" height="8.5" fill="#1B36F5"/><rect x="12.5" y="3" width="8.5" height="8.5" fill="#CCFF00"/><rect x="3" y="12.5" width="8.5" height="8.5" fill="#E01060"/><rect x="12.5" y="12.5" width="8.5" height="8.5" fill="#FFB800"/></svg>';
+
+var _body=body;
+body=function(id){
+  if(id==='calc')return '<div class="calc" data-calc></div>';
+  if(id==='blog')return '<div class="blog" data-blog></div>';
+  if(id==='game')return '<div class="game" data-game tabindex="-1"></div>';
+  return _body(id);
+};
+var _wire=wire;
+wire=function(root,op){
+  _wire(root,op);
+  var x;
+  if((x=root.querySelector('[data-calc]')))initCalc(x);
+  if((x=root.querySelector('[data-blog]')))initBlog(x);
+  if((x=root.querySelector('[data-game]')))initGame(x);
+  if((x=root.querySelector('[data-batoggle]')))initBA(root);
+};
+
+/* ---------- estimator ---------- */
+function money(n){return PR.currency+Math.round(n).toLocaleString('en-US')}
+function initCalc(root){
+  var C=T().calc,st={type:'site',pages:5,feats:{},langs:['hy']},prev={},sent=null;
+  function estimate(){
+    var t=PR.types[st.type],price=t[0],days=t[1];
+    var inc=PR.pagesIncluded[st.type]||0,extra=st.type==='bot'||st.type==='landing'?0:Math.max(0,st.pages-inc);
+    price+=extra*PR.perPage[0];days+=extra*PR.perPage[1];
+    Object.keys(st.feats).forEach(function(k){if(st.feats[k]&&PR.feats[k]){price+=PR.feats[k][0];days+=PR.feats[k][1]}});
+    price+=(st.langs.length-1)*PR.perLang[0];days+=(st.langs.length-1)*PR.perLang[1];
+    var hi=Math.ceil(price*PR.spread/10)*10,dHi=Math.ceil(days*1.3);
+    var time=dHi<=10?days+'–'+dHi+' '+C.days:Math.max(1,Math.round(days/7))+'–'+Math.ceil(dHi/7)+' '+C.weeks;
+    return {lo:price,hi:hi,time:time};
+  }
+  function chip(group,key,label,on){return '<button type="button" class="cc'+(on?' on':'')+'" data-g="'+group+'" data-k="'+key+'" aria-pressed="'+!!on+'">'+esc(label)+'</button>'}
+  function controls(){
+    var h='<div class="cl"><h3>'+esc(C.title)+'</h3><p class="sub">'+esc(C.sub)+'</p>';
+    h+='<h4>'+esc(C.type)+'</h4><div class="cg">'+Object.keys(C.types).map(function(k){return chip('type',k,C.types[k],st.type===k)}).join('')+'</div>';
+    var showPages=!(st.type==='bot'||st.type==='landing');
+    h+='<div class="pg"'+(showPages?'':' hidden')+'><h4>'+esc(C.pages)+' <b data-pv>'+st.pages+'</b></h4><input type="range" id="calc-pages" min="1" max="20" value="'+st.pages+'" aria-label="'+esc(C.pages)+'"></div>';
+    h+='<h4>'+esc(C.features)+'</h4><div class="cg">'+Object.keys(C.feats).map(function(k){return chip('feat',k,C.feats[k],st.feats[k])}).join('')+'</div>';
+    h+='<h4>'+esc(C.langs)+'</h4><div class="cg">'+[['hy','Հայերեն'],['ru','Русский'],['en','English']].map(function(l){return chip('lang',l[0],l[1],st.langs.indexOf(l[0])>=0)}).join('')+'</div></div>';
+    return h;
+  }
+  function mockHTML(){
+    var M=C.mock,f=st.feats,keys=[],h='';
+    function blk(k,html){keys.push(k);return '<div class="mb'+(prev[k]?'':' pop')+'" data-mk="'+k+'">'+html+'</div>'}
+    var navItems=[M.home,M.about,M.catalog,M.contact].slice(0,Math.min(4,Math.max(1,st.type==='landing'?1:st.pages)));
+    if(st.type==='bot'){
+      h='<div class="dv tgv"><div class="tgh"><i></i><b>Your Bot</b></div><div class="tgb">'+
+        blk('m1','<div class="tm">👋 '+esc(M.home)+'</div>')+
+        blk('kb','<div class="tk"><span>'+esc(M.catalog)+'</span><span>'+esc(M.contact)+'</span>'+(f.booking?'<span>'+esc(M.book)+'</span>':'')+(f.pay?'<span>💳 '+esc(M.pay)+'</span>':'')+'</div>')+
+        (f.account?blk('acc','<div class="tm">👤 '+esc(M.login)+'</div>'):'')+(f.crm?blk('crm','<div class="tm me">CRM ✓</div>'):'')+
+        (st.langs.length>1?blk('lang','<div class="tm">🌐 '+st.langs.join(' · ').toUpperCase()+'</div>'):'')+
+        (f.admin?blk('adm','<div class="tm me">⚙︎ '+esc(M.admin)+'</div>'):'')+'</div></div>';
+    }else if(st.type==='mobile'){
+      h='<div class="dv phv"><div class="ph-in"><div class="isl"></div>'+
+        blk('hero','<div class="mh"><b></b><i></i><i style="width:60%"></i><u></u></div>')+
+        (f.booking?blk('book','<div class="cal">'+Array(14).join('<i></i>')+'<i class="on"></i></div>'):'')+
+        (f.pay?blk('pay','<div class="payc">•••• 4242 <u></u></div>'):'')+
+        (f.account?blk('acc','<div class="accr"><span></span><b></b></div>'):'')+
+        blk('tab','<div class="tabbar">'+Array(Math.min(5,Math.max(2,st.pages))+1).join('<i></i>')+'</div>')+'</div></div>';
+    }else{
+      var dash=st.type==='webapp';
+      h='<div class="dv brv"><div class="bt"><i></i><i></i><i></i><span>your-business.am</span></div><div class="bpage">'+
+        blk('nav','<div class="mnav"><b>LOGO</b>'+navItems.map(function(n){return '<span>'+esc(n)+'</span>'}).join('')+(st.pages>4&&st.type!=='landing'?'<span>+'+(st.pages-4)+'</span>':'')+
+          (st.langs.length>1?'<em>'+st.langs.join(' ').toUpperCase()+'</em>':'')+(f.account?'<span class="lg">'+esc(M.login)+'</span>':'')+((st.type==='shop'||f.pay)?'<span class="ct">🛒</span>':'')+'</div>')+
+        (dash?blk('dash','<div class="dsh"><aside><i></i><i></i><i></i><i></i></aside><div><div class="kp"><i></i><i></i><i></i></div><div class="tb">'+Array(6).join('<i></i>')+'</div></div></div>')
+             :blk('hero','<div class="mh"><b></b><i></i><i style="width:55%"></i><u></u></div>'))+
+        (st.type==='shop'?blk('cat','<div class="grid4">'+Array(9).join('<i></i>')+'</div>'):'')+
+        (f.booking?blk('book','<div class="cal">'+Array(14).join('<i></i>')+'<i class="on"></i></div>'):'')+
+        (f.pay?blk('pay','<div class="payc">•••• 4242 <u>'+esc(M.pay)+'</u></div>'):'')+
+        (f.seo?blk('seo','<div class="serp"><small>google.com</small><b>Your Business — '+esc(M.home)+'</b><i></i></div>'):'')+
+        (st.type!=='landing'&&!dash?blk('pages','<div class="pgs">'+Array(Math.min(st.pages,8)+1).join('<i></i>')+'</div>'):'')+
+        '</div>'+
+        (f.admin?blk('adm','<div class="admp"><b>'+esc(M.admin)+'</b><i></i><i></i><i></i></div>'):'')+
+        (f.tgbot?blk('tg','<div class="tgbub">✈︎ Bot</div>'):'')+
+        (f.crm?blk('crm','<div class="crmc">CRM ⇄</div>'):'')+'</div>';
+    }
+    var seen={};keys.forEach(function(k){seen[k]=1});prev=seen;
+    return h;
+  }
+  function render(){
+    var e=estimate();
+    root.innerHTML=controls()+'<div class="cr"><div class="stagebox">'+mockHTML()+'</div></div>'+
+      '<div class="cb"><div class="est"><span>'+esc(C.price)+'</span><b data-price>'+money(e.lo)+' – '+money(e.hi)+'</b></div><div class="est"><span>'+esc(C.time)+'</span><b>'+esc(e.time)+'</b></div>'+
+      '<form class="cf" data-cf novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><input id="calc-name" placeholder="'+esc(C.name)+'" aria-label="'+esc(C.name)+'" autocomplete="name"><input id="calc-contact" placeholder="'+esc(C.contact)+'" aria-label="'+esc(C.contact)+'" autocomplete="tel"><button type="submit">'+esc(C.send)+'</button></form>'+
+      '<p class="cn" data-cn>'+esc(sent==='sent'?C.sent:C.note)+'</p></div>';
+    root.querySelectorAll('[data-g]').forEach(function(b){b.addEventListener('click',function(){
+      var g=b.getAttribute('data-g'),k=b.getAttribute('data-k');
+      if(g==='type'){st.type=k;if(k==='landing')st.pages=1;else if(st.pages<3)st.pages=5}
+      else if(g==='feat')st.feats[k]=!st.feats[k];
+      else{var i=st.langs.indexOf(k);if(i>=0){if(st.langs.length>1)st.langs.splice(i,1)}else st.langs.push(k)}
+      track('calc_change',g+':'+k);keep(render);
+    })});
+    var r=root.querySelector('#calc-pages');
+    if(r)r.addEventListener('input',function(){st.pages=+r.value;root.querySelector('[data-pv]').textContent=st.pages;var ee=estimate();root.querySelector('[data-price]').textContent=money(ee.lo)+' – '+money(ee.hi);
+      root.querySelector('.stagebox').innerHTML=mockHTML();root.querySelectorAll('.cb .est b')[1].textContent=ee.time;fit()});
+    requestAnimationFrame(fit);
+    root.querySelector('[data-cf]').addEventListener('submit',function(ev){
+      ev.preventDefault();var f=ev.target,name=f.querySelector('#calc-name').value.trim(),ct=f.querySelector('#calc-contact').value.trim(),cn=root.querySelector('[data-cn]');
+      if(f.querySelector('.hp').value)return;
+      if(!ct){cn.textContent=C.needContact;cn.classList.add('bad');f.querySelector('#calc-contact').focus();return}
+      var ee=estimate(),ans={};
+      ans[C.type]=C.types[st.type];
+      if(!(st.type==='bot'||st.type==='landing'))ans[C.pages]=st.pages;
+      ans[C.features]=Object.keys(st.feats).filter(function(k){return st.feats[k]}).map(function(k){return C.feats[k]}).join(', ')||'—';
+      ans[C.langs]=st.langs.join(', ').toUpperCase();
+      ans[C.price]=money(ee.lo)+' – '+money(ee.hi);ans[C.time]=ee.time;
+      var btn=f.querySelector('button');btn.disabled=true;
+      sendLead({type:'calc',answers:ans,name:name,contact:ct}).then(function(s){
+        sent=s;btn.disabled=false;cn.classList.toggle('bad',s!=='sent');
+        if(s==='sent'){cn.textContent=C.sent;track('calc_submit',st.type)}else{cn.innerHTML=esc(C.failed)+' '+contactsHTML()}
+      });
+    });
+  }
+  /* the mockup scales down to always fit the stage */
+  function fit(){var cr=root.querySelector('.cr'),bx=root.querySelector('.stagebox');if(!cr||!bx)return;bx.style.transform='none';var sc=Math.min(1,(cr.clientHeight-36)/bx.scrollHeight,(cr.clientWidth-36)/bx.scrollWidth);bx.style.transform='scale('+Math.max(.4,sc)+')'}
+  /* re-render without losing typed name/contact */
+  function keep(fn){var n=root.querySelector('#calc-name'),c=root.querySelector('#calc-contact'),nv=n&&n.value,cv=c&&c.value;fn();if(nv)root.querySelector('#calc-name').value=nv;if(cv)root.querySelector('#calc-contact').value=cv}
+  render();
+}
+
+/* ---------- before / after ---------- */
+var BA={dent:1,nairi:1};
+var _bb=browserBody;
+browserBody=function(p){
+  var h=_bb(p);if(!BA[p.id])return h;
+  var B=T().ba;
+  h=h.replace('<span class="demo">','<button type="button" class="batab" data-batoggle aria-pressed="false">'+esc(B.tab)+'</button><span class="demo">');
+  var old='<div class="old"><div class="ot">'+esc(p.name.toUpperCase())+' — Official Web Site</div><marquee>*** Welcome to our website!!! Call us today ***</marquee>'+
+    '<table><tr><td>Home</td><td>About us</td><td>Services</td><td>Contacts</td></tr></table><div class="ob"><div class="oimg">IMAGE</div><p>We are the best company in the city. We provide high quality services for our clients since 2009. For more information please call or visit our office.</p></div>'+
+    '<p class="oc">Visitors: 000417 · Best viewed in Internet Explorer 6.0</p></div>';
+  var ba='<div class="ba" data-ba hidden><div class="bal">'+old+'</div><div class="bar2" data-baafter>'+mock(p)+'</div><span class="lb l">'+esc(B.before)+'</span><span class="lb r">'+esc(B.after)+'</span><span class="handle" data-bh></span>'+
+    '<input type="range" min="0" max="100" value="50" class="bars" data-bar aria-label="'+esc(B.hint)+'"><span class="bahint">'+esc(B.hint)+' · '+esc(B.sample)+'</span></div>';
+  return h.replace('<div class="view" data-view>','<div class="view" data-view>'+ba);
+};
+function initBA(root){
+  var t=root.querySelector('[data-batoggle]'),ba=root.querySelector('[data-ba]'),r=ba.querySelector('[data-bar]'),af=ba.querySelector('[data-baafter]'),hd=ba.querySelector('[data-bh]');
+  function set(v){af.style.clipPath='inset(0 0 0 '+v+'%)';hd.style.left=v+'%'}
+  set(50);
+  r.addEventListener('input',function(){set(r.value)});
+  t.addEventListener('click',function(){var on=ba.hidden;ba.hidden=!on;t.setAttribute('aria-pressed',on);if(on){track('before_after');r.value=50;set(50);
+    if(!RM&&af.animate){var v=50;var k=[50,18,82,50];k.forEach(function(x,i){setTimeout(function(){r.value=x;set(x)},i*420)})}}});
+}
+
+/* ---------- live chat (replies from Telegram appear here) ---------- */
+function getSid(){try{var s=localStorage.getItem('berd-chat-sid');if(!s){s=Math.random().toString(36).slice(2,10)+Date.now().toString(36).slice(-4);localStorage.setItem('berd-chat-sid',s)}return s}catch(e){return window.__sid||(window.__sid=Math.random().toString(36).slice(2,12))}}
+function loadHist(){try{return JSON.parse(localStorage.getItem('berd-chat-log')||'[]')}catch(e){return []}}
+function saveHist(h){try{localStorage.setItem('berd-chat-log',JSON.stringify(h.slice(-60)))}catch(e){}}
+function liveChat(root,form){
+  var t=T(),Lv=t.live,log=root.querySelector('[data-log]'),ep=(CFG.leadEndpoint||'').replace(/\/$/,''),sid=getSid(),hist=loadHist(),timer=null,last=0,dead=false;
+  var cin=root.querySelector('#c-contact');cin.title=Lv.optional;
+  log.insertAdjacentHTML('beforeend','<div class="msg in">'+esc(Lv.intro)+'</div>');
+  function add(who,text,ts){
+    var m=document.createElement('div');m.className='msg '+(who==='me'?'out':'in')+(who==='team'?' team':'');
+    if(who==='team'){var b=document.createElement('b');b.textContent=Lv.team;m.appendChild(b)}
+    m.appendChild(document.createTextNode(text));var s=document.createElement('small');var d=new Date(ts||Date.now());s.textContent=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);m.appendChild(s);
+    log.appendChild(m);log.scrollTop=log.scrollHeight;
+  }
+  hist.forEach(function(m){add(m.w,m.x,m.t);if(m.w==='team')last=Math.max(last,m.t)});
+  function poll(){
+    if(dead||!ep)return;
+    if(!root.isConnected){clearInterval(timer);return}
+    if(document.hidden)return;
+    fetch(ep+'/chat?s='+encodeURIComponent(sid)+'&after='+last).then(function(r){if(r.status===404||r.status===501){dead=true;clearInterval(timer);return null}return r.ok?r.json():null}).then(function(j){
+      if(!j||!j.replies)return;
+      j.replies.forEach(function(rp){if(rp.t>last){last=rp.t;add('team',rp.text,rp.t);hist.push({w:'team',x:rp.text,t:rp.t});track('chat_reply_seen')}});
+      saveHist(hist);
+    }).catch(function(){});
+  }
+  function startPoll(){if(!timer&&ep){poll();timer=setInterval(poll,4000)}}
+  if(hist.length)startPoll();
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var m=root.querySelector('#c-msg'),n=root.querySelector('#c-name'),txt=(m.value||'').trim(),name=(n.value||'').trim(),ct=(cin.value||'').trim();
+    if(!txt){m.focus();m.placeholder=t.chat.needMsg;return}
+    if(form.querySelector('.hp').value)return;
+    var first=!hist.some(function(h){return h.w==='me'});
+    add('me',txt);hist.push({w:'me',x:txt,t:Date.now()});saveHist(hist);m.value='';
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;
+    sendLead({type:'chat',session:sid,name:name,contact:ct,message:txt}).then(function(st){
+      btn.disabled=false;
+      if(st==='sent'){if(first)add('team',Lv.sent);startPoll();track('chat_message')}
+      else add('team',(st==='off'?t.chat.off:t.chat.err).replace('{n}',name?', '+name:''));
+    });
+  });
+}
+
+/* ---------- time of day ---------- */
+function todNow(){var h=new Date().getHours();return h>=5&&h<12?'morning':h>=12&&h<18?'day':h>=18&&h<22?'evening':'night'}
+var LAMP='<svg viewBox="0 0 160 260" width="160" height="260"><defs><radialGradient id="lg" cx="50%" cy="0%" r="100%"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".9"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient></defs>'+
+  '<path class="beam" d="M58 92 L-40 262 L190 262 L104 92Z" fill="url(#lg)"/><path d="M40 92 Q81 36 122 92Z" fill="#1d1f2b" stroke="#3a3d4f" stroke-width="2"/><ellipse cx="81" cy="92" rx="41" ry="6" fill="#ffe9a8"/>'+
+  '<path d="M81 52 L81 20 L130 4" stroke="#2a2d3b" stroke-width="7" stroke-linecap="round" fill="none"/></svg>';
+function applyTod(){
+  var d=todNow(),g=T().tod&&T().tod[d];
+  os.setAttribute('data-tod',d);$('#phone').setAttribute('data-tod',d);
+  var el=$('#todGreet');if(!el){el=document.createElement('p');el.id='todGreet';el.className='greet';var h=$('.hero h1');h.parentNode.insertBefore(el,h)}
+  el.textContent=g||'';
+  var pe=$('#pGreet');if(!pe){pe=document.createElement('p');pe.id='pGreet';pe.className='greet';var w=$('.phone .wid h1');w.parentNode.insertBefore(pe,w)}
+  pe.textContent=g||'';
+  if(!$('#lamp')){var l=document.createElement('div');l.id='lamp';l.className='lamp';l.innerHTML=LAMP;$('#wall').appendChild(l);
+    var s=document.createElement('div');s.className='stars';s.innerHTML=Array(40).join('<i></i>');$('#wall').appendChild(s);
+    s.querySelectorAll('i').forEach(function(i){i.style.left=(Math.random()*100)+'%';i.style.top=(Math.random()*55)+'%';i.style.animationDelay=(Math.random()*3)+'s'})}
+}
+var _as=applyStatic;applyStatic=function(){_as();applyTod()};
+setInterval(applyTod,60000);
+
+/* ---------- hidden game: BERD Blocks ---------- */
+var gameFound=false;
+function openGame(src){
+  if(!gameFound){gameFound=true;track('easter_egg',src);toast(T().game.found)}
+  api.open('game');
+}
+function toast(msg){var t=document.createElement('div');t.className='toast';t.textContent=msg;(phoneMode()?document.body:os).appendChild(t);setTimeout(function(){t.classList.add('out')},2600);setTimeout(function(){t.remove()},3200)}
+(function triggers(){
+  var clicks=[],typed='';
+  function tap(){var now=Date.now();clicks=clicks.filter(function(c){return now-c<2500});clicks.push(now);if(clicks.length>=5){clicks=[];openGame('logo')}}
+  $('.menubar .mk').addEventListener('click',tap);
+  $('.phone .wid .mk').addEventListener('click',tap);
+  document.addEventListener('keydown',function(e){
+    var tg=e.target;if(tg&&(tg.tagName==='INPUT'||tg.tagName==='TEXTAREA'))return;
+    typed=(typed+(e.key||'')).slice(-4).toLowerCase();if(typed==='berd')openGame('typed');
+  });
+})();
+function initGame(root){
+  var G=T().game,W=10,H=20,S=21,COL=['#1B36F5','#CCFF00','#E01060','#FFB800','#ffffff'];
+  var SH=[[[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]],[[1,1,0],[0,1,1]],[[0,1,1],[1,1,0]]];
+  var best=0;try{best=+localStorage.getItem('berd-blocks-best')||0}catch(e){}
+  root.innerHTML='<div class="gtop"><div><small>'+esc(G.score)+'</small><b data-s>0</b></div><div><small>'+esc(G.lines)+'</small><b data-l>0</b></div><div><small>'+esc(G.best)+'</small><b data-b>'+best+'</b></div></div>'+
+    '<div class="gwrap"><canvas width="'+W*S+'" height="'+H*S+'" data-cv></canvas><div class="gov" data-ov><b>'+esc(G.title)+'</b><button type="button" data-go>'+esc(G.start)+'</button><small>'+esc(G.help)+'</small></div></div>'+
+    '<div class="gpad"><button type="button" data-a="left" aria-label="←">←</button><button type="button" data-a="rot" aria-label="↻">↻</button><button type="button" data-a="right" aria-label="→">→</button><button type="button" data-a="drop" aria-label="↓">⤓</button></div>';
+  var cv=root.querySelector('[data-cv]'),cx=cv.getContext('2d'),ov=root.querySelector('[data-ov]');
+  var grid,cur,score,lines,running=false,raf=0,acc=0,lastT=0;
+  function piece(){var s=SH[Math.random()*SH.length|0];return {m:s.map(function(r){return r.slice()}),x:3,y:0,c:COL[Math.random()*4|0]}}
+  function fits(p,dx,dy,m){m=m||p.m;for(var y=0;y<m.length;y++)for(var x=0;x<m[y].length;x++)if(m[y][x]){var nx=p.x+x+dx,ny=p.y+y+dy;if(nx<0||nx>=W||ny>=H||(ny>=0&&grid[ny][nx]))return false}return true}
+  function rot(m){return m[0].map(function(_,i){return m.map(function(r){return r[i]}).reverse()})}
+  function cell(x,y,c){cx.fillStyle=c;cx.fillRect(x*S+1,y*S+1,S-2,S-2);cx.fillStyle='rgba(255,255,255,.18)';cx.fillRect(x*S+1,y*S+1,S-2,4)}
+  function draw(){cx.fillStyle='#0d0e14';cx.fillRect(0,0,W*S,H*S);cx.strokeStyle='rgba(255,255,255,.04)';
+    for(var x=0;x<=W;x++){cx.beginPath();cx.moveTo(x*S,0);cx.lineTo(x*S,H*S);cx.stroke()}
+    grid.forEach(function(r,y){r.forEach(function(c,x){if(c)cell(x,y,c)})});
+    if(cur){var gy=0;while(fits(cur,0,gy+1))gy++;cur.m.forEach(function(r,y){r.forEach(function(v,x){if(v){cx.fillStyle='rgba(255,255,255,.08)';cx.fillRect((cur.x+x)*S+1,(cur.y+y+gy)*S+1,S-2,S-2)}})});
+      cur.m.forEach(function(r,y){r.forEach(function(v,x){if(v&&cur.y+y>=0)cell(cur.x+x,cur.y+y,cur.c)})})}}
+  function hud(){root.querySelector('[data-s]').textContent=score;root.querySelector('[data-l]').textContent=lines;root.querySelector('[data-b]').textContent=best}
+  function lock(){cur.m.forEach(function(r,y){r.forEach(function(v,x){if(v&&cur.y+y>=0)grid[cur.y+y][cur.x+x]=cur.c})});
+    var n=0;for(var y=H-1;y>=0;y--){if(grid[y].every(Boolean)){grid.splice(y,1);grid.unshift(Array(W).fill(0));n++;y++}}
+    if(n){lines+=n;score+=[0,100,300,500,800][n]}
+    cur=piece();if(!fits(cur,0,0))over();hud()}
+  function over(){running=false;cancelAnimationFrame(raf);if(score>best){best=score;try{localStorage.setItem('berd-blocks-best',best)}catch(e){}}hud();track('game_over',String(score));
+    ov.hidden=false;ov.querySelector('b').textContent=G.over+' · '+score;ov.querySelector('[data-go]').textContent=G.again}
+  function act(a){if(!running)return;if(a==='left'&&fits(cur,-1,0))cur.x--;else if(a==='right'&&fits(cur,1,0))cur.x++;else if(a==='rot'){var m=rot(cur.m);if(fits(cur,0,0,m))cur.m=m;else if(fits(cur,-1,0,m)){cur.x--;cur.m=m}else if(fits(cur,1,0,m)){cur.x++;cur.m=m}}
+    else if(a==='down'){if(fits(cur,0,1))cur.y++;else lock()}else if(a==='drop'){while(fits(cur,0,1)){cur.y++;score+=2}lock()}draw()}
+  function loop(t){if(!running)return;if(!root.isConnected){running=false;return}var sp=Math.max(110,620-lines*18);acc+=t-(lastT||t);lastT=t;if(acc>sp){acc=0;act('down')}raf=requestAnimationFrame(loop)}
+  function start(){grid=[];for(var i=0;i<H;i++)grid.push(Array(W).fill(0));cur=piece();score=0;lines=0;running=true;ov.hidden=true;hud();draw();lastT=0;acc=0;raf=requestAnimationFrame(loop);root.focus();track('game_start')}
+  ov.querySelector('[data-go]').addEventListener('click',start);
+  root.querySelectorAll('[data-a]').forEach(function(b){b.addEventListener('click',function(){act(b.getAttribute('data-a'));root.focus()})});
+  root.addEventListener('keydown',function(e){var k={ArrowLeft:'left',ArrowRight:'right',ArrowUp:'rot',ArrowDown:'down',' ':'drop'}[e.key];if(k){e.preventDefault();act(k)}});
+  grid=[];for(var i=0;i<H;i++)grid.push(Array(W).fill(0));draw();
+}
+
+/* ---------- blog ---------- */
+function blogUrl(slug){try{return new URL((L==='hy'?'':L+'/')+'blog/'+slug+'/',CFG.siteUrl).href}catch(e){return '#'}}
+function initBlog(root){
+  var B=T().blog;
+  function list(){
+    root.innerHTML='<div class="bl-h"><h3>'+esc(B.title)+'</h3><p>'+esc(B.sub)+'</p></div><div class="bl-list">'+BLOG.map(function(a){var x=a[L]||a.hy;
+      return '<button type="button" class="bl-card" data-slug="'+a.slug+'"><span class="bl-bar" style="background:'+a.color+'"></span><span class="bl-meta">'+a.date.split('-').reverse().join('.')+' · '+a.read+' '+esc(B.min)+'</span><b>'+esc(x.title)+'</b><span>'+esc(x.desc)+'</span><em>'+esc(B.read)+' →</em></button>'}).join('')+'</div>';
+    root.querySelectorAll('[data-slug]').forEach(function(b){b.addEventListener('click',function(){read(b.getAttribute('data-slug'))})});
+  }
+  function read(slug){
+    var a=BLOG.filter(function(x){return x.slug===slug})[0],x=a[L]||a.hy;track('blog_read',slug);
+    root.innerHTML='<div class="bl-r"><div class="bl-nav"><button type="button" data-back>'+esc(B.back)+'</button><a href="'+esc(blogUrl(slug))+'" target="_blank" rel="noopener">'+esc(B.open)+'</a></div>'+
+      '<article><span class="bl-meta"><i style="background:'+a.color+'"></i>'+a.date.split('-').reverse().join('.')+' · '+a.read+' '+esc(B.min)+'</span><h1>'+esc(x.title)+'</h1><p class="bl-lead">'+esc(x.desc)+'</p>'+x.body+'</article></div>';
+    root.querySelector('[data-back]').addEventListener('click',list);
+    var sc=root.closest('.wbody')||root.closest('.sbody');if(sc)sc.scrollTop=0;
+  }
+  list();
+}
+
 
 /* ---------- start ---------- */
 applyStatic();buildDesktop();buildPhone();tick();

@@ -129,3 +129,5 @@ fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
 fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /worker/\nDisallow: /tools/\n\nSitemap: ${SITE}sitemap.xml\n`);
 fs.writeFileSync(path.join(OUT, '404.html'), `<!doctype html><html lang="hy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BERD SOFT</title><meta http-equiv="refresh" content="0;url=${SITE}"></head><body style="background:#0b0c10;color:#fff;font:16px system-ui;padding:24px"><a href="${SITE}" style="color:#CCFF00">BERD SOFT →</a></body></html>\n`);
 console.log('built:', LANGS.map(l => (l === 'hy' ? '' : l + '/') + 'index.html').join(', '), '+ sitemap.xml, robots.txt, 404.html');
+
+require('./build-blog')({ src, OUT, C, CFG, SITE, LANGS, url, esc });
