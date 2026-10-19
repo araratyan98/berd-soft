@@ -194,3 +194,17 @@ body>.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px))}
 .sheet .bl-h{padding:18px 16px 4px}
 .sheet .bl-r{padding:14px 16px 32px}
 
+
+/* ---------- real projects: screenshots instead of drawn mockups ---------- */
+.card .th img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.br .scroller .shot{display:block;width:100%;height:auto}
+.br .addr .u.nourl{color:var(--muted)}
+.br .addr .u.nourl i{display:none}
+.br .addr .open{flex:none;font:700 12px var(--f-ui);color:#fff;background:var(--blue);padding:6px 11px;border-radius:8px;text-decoration:none;white-space:nowrap}
+.br .addr .open:hover{background:#0f26c9}
+.br .addr .open:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.br .info .t{background:none;color:var(--muted);padding:0;font:600 12.5px/1.45 var(--f-ui)}
+.pa.shots{min-height:0;grid-auto-flow:column;justify-content:center;align-items:start;gap:28px;padding:16px 20px}
+.pa.shots .pf2 .in{padding:0}
+.pa.shots .pf2 img{display:block;width:100%;height:100%;object-fit:cover}
+.sheet .pa.shots{grid-auto-flow:row}

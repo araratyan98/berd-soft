@@ -186,51 +186,29 @@ var ROBOT='<svg viewBox="0 0 64 64" class="rb"><line x1="32" y1="5" x2="32" y2="
   '<g class="rb-eyes"><rect x="21" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/><rect x="36" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/></g>'+
   '<path d="M26 47.5q6 3 12 0" stroke="#CCFF00" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
 
-/* ---------- projects (visual data; texts live in CONTENT[lang].projects) ---------- */
+/* ---------- projects (visual data; texts live in CONTENT[lang].projects) ----------
+   url: what the address bar shows ('' = no public address), link: opens the live project.
+   type 'shot': one page screenshot media/work/<id>.webp (h = its height at 1200px wide);
+   type 'phones': app screens media/work/<id>-1.webp, -2.webp. Card image: media/work/<id>-thumb.webp */
 var PROJ = [
-  {id:'aroma',name:'Aroma Coffee',cat:'bot',url:'aroma-coffee.am',c1:'#3b2416',c2:'#f4e7d7',c3:'#c8742c',stack:['Telegram Bot API','Node.js','PostgreSQL'],type:'tg'},
-  {id:'cargo',name:'CargoLink',cat:'app',url:'app.cargolink.am',c1:'#141a33',c2:'#f4f6fb',c3:'#1B36F5',stack:['React','TypeScript','Node.js'],type:'db'},
-  {id:'fitup',name:'FitUp',cat:'mob',url:'fitup.app',c1:'#0f3d1f',c2:'#f1fff0',c3:'#2fbf5f',stack:['React Native','Node.js'],type:'mob'},
-  {id:'dent',name:'Dent Plus',cat:'web',url:'dentplus.am',c1:'#0c3550',c2:'#eef8ff',c3:'#1aa3d9',stack:['Next.js','PostgreSQL'],type:'site'},
-  {id:'nairi',name:'Nairi Wear',cat:'web',url:'nairiwear.am',c1:'#1a1a1a',c2:'#f6f3ee',c3:'#E01060',stack:['Next.js','Stripe','Admin'],type:'site'},
-  {id:'tavern',name:'Old Tavern',cat:'bot',url:'t.me/oldtavern_bot',c1:'#5a1d14',c2:'#fff4ec',c3:'#c0392b',stack:['Telegram Bot API','Python'],type:'tg'}
+  {id:'walletly',name:'Walletly',cat:'app',url:'walletly-am.up.railway.app',link:'https://walletly-am.up.railway.app',c1:'#1f1a16',c2:'#eee4d6',c3:'#bd5a3f',stack:['Next.js','TypeScript','libSQL','Apple Wallet','Google Wallet'],type:'shot',h:1470},
+  {id:'mirror-booking',name:'MirrorBooking',cat:'mob',url:'mirrorbooking.com',link:'https://mirrorbooking.com',c1:'#1a1a2e',c2:'#f5f3ff',c3:'#7c3aed',stack:['React Native','Expo','Next.js','Node.js','MongoDB'],type:'phones'},
+  {id:'lezu',name:'Lezu',cat:'app',url:'',link:'',c1:'#16202c',c2:'#f5f6f8',c3:'#1f3a8a',stack:['Python','FastAPI','Claude API','SQLAlchemy'],type:'shot',h:750},
+  {id:'ararat-park',name:'Ararat Park',cat:'web',url:'',link:'',c1:'#0b120e',c2:'#d8cdb8',c3:'#186038',stack:['Next.js','TypeScript','Supabase','Three.js','MapLibre'],type:'shot',h:2700},
+  {id:'the-face',name:'THE FACE',cat:'web',url:'theface.am',link:'https://www.theface.am/',c1:'#17140f',c2:'#f5f2ed',c3:'#a89478',stack:['Next.js','TypeScript','Supabase'],type:'shot',h:2700},
+  {id:'skinradar',name:'SkinRadar',cat:'bot',url:'',link:'',c1:'#0a0b0e',c2:'#15171d',c3:'#d8a94a',stack:['Node.js','TypeScript','Express','Steam OpenID','Telegram Bot API'],type:'shot',h:1053}
 ];
+/* images live next to the published pages: /berd-soft/media/ on Pages, /media/ in local preview */
+var MEDIA=(function(){try{var su=new URL(CFG.siteUrl);if(location.origin===su.origin&&location.pathname.indexOf(su.pathname)===0)return su.pathname+'media/work/'}catch(e){}return '/media/work/'})();
 function proj(id){var p=PROJ.filter(function(x){return x.id===id})[0];if(!p)return null;var t=T().projects[id]||{};return Object.assign({},p,t)}
 function thumb(p){
-  var b='<div class="th" style="background:'+p.c2+'"><span class="tag">'+esc(T().ui.test)+'</span>';
-  b+='<span style="position:absolute;left:14%;top:26%;width:46%;height:12%;border-radius:6px;background:'+p.c1+'"></span>';
-  b+='<span style="position:absolute;left:14%;top:44%;width:34%;height:6%;border-radius:4px;background:'+p.c1+';opacity:.35"></span>';
-  b+='<span style="position:absolute;left:14%;top:58%;width:22%;height:11%;border-radius:6px;background:'+p.c3+'"></span>';
-  b+='<span style="position:absolute;right:8%;top:22%;width:28%;height:56%;border-radius:10px;background:'+p.c3+';opacity:.85"></span>';
-  return b+'</div>';
+  return '<div class="th" style="background:'+p.c2+'"><img src="'+MEDIA+p.id+'-thumb.webp" alt="" width="640" height="400" loading="lazy" decoding="async"></div>';
 }
-/* the demo sites show the client's own (Armenian) content, so they stay in one language */
+/* real screens of the project; they keep the project's own language */
 function mock(p){
-  if(p.type==='db') return '<div class="db"><aside><b>'+p.name+'</b><span class="on">Վահանակ</span><span>Առաքումներ</span><span>Հաճախորդներ</span><span>Հաշիվներ</span><span>Կարգավորումներ</span></aside><main>'+
-    '<div class="kpi"><div>Ակտիվ առաքումներ<b>128</b></div><div>Այսօր հանձնված<b>46</b></div><div>Ուշացող<b>3</b></div><div>Նոր հայտեր<b>19</b></div></div>'+
-    '<div class="chart">'+[40,55,48,70,62,80,74,90,68,84,95,88].map(function(h,i){return '<i style="height:'+h+'%;background:'+(i==10?p.c3:'#d9defa')+'"></i>'}).join('')+'</div>'+
-    '<table><tr><th>Համար</th><th>Ուղղություն</th><th>Հաճախորդ</th><th>Կարգավիճակ</th></tr>'+
-    [['CL-2041','Երևան → Գյումրի','Արմենիա ՍՊԸ','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2042','Երևան → Վանաձոր','Ararat Food','Հանձնված','#e3f7e9','#1d8a46'],['CL-2043','Երևան → Մոսկվա','Nairi Wear','Մաքսատանը','#fff1d6','#a06800'],['CL-2044','Գորիս → Երևան','Zangezur Agro','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2045','Երևան → Թբիլիսի','Dent Plus','Սպասում է','#f0f0f3','#555'],['CL-2046','Երևան → Աբովյան','Aroma Coffee','Հանձնված','#e3f7e9','#1d8a46'],['CL-2047','Երևան → Սևան','Lake House','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2048','Երևան → Դիլիջան','Forest Inn','Հանձնված','#e3f7e9','#1d8a46']]
-    .map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td><span class="st" style="background:'+r[4]+';color:'+r[5]+'">'+r[3]+'</span></td></tr>'}).join('')+
-    '</table><div class="chart" style="height:240px">'+[30,45,38,60,52,70,64,75,58,80,72,86].map(function(h){return '<i style="height:'+h+'%;background:#e7eaf8"></i>'}).join('')+'</div></main></div>';
-  if(p.type==='mob') return '<div class="pa">'+[0,1].map(function(k){return '<div class="pf2"><div class="in"><h4>'+(k?'Իմ մարզումները':'Բարև, Անի 👋')+'</h4>'+
-    '<div class="c" style="background:'+p.c3+';color:#fff">'+(k?'Այս շաբաթ':'Հաջորդ մարզումը')+'<b>'+(k?'4 / 5':'18:30')+'</b></div>'+
-    '<div class="r"><div style="background:#e7f8ec"></div><div style="background:#eef1ff"></div></div>'+
-    '<div class="c" style="background:#f3f4f7">Յոգա · Ժ. 19:00</div><div class="c" style="background:#f3f4f7">Crossfit · Ժ. 20:00</div><div class="c" style="background:#f3f4f7">Լողավազան · Ժ. 09:00</div></div></div>'}).join('')+'</div>';
-  if(p.type==='tg') return '<div class="tgm"><div class="h"><i style="background:'+p.c3+'"></i><span>'+p.name+' Bot<small>բոտ</small></span></div><div class="b">'+
-    '<div class="m">Բարև։ Ի՞նչ եք ցանկանում պատվիրել այսօր։</div><div class="kb"><span>📋 Մենյու</span><span>🛵 Առաքում</span><span>🕑 Նախնական պատվեր</span><span>📍 Հասցե</span></div>'+
-    '<div class="m me">Մենյու</div><div class="menu"><div><span>Կապուչինո</span><span>1 200 ֏</span></div><div><span>Լատե</span><span>1 400 ֏</span></div><div><span>Կրուասան</span><span>900 ֏</span></div><div><span>Չիզքեյք</span><span>1 800 ֏</span></div></div>'+
-    '<div class="m me">2 կապուչինո, 08:30-ին</div><div class="m">Պատվերն ընդունված է ✅ Պատրաստ կլինի 08:30-ին։ Վճարե՞լ հիմա։</div><div class="kb"><span>💳 Վճարել քարտով</span><span>💵 Տեղում</span></div>'+
-    '<div class="m me">Վճարել քարտով</div><div class="m">Շնորհակալություն։ Կսպասենք ձեզ 08:30-ին ☕</div></div></div>';
-  return '<div class="ms" style="background:'+p.c2+'"><nav style="color:'+p.c1+'"><b>'+p.name+'</b><div><span>Ծառայություններ</span><span>Մեր մասին</span><span>Կապ</span></div></nav>'+
-    '<div class="hero2" style="color:'+p.c1+'"><div><h2>'+(p.id==='dent'?'Առողջ ժպիտ՝ առանց հերթերի':'Նոր հավաքածու՝ արդեն կայքում')+'</h2><p>'+(p.id==='dent'?'Առցանց գրանցում, բժիշկների ժամանակացույց և SMS հիշեցում։':'Կատալոգ, զամբյուղ և առցանց վճարում։')+'</p><span class="cta" style="background:'+p.c3+';color:#fff">'+(p.id==='dent'?'Գրանցվել առցանց':'Դիտել կատալոգը')+'</span></div>'+
-    '<div class="art" style="background:'+p.c1+'"><i style="left:12%;top:12%;width:40%;height:40%;background:'+p.c3+'"></i><i style="left:46%;top:46%;width:42%;height:42%;background:'+p.c2+'"></i><i style="left:16%;top:62%;width:22%;height:22%;background:#fff;opacity:.6"></i></div></div>'+
-    '<div class="feats">'+['Արագ գրանցում','Հիշեցումներ','Առցանց վճարում'].map(function(t){return '<div style="background:#fff;color:'+p.c1+'">'+t+'<p>Հարմար է հեռախոսից և համակարգչից։</p></div>'}).join('')+'</div>'+
-    '<div class="band" style="background:'+p.c1+';color:#fff"><div><b>24/7</b><span>առցանց</span></div><div><b>3 քայլ</b><span>մինչև պատվեր</span></div><div><b>1 կայք</b><span>բոլոր սարքերի համար</span></div></div>'+
-    '<div class="gal"><i style="background:'+p.c3+'"></i><i style="background:'+p.c1+';opacity:.85"></i><i style="background:#fff"></i><i style="background:#fff"></i><i style="background:'+p.c1+';opacity:.5"></i></div>'+
-    '<div class="quote" style="color:'+p.c1+'">«Կայքը հիմա աշխատում է մեր փոխարեն, նույնիսկ գիշերը»։<small>Թեստային կարծիք</small></div>'+
-    '<div class="gal"><i style="background:#fff"></i><i style="background:'+p.c3+';opacity:.7"></i><i style="background:'+p.c1+';opacity:.3"></i><i style="background:#fff"></i><i style="background:'+p.c3+'"></i></div>'+
-    '<footer style="background:'+p.c1+';color:#fff"><span>'+p.name+'</span><span>BERD SOFT</span></footer></div>';
+  var alt=esc(p.name);
+  if(p.type==='phones') return '<div class="pa shots" style="background:'+p.c2+'">'+[1,2].map(function(k){return '<div class="pf2"><div class="in"><img src="'+MEDIA+p.id+'-'+k+'.webp" alt="'+alt+'" width="390" height="844" loading="lazy" decoding="async"></div></div>'}).join('')+'</div>';
+  return '<img class="shot" src="'+MEDIA+p.id+'.webp" alt="'+alt+'" width="1200" height="'+p.h+'" loading="lazy" decoding="async" style="background:'+p.c2+'">';
 }
 
 /* ---------- apps ---------- */
@@ -281,8 +259,10 @@ function body(id){
 }
 function browserBody(p){
   var u=T().ui;
-  return '<div class="br"><div class="vp"><div class="addr"><span class="u"><i></i>'+esc(p.url)+'</span><span class="demo">'+esc(u.demo)+'</span></div><div class="view" data-view><div class="scroller">'+mock(p)+'</div><span class="shint" data-hint>'+esc(u.scrollHint)+'</span></div></div>'+
-    '<div class="info"><span class="cat">'+esc(T().cats[p.cat])+'</span><h3>'+esc(p.name)+'</h3><span class="t">'+esc(u.testProject)+'</span><dl><div><dt>'+esc(u.task)+'</dt><dd>'+esc(p.task)+'</dd></div><div><dt>'+esc(u.sol)+'</dt><dd>'+esc(p.sol)+'</dd></div><div><dt>'+esc(u.res)+'</dt><dd>'+esc(p.res)+'</dd></div></dl><div class="chips">'+p.stack.map(function(s){return '<span>'+esc(s)+'</span>'}).join('')+'</div></div></div>';
+  var open=p.link?'<a class="open" href="'+esc(p.link)+'" target="_blank" rel="noopener" data-plink="'+p.id+'">'+esc(u.openSite)+'</a>':'';
+  var row=function(k,v){return v?'<div><dt>'+esc(u[k])+'</dt><dd>'+esc(v)+'</dd></div>':''};
+  return '<div class="br"><div class="vp"><div class="addr"><span class="u'+(p.url?'':' nourl')+'"><i></i>'+esc(p.url||p.name)+'</span>'+open+'</div><div class="view" data-view><div class="scroller">'+mock(p)+'</div>'+(p.type==='shot'?'<span class="shint" data-hint>'+esc(u.scrollHint)+'</span>':'')+'</div></div>'+
+    '<div class="info"><span class="cat">'+esc(T().cats[p.cat])+'</span><h3>'+esc(p.name)+'</h3><span class="t">'+esc(p.role)+'</span><dl>'+row('task',p.task)+row('sol',p.sol)+row('res',p.res)+'</dl><div class="chips">'+p.stack.map(function(s){return '<span>'+esc(s)+'</span>'}).join('')+'</div></div></div>';
 }
 
 /* open "Our work" already filtered to one category */
@@ -382,6 +362,7 @@ function wire(root, openProject){
   root.querySelectorAll('[data-p]').forEach(function(c){c.addEventListener('click',function(){openProject(c.getAttribute('data-p'),c)})});
   root.querySelectorAll('[data-goto]').forEach(function(b){b.addEventListener('click',function(){goWork(b.getAttribute('data-goto'))})});
   root.querySelectorAll('[data-ct]').forEach(function(a){a.addEventListener('click',function(){track('contact_click',a.textContent.split(' ')[0])})});
+  root.querySelectorAll('[data-plink]').forEach(function(a){a.addEventListener('click',function(){track('project_link',a.getAttribute('data-plink'))})});
   var br=root.querySelector('[data-brief]');if(br)initBrief(br);
 
   var form=root.querySelector('[data-form]');
@@ -538,7 +519,7 @@ function openProject(pid,fromEl){
   if(phoneMode()) return openSheet('p:'+pid);
   var key='p:'+pid,w=openWins[key];if(w){w.hidden=false;focusWin(w);setRun();return}
   var n=Object.keys(openWins).filter(function(k){return k.indexOf('p:')===0}).length;
-  makeWin(key,p.name+' · '+p.url,browserBody(p),{x:120+n*28,y:48+n*24,w:1040,h:640},fromEl?vRect(fromEl):null);
+  makeWin(key,p.name+(p.url?' · '+p.url:''),browserBody(p),{x:120+n*28,y:48+n*24,w:1040,h:640},fromEl?vRect(fromEl):null);
 }
 
 /* clock */
@@ -592,7 +573,7 @@ function endBoot(){
   setTimeout(function(){$('#botBubble').classList.remove('show')},9000);
   if(!phoneMode())setTimeout(openFromHash,450);
 }
-/* deep links: #work, #brief … open an app; #p-aroma opens that project */
+/* deep links: #work, #brief … open an app; #p-walletly opens that project */
 function openFromHash(){
   var h=location.hash.replace('#','');
   if(APPS[h])return api.open(h);

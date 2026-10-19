@@ -13,7 +13,8 @@
 |---|---|---|
 | `hero_click` | Սեղանի կոճակները (Բացել աշխատանքները / Հաշվարկել) | `work`, `brief` |
 | `app_open` | Ցանկացած պատուհանի բացում | `work`, `serv`, `proc`, `about`, `brief`, `chat`, `bot` |
-| `project_open` | Նախագծի բացում | `aroma`, `cargo` … |
+| `project_open` | Նախագծի բացում | `walletly`, `lezu` … |
+| `project_link` | «Բացել կայքը» սեղմում նախագծի պատուհանում | `walletly`, `the-face` … |
 | `window_time` | Պատուհանը փակելիս կամ կայքից դուրս գալիս | պատուհանը + `seconds` |
 | `bot_open`, `bot_question` | Օգնականի բացում, ինչ հարց են տվել | `price`, `pay`, `other` … |
 | `brief_start` → `brief_step` → `brief_submit` | Բրիֆի ձագար | քայլը |

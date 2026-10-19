@@ -16,6 +16,9 @@ const cfgMatch = src.match(/window\.BERD_CONFIG = window\.BERD_CONFIG \|\| (\{[\
 const CFG = Function('return (' + cfgMatch[1] + ')')();
 const contentMatch = src.match(/\/\*CONTENT\*\/([\s\S]*?)\/\*\/CONTENT\*\//);
 const C = Function('return (' + contentMatch[1] + ')')();
+// portfolio names and public links come from PROJ in the page script
+const PROJ = Function('return ' + src.match(/var PROJ = (\[[\s\S]*?\n\]);/)[1])();
+const projOf = id => PROJ.find(p => p.id === id) || { name: id };
 const SITE = CFG.siteUrl.replace(/\/?$/, '/');
 const LANGS = ['hy', 'ru', 'en'];
 const url = l => SITE + (l === 'hy' ? '' : l + '/');
@@ -65,7 +68,9 @@ function readable(l) {
   h.push('<section class="sr-only" id="site-text" lang="' + l + '">');
   h.push('<h1>BERD SOFT — ' + esc(strip(t.hero.h1)) + '</h1><p>' + esc(t.hero.p) + '</p>');
   h.push('<h2>' + esc(t.services.title) + '</h2><p>' + esc(t.services.lead) + '</p><ul>' + t.services.items.map(s => '<li><strong>' + esc(s[0]) + '.</strong> ' + esc(s[1]) + '</li>').join('') + '</ul>');
-  h.push('<h2>' + esc(t.ui.apps.work) + '</h2><ul>' + Object.entries(t.projects).map(([id, p]) => '<li><a href="' + url(l) + '#p-' + id + '">' + esc(id === 'aroma' ? 'Aroma Coffee' : id === 'cargo' ? 'CargoLink' : id === 'fitup' ? 'FitUp' : id === 'dent' ? 'Dent Plus' : id === 'nairi' ? 'Nairi Wear' : 'Old Tavern') + '</a> — ' + esc(p.kind) + '. ' + esc(p.task) + ' ' + esc(p.sol) + '</li>').join('') + '</ul>');
+  h.push('<h2>' + esc(t.ui.apps.work) + '</h2><ul>' + Object.entries(t.projects).map(([id, p]) => { const pr = projOf(id);
+    return '<li><a href="' + url(l) + '#p-' + id + '">' + esc(pr.name) + '</a> — ' + esc(p.kind) + '. ' + esc(p.task) + ' ' + esc(p.sol) +
+      (pr.link ? ' <a href="' + esc(pr.link) + '" rel="noopener">' + esc(pr.url) + '</a>' : '') + '</li>'; }).join('') + '</ul>');
   h.push('<h2>' + esc(t.process.title) + '</h2><ol>' + t.process.steps.map(s => '<li><strong>' + esc(s[0]) + '</strong> (' + esc(s[2]) + '). ' + esc(s[1]) + '</li>').join('') + '</ol>');
   h.push('<h2>' + esc(t.about.title) + '</h2><p>' + esc(t.about.lead) + '</p><ul>' + t.about.gua.map(g => '<li><strong>' + esc(g[0]) + '.</strong> ' + esc(g[1]) + '</li>').join('') + '</ul>');
   h.push('<h2>FAQ</h2><dl>' + t.bot.qa.map(q => '<dt>' + esc(q[1]) + '</dt><dd>' + esc(q[2]) + '</dd>').join('') + '</dl>');

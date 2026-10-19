@@ -140,7 +140,8 @@ function initCalc(root){
 }
 
 /* ---------- before / after ---------- */
-var BA={dent:1,nairi:1};
+/* only projects with a real "before" screenshot; none yet */
+var BA={};
 var _bb=browserBody;
 browserBody=function(p){
   var h=_bb(p);if(!BA[p.id])return h;

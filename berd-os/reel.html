@@ -39,8 +39,8 @@ iframe{width:1440px;height:1012px;border:0;transform:scale(.7084);transform-orig
   <div class="brand"><span class="mk"><i></i><i></i><i></i><i></i></span>BERD SOFT</div>
   <div class="cap">
     <p data-c="0">Կայք, որը<br>բացվում է <em>ինչպես<br>համակարգիչ</em></p>
-    <p data-c="1">Մեր աշխատանքները՝<br><em>կենդանի</em>, ոչ թե<br>նկարներով</p>
-    <p data-c="2"><em>Առաջ</em> և <em>հետո</em>.<br>տարբերությունը<br>տեսանելի է</p>
+    <p data-c="1">Մեր <em>իրական</em><br>աշխատանքները</p>
+    <p data-c="2">Ամեն նախագծում՝<br><em>խնդիրը</em> և<br><em>լուծումը</em></p>
     <p data-c="3">Գինը՝<br><em>վայրկյանների</em><br>ընթացքում</p>
     <p data-c="4">Հարցրեք մեր<br><em>ռոբոտին</em>՝<br>24/7</p>
   </div>
@@ -65,16 +65,17 @@ function D(){return document.getElementById('site').contentDocument}
 function q(s){return D().querySelector(s)}
 function click(s){var e=q(s);if(e)e.click();return !!e}
 function closeAll(){D().querySelectorAll('.win .c').forEach(function(b){b.click()})}
+function scrollView(id){var v=q('.win[data-key="p:'+id+'"] [data-view]');if(v){var y=0,t=setInterval(function(){y+=14;v.scrollTop=y;if(y>520)clearInterval(t)},33)}}
 window.startReel=function(){var f=document.getElementById('site');f.addEventListener('load',run,{once:true});f.src='/?reel=1&t='+Date.now();};
 function run(){
   at(300,function(){show(0)});
   at(4200,function(){show(1);click('[data-app="work"]')});
-  at(5600,function(){click('.card[data-p="nairi"]')});
-  at(6800,function(){var v=q('.win[data-key="p:nairi"] [data-view]');if(v){var y=0,t=setInterval(function(){y+=14;v.scrollTop=y;if(y>520)clearInterval(t)},33)}});
+  at(5600,function(){click('.card[data-p="walletly"]')});
+  at(6800,function(){scrollView('walletly')});
   at(8600,function(){closeAll()});
   at(9100,function(){show(2);click('[data-app="work"]')});
-  at(9900,function(){click('.card[data-p="dent"]')});
-  at(11000,function(){click('.win[data-key="p:dent"] [data-batoggle]')});
+  at(9900,function(){click('.card[data-p="ararat-park"]')});
+  at(11000,function(){scrollView('ararat-park')});
   at(13300,function(){closeAll()});
   at(13800,function(){show(3);click('[data-app="calc"]')});
   var steps=[['type','shop'],['feat','pay'],['feat','admin'],['feat','seo'],['lang','ru'],['feat','tgbot']];
