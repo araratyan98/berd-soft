@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BERD SOFT · Թվային բերդ ձեր բիզնեսի համար</title>
+<meta name="description" content="BERD SOFT՝ կայքեր, վեբ և մոբայլ հավելվածներ, Telegram-բոտեր։ Երևան։">
+<meta property="og:title" content="BERD SOFT · Թվային բերդ ձեր բիզնեսի համար">
+<meta property="og:description" content="Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։">
+<meta name="theme-color" content="#0b0c10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' fill='%231B36F5'/%3E%3Crect x='17' y='2' width='13' height='13' fill='%23CCFF00'/%3E%3Crect x='2' y='17' width='13' height='13' fill='%23E01060'/%3E%3Crect x='17' y='17' width='13' height='13' fill='%23FFB800'/%3E%3C/svg%3E">
+<style>
+html{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500;600;700;800;900&family=Onest:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one-screen stage; a laptop whose 1280×800 screen is a scaled virtual desktop ("BERD OS").
+   Phones get the same apps as a phone home screen instead of the laptop. Single dark look by choice. */
+:root{
+  color-scheme:dark;
+  --stage:#0b0c10; --stage-2:#14161d; --chrome:#e9eaee; --chrome-2:#d6d8de;
+  --win:#fbfbfc; --win-2:#f1f2f5; --line:#dcdee4; --text:#121318; --muted:#5f6370;
+  --blue:#1B36F5; --lime:#CCFF00; --pink:#E01060; --amber:#FFB800; --ink:#0D0D0F;
+  --on-stage:#eef0f6; --on-stage-2:#9aa0b0;
+  --f-ui:"Noto Sans Armenian","Onest",system-ui,sans-serif;
+  --f-lat:"Onest","Noto Sans Armenian",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+html,body{height:100%}
+body{background:var(--stage);color:var(--on-stage);font-family:var(--f-ui);overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+.mk{display:inline-grid;grid-template-columns:1fr 1fr;gap:9%;flex:none}
+.mk i{display:block}.mk i:nth-child(1){background:var(--blue)}.mk i:nth-child(2){background:var(--lime)}.mk i:nth-child(3){background:var(--pink)}.mk i:nth-child(4){background:var(--amber)}
+
+/* ---------- stage ---------- */
+.stage{height:100%;display:grid;grid-template-rows:auto 1fr auto;gap:8px;padding-block:14px;
+  background:radial-gradient(70% 55% at 50% 45%,#1a1d2a 0%,var(--stage) 70%)}
+.top{display:flex;justify-content:space-between;align-items:center;font:600 14px var(--f-lat);color:var(--on-stage)}
+.top .b{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.01em;font-size:16px}
+.top .b .mk{width:18px;height:18px}
+.top small{color:var(--on-stage-2);font:500 13px var(--f-ui)}
+.hint{text-align:center;color:var(--on-stage-2);font:500 13px var(--f-ui)}
+.hint b{color:var(--on-stage);font-weight:600}
+/* every laptop dimension derives from --sw (the screen width), so the frame always wraps the screen exactly */
+.laptop-wrap{display:grid;place-items:center;min-height:0;min-width:0;perspective:2400px}
+.laptop{--sw:1000px;--pad:calc(var(--sw)*.022);position:relative;transform-style:preserve-3d;width:calc(var(--sw) + var(--pad)*2)}
+.lid{position:relative;box-sizing:content-box;width:var(--sw);padding:var(--pad) var(--pad) calc(var(--pad)*1.45);background:#0c0c0e;
+  border-radius:calc(var(--sw)*.018) calc(var(--sw)*.018) calc(var(--sw)*.006) calc(var(--sw)*.006);
+  box-shadow:inset 0 0 0 1.5px #3a3b41,inset 0 0 0 4px #050506,0 calc(var(--sw)*.05) calc(var(--sw)*.09) calc(var(--sw)*-.03) rgba(0,0,0,.85);
+  transform-origin:50% 100%;backface-visibility:hidden}
+.lid:before{content:"";position:absolute;left:50%;top:0;width:calc(var(--sw)*.1);height:calc(var(--pad)*.95);transform:translateX(-50%);background:#050506;border-radius:0 0 calc(var(--pad)*.5) calc(var(--pad)*.5);z-index:2}
+.lid .cam{position:absolute;left:50%;top:calc(var(--pad)*.32);width:calc(var(--pad)*.3);height:calc(var(--pad)*.3);transform:translateX(-50%);border-radius:50%;background:#1d2533;box-shadow:inset 0 0 2px #5b7cff;z-index:3}
+.screen{position:relative;overflow:hidden;width:var(--sw);height:calc(var(--sw)*.625);border-radius:calc(var(--sw)*.004);background:#000}
+.glass{position:absolute;inset:0;z-index:1001;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.07) 0%,rgba(255,255,255,.02) 32%,rgba(255,255,255,0) 46%)}
+.deck{position:relative;height:calc(var(--sw)*.02);margin:0 calc(var(--sw)*-.07);background:linear-gradient(180deg,#e2e4e8,#b3b6bd 55%,#6c6f77);
+  border-radius:2px 2px calc(var(--sw)*.016) calc(var(--sw)*.016);box-shadow:0 calc(var(--sw)*.03) calc(var(--sw)*.05) calc(var(--sw)*-.01) rgba(0,0,0,.75)}
+.deck:before{content:"";position:absolute;left:50%;top:0;width:calc(var(--sw)*.15);height:45%;transform:translateX(-50%);background:linear-gradient(#9da0a8,#c6c8cd);border-radius:0 0 calc(var(--sw)*.01) calc(var(--sw)*.01)}
+.zoom .deck{display:none}
+/* power-on: black panel, a soft bloom of light, then the boot screen shows through */
+.power{position:absolute;inset:0;z-index:1000;background:#000;pointer-events:none}
+.power.on{animation:poweron .9s ease-out forwards}
+@keyframes poweron{0%{background:#000;opacity:1}18%{background:radial-gradient(60% 45% at 50% 50%,#3b4bff 0%,#0b0d1c 60%,#000 100%);opacity:1}100%{opacity:0}}
+.os.ready .hero{animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.os.ready .dock{animation:dockin .7s .15s cubic-bezier(.2,.8,.2,1) both}
+.os.ready .dicons{animation:rise .7s .25s cubic-bezier(.2,.8,.2,1) both}
+.os.ready .wall{animation:wallin 1.1s ease-out both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes dockin{from{opacity:0;transform:translate(-50%,40px)}}
+@keyframes wallin{from{transform:scale(1.06);filter:brightness(.4)}}
+
+/* virtual 1280×800 OS */
+.os{position:absolute;left:0;top:0;width:1280px;height:800px;transform-origin:0 0;overflow:hidden;font-family:var(--f-ui);color:var(--text)}
+
+/* boot */
+.boot{position:absolute;inset:0;z-index:999;background:#000;display:grid;place-items:center;align-content:center;gap:34px;color:#fff;transition:opacity .45s}
+.boot .mk{width:92px;height:92px}
+.boot .mk i{animation:pop .5s 1.25s cubic-bezier(.2,.9,.3,1.3) both}
+.boot .mk i:nth-child(2){animation-delay:1.37s}.boot .mk i:nth-child(3){animation-delay:1.49s}.boot .mk i:nth-child(4){animation-delay:1.61s}
+.boot .bar{width:220px;height:5px;border-radius:5px;background:#2a2b30;overflow:hidden}
+.boot .bar i{display:block;height:100%;width:0;background:#fff;border-radius:5px;animation:load 1.5s 1.5s ease-in-out forwards}
+.boot small{position:absolute;bottom:26px;font:500 13px var(--f-ui);color:#7c808c}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:none;opacity:1}}
+@keyframes load{to{width:100%}}
+.boot.gone{opacity:0;pointer-events:none}
+
+/* wallpaper */
+.wall{position:absolute;inset:0;background:#101219;overflow:hidden}
+.wall .blk{position:absolute;filter:saturate(1.05)}
+.wall:after{content:"";position:absolute;inset:0;opacity:.35;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.wall .shade{position:absolute;inset:0;background:radial-gradient(60% 70% at 25% 45%,rgba(10,11,16,.0),rgba(10,11,16,.55) 70%),linear-gradient(90deg,rgba(10,11,16,.82) 0%,rgba(10,11,16,.35) 46%,rgba(10,11,16,0) 70%)}
+
+/* menu bar */
+.menubar{position:absolute;left:0;right:0;top:0;height:28px;z-index:500;display:flex;align-items:center;gap:20px;padding:0 14px;
+  background:rgba(18,19,26,.55);backdrop-filter:blur(18px) saturate(1.4);color:#f3f4f8;font:500 13px var(--f-ui)}
+.menubar .mk{width:14px;height:14px}
+.menubar b{font:800 13px var(--f-lat);letter-spacing:.01em}
+.menubar .app{font-weight:700}
+.menubar .sp{flex:1}
+.menubar .r{display:flex;gap:16px;align-items:center;font-variant-numeric:tabular-nums}
+.menubar .fs{padding:2px 8px;border-radius:5px}.menubar .fs:hover{background:rgba(255,255,255,.14)}
+
+/* desktop headline widget */
+.hero{position:absolute;left:64px;top:118px;width:620px;color:#fff;z-index:1}
+.hero .kick{display:inline-flex;align-items:center;gap:8px;font:600 13px var(--f-ui);color:#cfd3e0;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 12px;border-radius:999px}
+.hero .kick i{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.hero h1{margin:22px 0 0;font:800 58px/1.06 var(--f-ui);letter-spacing:-.025em;text-wrap:balance}
+.hero h1 em{font-style:normal;color:var(--lime)}
+.hero p{margin:20px 0 0;font:400 18px/1.55 var(--f-ui);color:#c6cad8;max-width:46ch}
+.hero .acts{display:flex;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:13px 20px;border-radius:12px;font:700 15px var(--f-ui)}
+.btn.p{background:var(--lime);color:#111}.btn.p:hover{background:#dbff4d}
+.btn.g{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}.btn.g:hover{background:rgba(255,255,255,.18)}
+
+/* desktop icons */
+.dicons{position:absolute;right:26px;top:52px;display:grid;gap:18px;z-index:1}
+.dicon{width:96px;display:grid;justify-items:center;gap:7px;color:#fff;font:600 12.5px/1.25 var(--f-ui);text-align:center;padding:6px 4px;border-radius:8px}
+.dicon:hover,.dicon:focus-visible{background:rgba(255,255,255,.12)}
+.dicon .ico{width:58px;height:58px}
+.dicon span{text-shadow:0 1px 3px rgba(0,0,0,.6)}
+
+/* dock */
+.dock{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);z-index:600;display:flex;align-items:flex-end;gap:10px;padding:9px 12px;
+  border-radius:22px;background:rgba(240,242,248,.18);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(22px) saturate(1.5);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.dock .sep{width:1px;align-self:stretch;margin:4px 2px;background:rgba(255,255,255,.25)}
+.dk{position:relative;width:58px;height:58px;transition:transform .18s cubic-bezier(.3,.7,.4,1.4)}
+.dk .ico{width:100%;height:100%}
+.dk:hover{transform:translateY(-12px) scale(1.28)}
+.dk:hover+.dk,.dk:has(+.dk:hover){transform:translateY(-5px) scale(1.12)}
+.dk .tip{position:absolute;left:50%;bottom:calc(100% + 14px);transform:translateX(-50%);white-space:nowrap;padding:5px 10px;border-radius:7px;
+  background:rgba(20,21,28,.9);color:#fff;font:600 12px var(--f-ui);opacity:0;pointer-events:none;transition:opacity .15s}
+.dk:hover .tip,.dk:focus-visible .tip{opacity:1}
+.dk .run{position:absolute;left:50%;bottom:-7px;width:5px;height:5px;margin-left:-2.5px;border-radius:50%;background:#fff;opacity:0}
+.dk.on .run{opacity:.9}
+
+/* app icons (shared by dock, desktop, phone) */
+.ico{display:grid;place-items:center;border-radius:22%;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 10px rgba(0,0,0,.28)}
+.ico svg{width:56%;height:56%}
+.i-work{background:linear-gradient(160deg,#4c63ff,#1B36F5 55%,#1226b8)}
+.i-serv{background:linear-gradient(160deg,#e6ff6a,#CCFF00 55%,#a6d100)}
+.i-proc{background:linear-gradient(160deg,#ffffff,#eceef3)}
+.i-about{background:linear-gradient(160deg,#ff4f90,#E01060 55%,#b00b4a)}
+.i-chat{background:linear-gradient(160deg,#ffd257,#FFB800 55%,#e09a00)}
+.i-term{background:linear-gradient(160deg,#2b2d35,#0e0f13)}
+.i-folder{background:none;box-shadow:none;overflow:visible}
+
+/* windows */
+.win{position:absolute;display:flex;flex-direction:column;background:var(--win);border-radius:12px;overflow:hidden;z-index:100;
+  box-shadow:0 0 0 1px rgba(0,0,0,.22),0 28px 70px rgba(0,0,0,.45);will-change:transform}
+.win[hidden]{display:none!important}
+.win.max{left:0!important;top:28px!important;width:1280px!important;height:772px!important;border-radius:0}
+.tbar{height:40px;flex:none;display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--win-2);border-bottom:1px solid var(--line);cursor:grab;user-select:none}
+.tbar:active{cursor:grabbing}
+.lights{display:flex;gap:8px}
+.lights button{width:13px;height:13px;border-radius:50%;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25);display:grid;place-items:center;font:700 9px/1 var(--f-lat);color:transparent}
+.lights:hover button{color:rgba(0,0,0,.55)}
+.lights .c{background:var(--pink)}.lights .m{background:var(--amber)}.lights .x{background:var(--lime)}
+.tbar .tt{flex:1;text-align:center;font:600 13px var(--f-ui);color:#3b3e48;margin-right:58px}
+.wbody{flex:1;min-height:0;overflow:auto;color:var(--text)}
+.wbody::-webkit-scrollbar{width:10px}.wbody::-webkit-scrollbar-thumb{background:#c9ccd4;border-radius:10px;border:3px solid var(--win)}
+
+/* portfolio app */
+.pf{display:grid;grid-template-columns:200px 1fr;height:100%}
+.pf aside{background:#eef0f4;border-right:1px solid var(--line);padding:16px 10px;display:grid;align-content:start;gap:2px}
+.pf aside h5{margin:6px 10px 8px;font:700 11px var(--f-ui);letter-spacing:.06em;color:#8a8e9a;text-transform:uppercase}
+.pf aside button{display:flex;justify-content:space-between;align-items:center;text-align:left;padding:8px 10px;border-radius:8px;font:600 13.5px var(--f-ui);color:#2c2f38}
+.pf aside button span{font:500 12px var(--f-lat);color:#8a8e9a}
+.pf aside button.on{background:#dfe3ff;color:var(--blue)}
+.pf aside .note{margin:16px 10px 0;padding:12px;border-radius:10px;background:#fff7dc;color:#6b5200;font:500 12px/1.45 var(--f-ui)}
+.pf main{padding:20px 22px;overflow:auto;min-width:0}
+.pf main h3{margin:0 0 4px;font:800 24px var(--f-ui);letter-spacing:-.01em}
+.pf main .sub{color:var(--muted);font:500 14px var(--f-ui);margin:0 0 18px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{display:grid;gap:10px;text-align:left;padding:0;border-radius:14px;cursor:pointer}
+.card .th{position:relative;aspect-ratio:16/10;max-width:100%;border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px rgba(0,0,0,.08),0 6px 16px rgba(0,0,0,.08);transition:transform .2s,box-shadow .2s}
+.card:hover .th{transform:translateY(-3px);box-shadow:0 0 0 2px var(--blue),0 12px 24px rgba(27,54,245,.18)}
+.card .th .tag{position:absolute;left:10px;top:10px;font:700 10.5px var(--f-ui);background:rgba(255,255,255,.92);color:#333;padding:3px 8px;border-radius:6px}
+.card b{font:700 15px var(--f-ui);color:var(--text)}
+.card small{display:block;font:500 12.5px var(--f-ui);color:var(--muted);margin-top:2px}
+
+/* browser window */
+.br{display:grid;grid-template-columns:1fr 300px;height:100%}
+.br .vp{display:flex;flex-direction:column;min-width:0;background:#e9ebf0}
+.br .addr{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--win-2);border-bottom:1px solid var(--line)}
+.br .addr .u{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:500 13px var(--f-lat);color:#444}
+.br .addr .u i{width:10px;height:12px;border:2px solid #22a35a;border-radius:3px;display:inline-block}
+.br .addr .demo{font:700 11px var(--f-ui);color:#8a5a00;background:#fff1c7;padding:4px 8px;border-radius:6px}
+.br .view{flex:1;position:relative;overflow:hidden}
+.br .scroller{position:absolute;left:0;right:0;top:0;animation:scrollsite var(--dur,16s) ease-in-out infinite alternate}
+.br .view:hover .scroller{animation-play-state:paused}
+@keyframes scrollsite{0%,8%{transform:translateY(0)}92%,100%{transform:translateY(var(--dist,-800px))}}
+.br .info{border-left:1px solid var(--line);padding:22px 20px;overflow:auto;background:#fff}
+.br .info .cat{font:700 11.5px var(--f-ui);letter-spacing:.06em;color:var(--blue);text-transform:uppercase}
+.br .info h3{margin:8px 0 6px;font:800 24px/1.15 var(--f-ui)}
+.br .info .t{display:inline-block;font:700 11px var(--f-ui);color:#8a5a00;background:#fff1c7;padding:3px 8px;border-radius:6px}
+.br .info dl{display:grid;gap:14px;margin:20px 0}
+.br .info dt{font:700 12px var(--f-ui);color:var(--muted);margin-bottom:3px}
+.br .info dd{margin:0;font:500 14px/1.5 var(--f-ui)}
+.br .info .chips{display:flex;flex-wrap:wrap;gap:6px}
+.br .info .chips span{font:600 11.5px var(--f-lat);padding:4px 9px;border-radius:999px;background:#eef0f6;color:#333}
+
+/* generic content apps */
+.pad{padding:24px 26px}
+.pad h3{margin:0;font:800 26px/1.15 var(--f-ui);letter-spacing:-.01em}
+.pad .lead{margin:8px 0 20px;color:var(--muted);font:500 14.5px/1.55 var(--f-ui);max-width:60ch}
+.svc{display:grid;gap:10px}
+.svc .row{display:grid;grid-template-columns:52px 1fr auto;gap:16px;align-items:center;padding:14px 16px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.svc .row .sq{width:52px;height:52px;border-radius:12px;display:grid;place-items:center}
+.svc .row .sq svg{width:26px;height:26px}
+.svc .row b{font:700 16px var(--f-ui)}.svc .row p{margin:3px 0 0;font:500 13.5px/1.45 var(--f-ui);color:var(--muted)}
+.svc .row .k{font:700 12.5px var(--f-ui);color:var(--blue);white-space:nowrap;padding:8px 12px;border-radius:999px;background:#eef1ff}
+.svc .row .k:hover{background:var(--blue);color:#fff}
+.notes{display:grid;grid-template-columns:220px 1fr;height:100%}
+.notes aside{background:#faf6e8;border-right:1px solid #ece4c8;padding:16px 12px}
+.notes aside div{padding:10px 12px;border-radius:8px;background:#f1e7c2;font:700 13px var(--f-ui);color:#4a3d10}
+.notes aside small{display:block;font:500 12px var(--f-ui);color:#8a7a40;margin-top:3px}
+.notes main{padding:26px 30px;background:#fffdf6;overflow:auto}
+.notes h3{margin:0 0 6px;font:800 26px var(--f-ui)}
+.notes .date{color:#9a8f6a;font:500 12.5px var(--f-ui);margin-bottom:18px}
+.steps{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.steps li{display:grid;grid-template-columns:26px 1fr auto;gap:14px;align-items:start}
+.steps .ck{width:22px;height:22px;border-radius:50%;border:2px solid #c9bd8f;display:grid;place-items:center;margin-top:2px}
+.steps li.done .ck{background:var(--blue);border-color:var(--blue)}
+.steps li.done .ck:after{content:"";width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px)}
+.steps b{font:700 16px var(--f-ui)}.steps p{margin:3px 0 0;font:500 14px/1.5 var(--f-ui);color:#5c5640}
+.steps .d{font:600 12.5px var(--f-ui);color:#8a7a40;white-space:nowrap;background:#f3ecd2;padding:3px 9px;border-radius:999px}
+.gua{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gua div{padding:18px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.gua b{display:block;font:800 17px/1.25 var(--f-ui);margin-bottom:6px}
+.gua p{margin:0;font:500 13.5px/1.5 var(--f-ui);color:var(--muted)}
+.gua div:nth-child(1){border-top:4px solid var(--blue)}.gua div:nth-child(2){border-top:4px solid var(--lime)}.gua div:nth-child(3){border-top:4px solid var(--pink)}.gua div:nth-child(4){border-top:4px solid var(--amber)}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.stack span{font:600 12.5px var(--f-lat);padding:6px 11px;border-radius:8px;background:#eef0f6}
+
+/* chat */
+.chat{display:grid;grid-template-rows:auto 1fr auto;height:100%;background:#eef0f5}
+.chat .hd{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#fff;border-bottom:1px solid var(--line)}
+.chat .av{width:40px;height:40px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.chat .av .mk{width:18px;height:18px}
+.chat .hd b{display:block;font:700 15px var(--f-ui)}.chat .hd small{font:500 12px var(--f-ui);color:#22a35a}
+.chat .log{padding:18px;overflow:auto;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:78%;padding:10px 14px;border-radius:16px;font:500 14px/1.45 var(--f-ui)}
+.msg.in{background:#fff;align-self:flex-start;border-bottom-left-radius:5px}
+.msg.out{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:5px}
+.msg small{display:block;font:500 11px var(--f-lat);opacity:.6;margin-top:4px;text-align:right}
+.chat form{display:grid;gap:8px;padding:12px 14px;background:#fff;border-top:1px solid var(--line)}
+.chat .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chat input,.chat textarea{width:100%;box-sizing:border-box;font:500 14px var(--f-ui);padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#f7f8fb;color:var(--text);resize:none}
+.chat .send{display:flex;gap:8px;align-items:center}
+.chat .send textarea{flex:1}
+.chat .send button{flex:none;height:42px;padding:0 16px;border-radius:10px;background:var(--blue);color:#fff;font:700 14px var(--f-ui)}
+.chat .tg{font:500 12px var(--f-ui);color:var(--muted)}
+.chat .tg b{font-family:var(--f-lat);color:var(--text);user-select:all}
+
+/* terminal */
+.term{height:100%;box-sizing:border-box;background:#0e0f13;color:#d8dbe4;font:400 13.5px/1.6 var(--f-mono);padding:14px 16px;overflow:auto}
+.term .l{white-space:pre-wrap}
+.term .g{color:var(--lime)}.term .bl{color:#8fa0ff}.term .pk{color:#ff6aa3}.term .am{color:var(--amber)}
+.term form{display:flex;gap:8px}
+.term input{flex:1;background:none;border:0;outline:0;color:#fff;font:inherit;padding:0}
+
+/* ---------- phone mode ---------- */
+.phone{display:none}
+@media (max-width:760px){
+  body{overflow:auto;padding-left:0;padding-right:0}
+  .stage{display:none}
+  .phone{display:block;position:relative;min-height:100%;
+    background:radial-gradient(120% 60% at 20% 0%,#2a3cff 0%,#121427 45%,#0b0c10 100%);color:#fff;
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 120px}
+}
+.phone .sb{display:flex;justify-content:space-between;align-items:center;font:700 14px var(--f-lat);padding:4px 6px 0}
+.phone .sb span{display:flex;align-items:center;gap:6px}
+.phone .wid{margin-top:22px;padding:20px;border-radius:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(14px)}
+.phone .wid .mk{width:26px;height:26px}
+.phone .wid h1{margin:14px 0 0;font:800 30px/1.1 var(--f-ui);letter-spacing:-.02em;text-wrap:balance}
+.phone .wid h1 em{font-style:normal;color:var(--lime)}
+.phone .wid p{margin:10px 0 0;color:#c8ccda;font:500 14.5px/1.5 var(--f-ui)}
+.phone .apps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 10px;margin-top:26px}
+.phone .app{display:grid;justify-items:center;align-content:start;gap:8px;min-width:0;font:600 12px/1.25 var(--f-ui);text-align:center;color:#fff;hyphens:none}
+.phone .app .ico{width:100%;max-width:68px;height:auto;aspect-ratio:1}
+/* phone home: recent work carousel */
+.phone .feat{margin-top:30px}
+.phone .feat h2{display:flex;justify-content:space-between;align-items:baseline;margin:0 0 12px;font:700 17px var(--f-ui)}
+.phone .feat h2 button{font:600 13px var(--f-ui);color:var(--lime)}
+.phone .rail{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 calc(-1*max(16px,env(safe-area-inset-right,0px))) 0 0;padding:0 16px 6px 0}
+.phone .rail::-webkit-scrollbar{display:none}
+.phone .rail .card{flex:none;width:72%;scroll-snap-align:start;color:#fff}
+.phone .rail .card b{color:#fff}.phone .rail .card small{color:#aab0c2}
+.phone .wid,.phone .app,.phone .feat,.phone .pdock{animation:rise .6s cubic-bezier(.2,.8,.2,1) both}
+.phone .app:nth-child(2){animation-delay:.05s}.phone .app:nth-child(3){animation-delay:.1s}.phone .app:nth-child(4){animation-delay:.15s}.phone .app:nth-child(5){animation-delay:.2s}.phone .feat{animation-delay:.25s}
+.phone{box-sizing:border-box;width:100%;overflow-x:hidden}
+.phone .pdock{position:fixed;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px));
+  display:flex;justify-content:space-around;padding:12px;border-radius:28px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(22px);z-index:5}
+.phone .pdock .app{width:22%}.phone .pdock .ico{width:100%;max-width:58px;height:auto;aspect-ratio:1}
+.sheet{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;background:var(--win);color:var(--text);
+  padding-top:env(safe-area-inset-top,0px);transform:translateY(100%);transition:transform .38s cubic-bezier(.2,.8,.2,1)}
+.sheet.open{transform:none}
+.sheet .sh{display:flex;align-items:center;gap:10px;padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:var(--win-2)}
+.sheet .sh button{font:700 15px var(--f-ui);color:var(--blue)}
+.sheet .sh b{flex:1;text-align:center;font:700 15px var(--f-ui);margin-right:60px}
+.sheet .sbody{flex:1;overflow:auto;min-height:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+/* phone-specific overrides of app layouts */
+.sheet .pf{grid-template-columns:1fr}
+.sheet .pf aside{display:flex;overflow-x:auto;gap:6px;border-right:0;border-bottom:1px solid var(--line);padding:10px 12px}
+.sheet .pf aside h5,.sheet .pf aside .note{display:none}
+.sheet .pf aside button{white-space:nowrap;gap:6px}
+.sheet .pf main{padding:16px}
+.sheet .grid{grid-template-columns:1fr 1fr;gap:12px}
+.sheet .br{grid-template-columns:1fr;height:auto}
+.sheet .br .view{flex:none;height:62vh;min-height:360px}
+/* demo sites reflow like real mobile sites inside the phone browser */
+.sheet .ms nav div{display:none}
+.sheet .ms .hero2{grid-template-columns:1fr;padding:18px 20px 28px}
+.sheet .ms .hero2 h2{font-size:30px}
+.sheet .ms .art{max-width:70%}
+.sheet .ms .feats{grid-template-columns:1fr;padding:6px 20px 26px}
+.sheet .ms .band{padding:24px 16px}
+.sheet .ms .band b{font-size:22px}
+.sheet .ms .gal{padding:22px 20px;grid-auto-rows:90px}
+.sheet .ms .quote{padding:24px 20px;font-size:17px}
+.sheet .db{grid-template-columns:1fr}
+.sheet .db aside{display:none}
+.sheet .db main{padding:12px}
+.sheet .db .kpi{grid-template-columns:1fr 1fr}
+.sheet .db table{font-size:11px}
+.sheet .db td:nth-child(3),.sheet .db th:nth-child(3){display:none}
+.sheet .pf aside{align-items:center}
+.sheet .pf aside button{padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line)}
+.sheet .pf aside button.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.sheet .pf aside button.on span{color:#dfe3ff}
+.sheet .br .info{border-left:0}
+.sheet .notes{grid-template-columns:1fr}
+.sheet .notes aside{display:none}
+.sheet .gua{grid-template-columns:1fr}
+.sheet .pad{padding:18px 16px}
+.sheet .svc .row{grid-template-columns:44px 1fr}
+.sheet .svc .row .k{grid-column:2;justify-self:start}
+.sheet .svc .row .sq{width:44px;height:44px}
+.sheet .chat{height:100%}
+.sheet .chat .two{grid-template-columns:1fr}
+.sheet .term{min-height:100%}
+
+/* mock websites inside the browser */
+.ms{font-family:var(--f-ui);color:#111;background:#fff}
+.ms nav{display:flex;justify-content:space-between;align-items:center;padding:16px 28px;font:600 12px var(--f-ui)}
+.ms nav b{font:800 16px var(--f-lat)}
+.ms nav div{display:flex;gap:18px;opacity:.75}
+.ms .hero2{display:grid;grid-template-columns:1.1fr 1fr;gap:24px;padding:30px 28px 40px;align-items:center}
+.ms .hero2 h2{margin:0;font:800 38px/1.08 var(--f-ui);letter-spacing:-.02em}
+.ms .hero2 p{margin:12px 0 18px;font:500 13.5px/1.55 var(--f-ui);opacity:.75}
+.ms .hero2 .cta{display:inline-block;padding:11px 18px;border-radius:10px;font:700 13px var(--f-ui)}
+.ms .art{aspect-ratio:1/1;max-width:100%;border-radius:18px;position:relative;overflow:hidden}
+.ms .art i{position:absolute;border-radius:14px}
+.ms .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:10px 28px 34px}
+.ms .feats div{border-radius:14px;padding:16px;font:700 13px var(--f-ui)}
+.ms .feats div p{margin:6px 0 0;font:500 12px/1.45 var(--f-ui);opacity:.7}
+.ms .band{padding:34px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center}
+.ms .band b{display:block;font:800 30px var(--f-lat)}
+.ms .band span{font:500 12px var(--f-ui);opacity:.75}
+.ms .gal{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:120px;gap:10px;padding:30px 28px}
+.ms .gal i{border-radius:12px}
+.ms .gal i:first-child{grid-row:span 2}
+.ms .quote{padding:34px 28px;font:600 20px/1.4 var(--f-ui)}
+.ms .quote small{display:block;margin-top:10px;font:500 12px var(--f-ui);opacity:.6}
+.ms footer{padding:26px 28px;display:flex;justify-content:space-between;font:500 12px var(--f-ui)}
+/* dashboard mock */
+.db{display:grid;grid-template-columns:170px 1fr;min-height:1100px;font-family:var(--f-ui);background:#f4f6fb;color:#151821}
+.db aside{background:#141a33;color:#cfd6f5;padding:18px 14px;display:grid;align-content:start;gap:6px;font:600 12.5px var(--f-ui)}
+.db aside b{color:#fff;font:800 16px var(--f-lat);margin-bottom:14px}
+.db aside span{padding:8px 10px;border-radius:8px}.db aside span.on{background:#2a3570;color:#fff}
+.db main{padding:20px}
+.db .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.db .kpi div{background:#fff;border-radius:12px;padding:14px;font:600 11.5px var(--f-ui);color:#6b7080}
+.db .kpi b{display:block;font:800 22px var(--f-lat);color:#151821;margin-top:6px}
+.db .chart{margin-top:12px;background:#fff;border-radius:12px;height:200px;display:flex;align-items:flex-end;gap:10px;padding:18px}
+.db .chart i{flex:1;border-radius:6px 6px 0 0}
+.db table{width:100%;margin-top:12px;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font:500 12px var(--f-ui)}
+.db td,.db th{padding:11px 12px;border-bottom:1px solid #eef0f5;text-align:left}
+.db th{font-weight:700;color:#6b7080;background:#fafbfd}
+.db .st{padding:3px 8px;border-radius:999px;font-weight:700;font-size:11px}
+/* phone app mock */
+.pa{min-height:1150px;display:grid;justify-items:center;gap:26px;padding:30px 0;background:linear-gradient(180deg,#f1fff0,#e7ecff)}
+.pa .pf2{width:250px;height:520px;border-radius:40px;background:#111;padding:10px;box-shadow:0 20px 40px rgba(0,0,0,.25)}
+.pa .pf2 .in{height:100%;border-radius:31px;overflow:hidden;background:#fff;font-family:var(--f-ui);padding:34px 14px 14px;display:grid;align-content:start;gap:10px}
+.pa .pf2 h4{margin:0;font:800 18px var(--f-ui)}
+.pa .pf2 .c{border-radius:16px;padding:14px;font:700 12px var(--f-ui)}
+.pa .pf2 .c b{display:block;font:800 26px var(--f-lat);margin-top:4px}
+.pa .pf2 .r{display:flex;gap:8px}.pa .pf2 .r div{flex:1;border-radius:12px;height:70px}
+/* telegram mock */
+.tgm{min-height:1050px;background:linear-gradient(180deg,#cfe3c8,#a9c7a0);font-family:var(--f-ui);padding:0 0 30px}
+.tgm .h{display:flex;align-items:center;gap:10px;padding:12px 18px;background:#fff;font:700 14px var(--f-ui)}
+.tgm .h i{width:34px;height:34px;border-radius:50%;background:#c0392b}
+.tgm .h small{display:block;font:500 11px var(--f-ui);color:#4a90d9}
+.tgm .b{display:flex;flex-direction:column;gap:10px;padding:18px}
+.tgm .m{max-width:70%;padding:10px 13px;border-radius:14px;font:500 13px/1.4 var(--f-ui);background:#fff}
+.tgm .m.me{align-self:flex-end;background:#e2ffc7}
+.tgm .kb{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:70%}
+.tgm .kb span{background:rgba(255,255,255,.75);border-radius:10px;padding:9px;text-align:center;font:600 12px var(--f-ui);color:#2b6cb0}
+.tgm .menu{max-width:72%;background:#fff;border-radius:14px;overflow:hidden}
+.tgm .menu div{display:flex;justify-content:space-between;padding:10px 13px;border-bottom:1px solid #eee;font:600 12.5px var(--f-ui)}
+
+/* assistant: floating robot button */
+.botfab{position:absolute;right:26px;bottom:22px;z-index:5000;width:74px;height:74px;border-radius:50%;padding:0;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#ffffff,#e9ebf3 70%);box-shadow:0 0 0 3px var(--lime),0 14px 30px rgba(0,0,0,.45);animation:bob 3.2s ease-in-out infinite;transition:transform .2s}
+.botfab:hover{transform:scale(1.08)}
+.botfab .rb{width:76%;height:76%;overflow:visible}
+.botfab .ring{position:absolute;inset:-3px;border-radius:50%;border:3px solid var(--lime);animation:ping 2.6s ease-out infinite;pointer-events:none}
+.rb-eyes{transform-origin:32px 31px;animation:blink 4.2s infinite}
+.rb-ant{animation:glow 1.6s ease-in-out infinite alternate}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes ping{0%{transform:scale(1);opacity:.8}70%,100%{transform:scale(1.45);opacity:0}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes glow{from{fill:#E01060}to{fill:#ff6aa3}}
+.bubble{position:absolute;right:112px;bottom:44px;z-index:5000;max-width:240px;padding:11px 15px;border-radius:16px 16px 4px 16px;background:#fff;color:var(--text);
+  font:600 14px/1.35 var(--f-ui);box-shadow:0 12px 28px rgba(0,0,0,.35);opacity:0;transform:translateY(8px) scale(.96);transform-origin:100% 100%;transition:opacity .35s,transform .35s;pointer-events:none}
+.bubble.show{opacity:1;transform:none}
+.pfab{position:fixed;left:auto;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(104px + env(safe-area-inset-bottom,0px));z-index:40;width:64px;height:64px}
+/* assistant chat */
+.abot .rbav{background:#eef1ff;width:44px;height:44px}
+.abot .rbav .rb{width:36px;height:36px}
+.abot .hd small{color:#22a35a}
+.abot .log{padding-bottom:6px}
+.msg .act{display:block;margin-top:9px;padding:7px 12px;border-radius:999px;background:var(--blue);color:#fff;font:700 12.5px var(--f-ui)}
+.msg .act:hover{background:#0f25c9}
+.msg.typing{display:flex;gap:5px;padding:13px 15px}
+.msg.typing i{width:7px;height:7px;border-radius:50%;background:#9aa0b0;animation:dots 1s infinite}
+.msg.typing i:nth-child(2){animation-delay:.15s}.msg.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dots{0%,80%,100%{opacity:.3;transform:none}40%{opacity:1;transform:translateY(-3px)}}
+.abot{grid-template-rows:auto 1fr auto auto}
+.abot .qs{display:flex;flex-wrap:wrap;gap:7px;padding:10px 14px;background:#eef0f5;max-height:150px;overflow:auto}
+.abot .qs button{padding:8px 12px;border-radius:999px;background:#fff;border:1.5px solid #cdd3ff;color:var(--blue);font:600 13px var(--f-ui);text-align:left}
+.abot .qs button:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.abot .qs.back{justify-content:center}
+.abot .qs.back button{background:var(--blue);border-color:var(--blue);color:#fff;font-weight:700;padding:9px 18px}
+.abot .qs.back button:hover{background:#0f25c9}
+.abot .ask{display:flex;gap:8px;padding:10px 14px;background:#fff;border-top:1px solid var(--line)}
+.abot .ask input{flex:1;min-width:0;font:500 14px var(--f-ui);padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:#f7f8fb;color:var(--text)}
+.abot .ask button{flex:none;width:42px;height:42px;border-radius:50%;background:var(--blue);color:#fff;font:700 16px var(--f-lat)}
+
+@media (prefers-reduced-motion:reduce){
+  .botfab,.botfab .ring,.rb-eyes,.rb-ant,.msg.typing i{animation:none}
+  .boot .mk i,.boot .bar i{animation:none}.boot .bar i{width:100%}
+  .br .scroller{animation:none}
+  .dk,.sheet{transition:none}
+}
+</style>
+
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="top">
+    <span class="b"><span class="mk"><i></i><i></i><i></i><i></i></span>BERD SOFT</span>
+    <small>Կայքի նախատիպ · նախագծերը թեստային են</small>
+  </div>
+  <div class="laptop-wrap" id="lwrap">
+    <div class="laptop" id="laptop">
+      <div class="lid" id="lid"><span class="cam"></span>
+        <div class="screen" id="screen"><div class="power" id="power"></div><div class="glass"></div>
+          <div class="os" id="os">
+            <div class="wall" id="wall">
+              <span class="blk" style="left:690px;top:-60px;width:420px;height:420px;background:var(--blue)"></span>
+              <span class="blk" style="left:1130px;top:-60px;width:420px;height:420px;background:var(--lime)"></span>
+              <span class="blk" style="left:690px;top:380px;width:420px;height:420px;background:var(--pink)"></span>
+              <span class="blk" style="left:1130px;top:380px;width:420px;height:420px;background:var(--amber)"></span>
+              <span class="shade"></span>
+            </div>
+
+            <div class="menubar">
+              <span class="mk"><i></i><i></i><i></i><i></i></span><b>BERD SOFT</b>
+              <span class="sp"></span>
+              <span class="r"><button class="fs" id="fsBtn" type="button" aria-label="Մեծացնել էկրանը">⤢</button><span>ՀՅ</span><span id="clock">--:--</span></span>
+            </div>
+
+            <section class="hero" aria-label="BERD SOFT">
+              <span class="kick"><i></i>Վեբ ստուդիա · Երևան</span>
+              <h1>Թվային <em>բերդ</em> ձեր բիզնեսի համար</h1>
+              <p>Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։</p>
+              <div class="acts">
+                <button class="btn p" type="button" data-open="work">Բացել աշխատանքները →</button>
+                <button class="btn g" type="button" data-open="chat">Գրել մեզ</button>
+              </div>
+            </section>
+
+            <div class="dicons" id="dicons"></div>
+            <div id="wins"></div>
+            <nav class="dock" id="dock" aria-label="Ծրագրեր"></nav>
+            <span class="bubble" id="botBubble">Հարցեր ունե՞ք։ Հարցրեք ինձ</span>
+            <button class="botfab" id="botFab" type="button" aria-label="BERD Օգնական"></button>
+
+            <div class="boot" id="boot" role="presentation">
+              <span class="mk"><i></i><i></i><i></i><i></i></span>
+              <span class="bar"><i></i></span>
+              <small>Սեղմեք՝ բաց թողնելու համար</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="deck" id="deck"></div>
+    </div>
+  </div>
+  <div class="hint">Սեղմեք ներքևի <b>պատկերակներին</b>՝ ծրագրերը բացելու համար · պատուհանները կարելի է տեղաշարժել</div>
+</div>
+
+<!-- phone home screen -->
+<div class="phone" id="phone">
+  <div class="sb"><span id="pclock">--:--</span><span>BERD SOFT ▮▮▮</span></div>
+  <section class="wid">
+    <span class="mk"><i></i><i></i><i></i><i></i></span>
+    <h1>Թվային <em>բերդ</em> ձեր բիզնեսի համար</h1>
+    <p>Կայքեր, հավելվածներ և Telegram-բոտեր, որոնք ամուր են, արագ և աշխատում են ձեզ համար։</p>
+  </section>
+  <div class="apps" id="papps"></div>
+  <section class="feat" aria-label="Վերջին աշխատանքները"><h2>Վերջին աշխատանքները <button type="button" id="featAll">Բոլորը →</button></h2><div class="rail" id="prail"></div></section>
+  <nav class="pdock" id="pdock" aria-label="Ծրագրեր"></nav>
+  <button class="botfab pfab" id="pBotFab" type="button" aria-label="BERD Օգնական"></button>
+</div>
+<div class="sheet" id="sheet" aria-hidden="true">
+  <div class="sh"><button type="button" id="sheetBack">‹ Հետ</button><b id="sheetTitle"></b></div>
+  <div class="sbody" id="sheetBody"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $ = function(s,r){return (r||document).querySelector(s)};
+
+/* ---------- icons ---------- */
+var SV = {
+  work:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 13h8"/></svg>',
+  serv:'<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><path d="M17.25 14v6.5M14 17.25h6.5"/></svg>',
+  proc:'<svg viewBox="0 0 24 24" fill="none" stroke="#1B36F5" stroke-width="2.2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11"/><path d="m3.5 6 1.3 1.3L7 5M3.5 12l1.3 1.3L7 11" stroke="#E01060"/><circle cx="5" cy="18" r="1.4" fill="#1B36F5"/></svg>',
+  about:'<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.6-3.4 3-5.3 6-5.3s5.4 1.9 6 5.3"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.2c2.3.2 4 1.7 4.5 4.3"/></svg>',
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.1" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5" stroke-linecap="round"/></svg>',
+  term:'<svg viewBox="0 0 24 24" fill="none" stroke="#CCFF00" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 4 4-4 4"/><path d="M12 17h7" stroke="#fff"/></svg>'
+};
+var FOLDER = '<svg viewBox="0 0 64 54" width="100%" height="100%"><path d="M2 8a5 5 0 0 1 5-5h16l6 6h28a5 5 0 0 1 5 5v33a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5z" fill="#3e57ff"/><path d="M2 17a5 5 0 0 1 5-5h50a5 5 0 0 1 5 5v30a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5z" fill="#5b71ff"/><rect x="10" y="22" width="9" height="9" fill="#CCFF00"/><rect x="21" y="22" width="9" height="9" fill="#fff"/><rect x="10" y="33" width="9" height="9" fill="#E01060"/><rect x="21" y="33" width="9" height="9" fill="#FFB800"/></svg>';
+var DOC = '<svg viewBox="0 0 48 60" width="80%" height="100%"><path d="M4 4h28l12 12v40H4z" fill="#fff"/><path d="M32 4v12h12" fill="#dfe2ea"/><path d="M11 26h26M11 33h26M11 40h18" stroke="#9aa0b0" stroke-width="2.4"/><rect x="11" y="13" width="14" height="6" fill="#E01060"/></svg>';
+
+/* ---------- content ---------- */
+var CATS = {web:'Կայքեր',app:'Վեբ հավելվածներ',mob:'Մոբայլ',bot:'Բոտեր'};
+var PROJ = [
+  {id:'aroma',name:'Aroma Coffee',cat:'bot',kind:'Telegram-բոտ + կայք',url:'aroma-coffee.am',c1:'#3b2416',c2:'#f4e7d7',c3:'#c8742c',
+   task:'Առավոտյան հերթերը սրճարանում կորցնում էին հաճախորդներին։',sol:'Նախնական պատվեր Telegram-բոտով և պարզ կայք մենյուով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։',stack:['Telegram Bot API','Node.js','PostgreSQL'],type:'tg'},
+  {id:'cargo',name:'CargoLink',cat:'app',kind:'Վեբ հավելված',url:'app.cargolink.am',c1:'#141a33',c2:'#f4f6fb',c3:'#1B36F5',
+   task:'Բեռների կարգավիճակները վարում էին Excel-ում, մենեջերները ծանրաբեռնված էին զանգերով։',sol:'Հաճախորդի անձնական էջ՝ առաքումների հետևումով և ծանուցումներով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։',stack:['React','TypeScript','Node.js'],type:'db'},
+  {id:'fitup',name:'FitUp',cat:'mob',kind:'iOS և Android հավելված',url:'fitup.app',c1:'#0f3d1f',c2:'#f1fff0',c3:'#2fbf5f',
+   task:'Մարզումների գրանցումները վարում էին նամակագրությամբ, և դրանց մի մասը կորչում էր։',sol:'Մոբայլ հավելված՝ ժամանակացույցով, գրանցումով և հիշեցումներով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։',stack:['React Native','Node.js'],type:'mob'},
+  {id:'dent',name:'Dent Plus',cat:'web',kind:'Կայք՝ առցանց գրանցումով',url:'dentplus.am',c1:'#0c3550',c2:'#eef8ff',c3:'#1aa3d9',
+   task:'Հիվանդները զանգում էին ոչ աշխատանքային ժամերին և չէին կարողանում գրանցվել։',sol:'Կայք՝ առցանց գրանցումով, բժիշկների ժամանակացույցով և SMS հիշեցումով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։',stack:['Next.js','PostgreSQL'],type:'site'},
+  {id:'nairi',name:'Nairi Wear',cat:'web',kind:'Առցանց խանութ',url:'nairiwear.am',c1:'#1a1a1a',c2:'#f6f3ee',c3:'#E01060',
+   task:'Վաճառում էին Instagram-ի նամակներով և պատվերներ էին կորցնում։',sol:'Առցանց խանութ՝ կատալոգով, զամբյուղով և առցանց վճարումով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։',stack:['Next.js','Stripe','Admin'],type:'site'},
+  {id:'tavern',name:'Old Tavern',cat:'bot',kind:'Առաքման բոտ',url:'t.me/oldtavern_bot',c1:'#5a1d14',c2:'#fff4ec',c3:'#c0392b',
+   task:'Առաքման ծառայությունները պահում էին պատվերի գումարի զգալի մասը։',sol:'Սեփական Telegram-բոտ՝ մենյուով, վճարումով և առաքման հետևումով։',res:'Թեստային նախագիծ. իրական արդյունքը կավելացվի։',stack:['Telegram Bot API','Python'],type:'tg'}
+];
+function thumb(p){
+  var b='<div class="th" style="background:'+p.c2+'"><span class="tag">Թեստային</span>';
+  b+='<span style="position:absolute;left:14%;top:26%;width:46%;height:12%;border-radius:6px;background:'+p.c1+'"></span>';
+  b+='<span style="position:absolute;left:14%;top:44%;width:34%;height:6%;border-radius:4px;background:'+p.c1+';opacity:.35"></span>';
+  b+='<span style="position:absolute;left:14%;top:58%;width:22%;height:11%;border-radius:6px;background:'+p.c3+'"></span>';
+  b+='<span style="position:absolute;right:8%;top:22%;width:28%;height:56%;border-radius:10px;background:'+p.c3+';opacity:.85"></span>';
+  return b+'</div>';
+}
+function mock(p){
+  if(p.type==='db') return '<div class="db"><aside><b>'+p.name+'</b><span class="on">Վահանակ</span><span>Առաքումներ</span><span>Հաճախորդներ</span><span>Հաշիվներ</span><span>Կարգավորումներ</span></aside><main>'+
+    '<div class="kpi"><div>Ակտիվ առաքումներ<b>128</b></div><div>Այսօր հանձնված<b>46</b></div><div>Ուշացող<b>3</b></div><div>Նոր հայտեր<b>19</b></div></div>'+
+    '<div class="chart">'+[40,55,48,70,62,80,74,90,68,84,95,88].map(function(h,i){return '<i style="height:'+h+'%;background:'+(i==10?p.c3:'#d9defa')+'"></i>'}).join('')+'</div>'+
+    '<table><tr><th>Համար</th><th>Ուղղություն</th><th>Հաճախորդ</th><th>Կարգավիճակ</th></tr>'+
+    [['CL-2041','Երևան → Գյումրի','Արմենիա ՍՊԸ','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2042','Երևան → Վանաձոր','Ararat Food','Հանձնված','#e3f7e9','#1d8a46'],['CL-2043','Երևան → Մոսկվա','Nairi Wear','Մաքսատանը','#fff1d6','#a06800'],['CL-2044','Գորիս → Երևան','Zangezur Agro','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2045','Երևան → Թբիլիսի','Dent Plus','Սպասում է','#f0f0f3','#555'],['CL-2046','Երևան → Աբովյան','Aroma Coffee','Հանձնված','#e3f7e9','#1d8a46'],['CL-2047','Երևան → Սևան','Lake House','Ճանապարհին','#e0e6ff','#1B36F5'],['CL-2048','Երևան → Դիլիջան','Forest Inn','Հանձնված','#e3f7e9','#1d8a46']]
+    .map(function(r){return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td><span class="st" style="background:'+r[4]+';color:'+r[5]+'">'+r[3]+'</span></td></tr>'}).join('')+
+    '</table><div class="chart" style="height:240px">'+[30,45,38,60,52,70,64,75,58,80,72,86].map(function(h){return '<i style="height:'+h+'%;background:#e7eaf8"></i>'}).join('')+'</div></main></div>';
+  if(p.type==='mob') return '<div class="pa">'+[0,1].map(function(k){return '<div class="pf2"><div class="in"><h4>'+(k?'Իմ մարզումները':'Բարև, Անի 👋')+'</h4>'+
+    '<div class="c" style="background:'+p.c3+';color:#fff">'+(k?'Այս շաբաթ':'Հաջորդ մարզումը')+'<b>'+(k?'4 / 5':'18:30')+'</b></div>'+
+    '<div class="r"><div style="background:#e7f8ec"></div><div style="background:#eef1ff"></div></div>'+
+    '<div class="c" style="background:#f3f4f7">Յոգա · Ժ. 19:00</div><div class="c" style="background:#f3f4f7">Crossfit · Ժ. 20:00</div><div class="c" style="background:#f3f4f7">Լողավազան · Ժ. 09:00</div></div></div>'}).join('')+'</div>';
+  if(p.type==='tg') return '<div class="tgm"><div class="h"><i style="background:'+p.c3+'"></i><span>'+p.name+' Bot<small>բոտ</small></span></div><div class="b">'+
+    '<div class="m">Բարև։ Ի՞նչ եք ցանկանում պատվիրել այսօր։</div><div class="kb"><span>📋 Մենյու</span><span>🛵 Առաքում</span><span>🕑 Նախնական պատվեր</span><span>📍 Հասցե</span></div>'+
+    '<div class="m me">Մենյու</div><div class="menu"><div><span>Կապուչինո</span><span>1 200 ֏</span></div><div><span>Լատե</span><span>1 400 ֏</span></div><div><span>Կրուասան</span><span>900 ֏</span></div><div><span>Չիզքեյք</span><span>1 800 ֏</span></div></div>'+
+    '<div class="m me">2 կապուչինո, 08:30-ին</div><div class="m">Պատվերն ընդունված է ✅ Պատրաստ կլինի 08:30-ին։ Վճարե՞լ հիմա։</div><div class="kb"><span>💳 Վճարել քարտով</span><span>💵 Տեղում</span></div>'+
+    '<div class="m me">Վճարել քարտով</div><div class="m">Շնորհակալություն։ Կսպասենք ձեզ 08:30-ին ☕</div></div></div>';
+  return '<div class="ms" style="background:'+p.c2+'"><nav style="color:'+p.c1+'"><b>'+p.name+'</b><div><span>Ծառայություններ</span><span>Մեր մասին</span><span>Կապ</span></div></nav>'+
+    '<div class="hero2" style="color:'+p.c1+'"><div><h2>'+(p.id==='dent'?'Առողջ ժպիտ՝ առանց հերթերի':'Նոր հավաքածու՝ արդեն կայքում')+'</h2><p>'+p.sol+'</p><span class="cta" style="background:'+p.c3+';color:#fff">'+(p.id==='dent'?'Գրանցվել առցանց':'Դիտել կատալոգը')+'</span></div>'+
+    '<div class="art" style="background:'+p.c1+'"><i style="left:12%;top:12%;width:40%;height:40%;background:'+p.c3+'"></i><i style="left:46%;top:46%;width:42%;height:42%;background:'+p.c2+'"></i><i style="left:16%;top:62%;width:22%;height:22%;background:#fff;opacity:.6"></i></div></div>'+
+    '<div class="feats">'+['Արագ գրանցում','Հիշեցումներ','Առցանց վճարում'].map(function(t){return '<div style="background:#fff;color:'+p.c1+'">'+t+'<p>Հարմար է հեռախոսից և համակարգչից։</p></div>'}).join('')+'</div>'+
+    '<div class="band" style="background:'+p.c1+';color:#fff"><div><b>24/7</b><span>առցանց</span></div><div><b>3 քայլ</b><span>մինչև պատվեր</span></div><div><b>1 կայք</b><span>բոլոր սարքերի համար</span></div></div>'+
+    '<div class="gal"><i style="background:'+p.c3+'"></i><i style="background:'+p.c1+';opacity:.85"></i><i style="background:#fff"></i><i style="background:#fff"></i><i style="background:'+p.c1+';opacity:.5"></i></div>'+
+    '<div class="quote" style="color:'+p.c1+'">«Կայքը հիմա աշխատում է մեր փոխարեն, նույնիսկ գիշերը»։<small>Թեստային կարծիք</small></div>'+
+    '<div class="gal"><i style="background:#fff"></i><i style="background:'+p.c3+';opacity:.7"></i><i style="background:'+p.c1+';opacity:.3"></i><i style="background:#fff"></i><i style="background:'+p.c3+'"></i></div>'+
+    '<footer style="background:'+p.c1+';color:#fff"><span>'+p.name+'</span><span>Ստեղծված է BERD SOFT-ի կողմից</span></footer></div>';
+}
+
+var APPS = {
+  work:{t:'Աշխատանքներ',w:900,h:570,x:190,y:70},
+  serv:{t:'Ծառայություններ',w:640,h:520,x:330,y:96},
+  proc:{t:'Ինչպես ենք աշխատում',w:760,h:520,x:260,y:84},
+  about:{t:'Մեր մասին',w:700,h:540,x:300,y:76},
+  chat:{t:'Կապ',w:470,h:600,x:740,y:60},
+  bot:{t:'BERD Օգնական',w:400,h:560,x:840,y:112}
+};
+var ORDER=['work','serv','proc','about','chat'];
+/* robot face used by the floating button and the assistant chat */
+var ROBOT='<svg viewBox="0 0 64 64" class="rb"><line x1="32" y1="5" x2="32" y2="13" stroke="#c9ccd6" stroke-width="3" stroke-linecap="round"/><circle class="rb-ant" cx="32" cy="5" r="4" fill="#E01060"/>'+
+  '<rect x="6" y="27" width="6" height="14" rx="3" fill="#FFB800"/><rect x="52" y="27" width="6" height="14" rx="3" fill="#FFB800"/>'+
+  '<rect x="10" y="13" width="44" height="40" rx="18" fill="#16182a"/><rect x="15" y="20" width="34" height="22" rx="11" fill="#1B36F5"/>'+
+  '<g class="rb-eyes"><rect x="21" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/><rect x="36" y="26" width="7" height="10" rx="3.5" fill="#CCFF00"/></g>'+
+  '<path d="M26 47.5q6 3 12 0" stroke="#CCFF00" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
+/* scripted answers: id, question chip, answer, optional action app, action label */
+var QA=[
+  ['serv','Ի՞նչ ծառայություններ եք մատուցում','Ստեղծում ենք կայքեր, վեբ հավելվածներ, iPhone-ի և Android-ի հավելվածներ և Telegram-բոտեր։ Նաև կարգավորում ենք դոմենը, սերվերը և աջակցում ենք գործարկումից հետո։','serv','Բացել ծառայությունները'],
+  ['price','Որքա՞ն արժե կայքը','Գինը կախված է նախագծից. էջերի քանակից, ֆունկցիաներից և ինտեգրումներից։ Բրիֆից հետո անվճար ուղարկում ենք մանրամասն նախահաշիվ, և գինը ֆիքսվում է մինչև աշխատանքի մեկնարկը։','chat','Ստանալ նախահաշիվ'],
+  ['time','Որքա՞ն ժամանակ է պետք','Դիզայնը սովորաբար 3–7 օր է, մշակումը՝ 1–4 շաբաթ՝ կախված ծավալից։ Ճշգրիտ ժամկետը նշում ենք բրիֆից հետո։'],
+  ['pay','Ինչպե՞ս է կատարվում վճարումը','Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Մնացած 70%-ը վճարում եք պատրաստ նախագիծը հանձնելիս։'],
+  ['own','Ո՞ւմ է պատկանում կայքը','Ձեզ։ Դոմենն ու սերվերը գրանցվում են ձեր անունով, կոդը և բոլոր մուտքերը հանձնում ենք ձեզ։'],
+  ['sup','Աջակցում եք գործարկումից հետո','Այո։ Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ՝ մինչև 12 ամիս՝ կախված փաթեթից։'],
+  ['work','Ցույց տվեք ձեր աշխատանքները','Իհարկե։ «Աշխատանքներ»-ում նախագծի վրա սեղմելով այն կբացվի բրաուզերում։','work','Բացել աշխատանքները'],
+  ['human','Ուզում եմ խոսել մարդու հետ','Իհարկե։ Գրեք մեզ «Կապ» պատուհանում, պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում։','chat','Բացել «Կապ»-ը']
+];
+/* keyword routing for questions typed by hand */
+var QK=[['price',/գին|արժ|դրամ|\$|֏|price|cost/i],['pay',/վճար|կանխ|pay/i],['time',/ժամկետ|ժամանակ|օրում|շաբաթ|երբ|time/i],['own',/պատկան|մուտք|կոդ|դոմեն/i],['sup',/աջակց|support|սպասարկ/i],['work',/աշխատանք|պորտֆոլ|օրինակ|նախագ|portfolio/i],['human',/մարդ|զանգ|կապ|մենեջեր/i],['serv',/ծառայ|կայք|հավելված|բոտ|app|bot/i]];
+
+function body(id){
+  if(id==='work'){
+    var counts={all:PROJ.length};PROJ.forEach(function(p){counts[p.cat]=(counts[p.cat]||0)+1});
+    var h='<div class="pf"><aside><h5>Թղթապանակներ</h5><button type="button" class="on" data-f="all">Բոլորը <span>'+counts.all+'</span></button>';
+    Object.keys(CATS).forEach(function(k){h+='<button type="button" data-f="'+k+'">'+CATS[k]+' <span>'+(counts[k]||0)+'</span></button>'});
+    h+='<p class="note">Սրանք թեստային նախագծեր են։ Իրական աշխատանքները կավելացվեն հետո։</p></aside><main><h3>Աշխատանքներ</h3><p class="sub">Սեղմեք նախագծի վրա՝ այն «բրաուզերում» բացելու համար։</p><div class="grid">';
+    PROJ.forEach(function(p){h+='<button type="button" class="card" data-p="'+p.id+'" data-cat="'+p.cat+'">'+thumb(p)+'<span><b>'+p.name+'</b><small>'+p.kind+'</small></span></button>'});
+    return h+'</div></main></div>';
+  }
+  if(id==='serv') return '<div class="pad"><h3>Ծառայություններ</h3><p class="lead">Հինգ ուղղություն՝ մեկ թիմ։ Կարիք չկա տարբեր մասնագետներ փնտրել և նրանց աշխատանքը համակարգել։</p><div class="svc">'+
+    [['Կայքեր և լենդինգներ','Կայք, որը հինգ վայրկյանում բացատրում է ձեր բիզնեսը և բերում հայտեր։','var(--blue)','#fff','web'],
+     ['Վեբ հավելվածներ','CRM, անձնական էջեր, ամրագրում, վճարումներ և ինտեգրումներ։','var(--lime)','#111','app'],
+     ['Մոբայլ հավելվածներ','Հավելվածներ iPhone-ի և Android-ի համար։ App Store-ում և Google Play-ում հրապարակումը մեր վրա է։','var(--pink)','#fff','mob'],
+     ['Telegram-բոտեր','Պատվերներ, գրանցում և վճարում ուղիղ մեսենջերում։','var(--amber)','#111','bot'],
+     ['Սերվեր և աջակցություն','Դոմեն, SSL, պահուստավորում և մոնիտորինգ։ Մուտքերը ձերն են։','#121318','#CCFF00','srv']]
+    .map(function(r){return '<div class="row"><span class="sq" style="background:'+r[2]+'"><svg viewBox="0 0 24 24" fill="none" stroke="'+r[3]+'" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg></span><span><b>'+r[0]+'</b><p>'+r[1]+'</p></span>'+(CATS[r[4]]?'<button type="button" class="k" data-goto="'+r[4]+'">Տեսնել աշխատանքները →</button>':'<span></span>')+'</div>'}).join('')+'</div></div>';
+  if(id==='proc') return '<div class="notes"><aside><div>Ինչպես ենք աշխատում<small>5 փուլ</small></div></aside><main><h3>Հինգ փուլ, յուրաքանչյուրը հաստատում եք դուք</h3><p class="date">Արդյունքը տեսնում եք յուրաքանչյուր քայլում</p><ul class="steps">'+
+    [['Բրիֆ և գնահատում','Խորանում ենք խնդրի մեջ և վերադառնում աշխատանքների ցանկով ու ժամկետով։','Անվճար',1],
+     ['Նախատիպ և դիզայն','Սկզբում էկրանների կառուցվածքը, հետո՝ վիզուալը։ Հաստատում եք մինչև կոդը։','3–7 օր',1],
+     ['Մշակում','Դիզայնը հաստատելուց հետո վճարում եք 30% կանխավճար, և սկսում ենք կոդը։ Ամեն շաբաթ ցույց ենք տալիս աշխատող տարբերակը թեստային հղումով։','1–4 շաբաթ',0],
+     ['Գործարկում','Դոմեն, սերվեր, SSL։ Բոլոր մուտքերը հանձնում ենք ձեզ։ Մնացած 70%-ը վճարում եք հանձնման ժամանակ։','1–2 օր',0],
+     ['Աջակցություն','Թարմացումներ, պահուստավորում, մոնիտորինգ և բարելավումներ։','Մինչև 12 ամիս',0]]
+    .map(function(s){return '<li class="'+(s[3]?'done':'')+'"><span class="ck"></span><span><b>'+s[0]+'</b><p>'+s[1]+'</p></span><span class="d">'+s[2]+'</span></li>'}).join('')+'</ul></main></div>';
+  if(id==='about') return '<div class="pad"><h3>Մենք BERD SOFT-ն ենք</h3><p class="lead">Լրիվ ցիկլի մշակման ստուդիա Երևանում։ Աշխատում ենք Հայաստանի, ԱՊՀ-ի և Եվրոպայի հաճախորդների հետ։ Ահա մեր չորս սկզբունքները.</p><div class="gua">'+
+    [['30% հիմա, 70%՝ հանձնելիս','Դիզայնը հաստատելուց հետո՝ 30% կանխավճար, մնացած 70%-ը՝ պատրաստ նախագիծը հանձնելիս։'],['Դիզայնը դուր չեկա՞վ, մի վճարեք','Մակետները հաստատում եք մինչև մշակումը։'],['Բոլոր մուտքերը ձերն են','Դոմենն ու սերվերը ձեր անունով են, կոդը հանձնվում է։'],['Գինը չի աճի','Գնացուցակը ֆիքսվում է մինչև աշխատանքի մեկնարկը։']]
+    .map(function(g){return '<div><b>'+g[0]+'</b><p>'+g[1]+'</p></div>'}).join('')+'</div><div class="stack">'+['React','Next.js','TypeScript','Node.js','Python','PostgreSQL','React Native','Telegram Bot API','Docker'].map(function(s){return '<span>'+s+'</span>'}).join('')+'</div></div>';
+  if(id==='chat') return '<div class="chat"><div class="hd"><span class="av"><span class="mk"><i></i><i></i><i></i><i></i></span></span><span><b>BERD SOFT</b><small>● Առցանց է</small></span></div>'+
+    '<div class="log" data-log><div class="msg in">Բարև։ Պատմեք ձեր նախագծի մասին. ինչ է պետք անել և երբ։<small>10:02</small></div><div class="msg in">Պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում, գնահատումն անվճար է։<small>10:02</small></div></div>'+
+    '<form data-form novalidate><div class="two"><input id="c-name" placeholder="Ձեր անունը" aria-label="Ձեր անունը"><input id="c-contact" placeholder="Հեռախոս կամ Telegram" aria-label="Հեռախոս կամ Telegram"></div>'+
+    '<div class="send"><textarea id="c-msg" rows="2" placeholder="Ինչ է պետք անել…" aria-label="Հաղորդագրություն"></textarea><button type="submit">Ուղարկել</button></div>'+
+    '<span class="tg">Telegram՝ <b>@berd_soft</b> (թեստային)</span></form></div>';
+  if(id==='bot') return '<div class="chat abot" data-bot><div class="hd"><span class="av rbav">'+ROBOT+'</span><span><b>BERD Օգնական</b><small>● Պատասխանում է միանգամից</small></span></div>'+
+    '<div class="log" data-log></div><div class="qs" data-qs aria-label="Պատրաստի հարցեր"></div>'+
+    '<form class="ask" data-ask><input id="bot-in" placeholder="Գրեք ձեր հարցը…" aria-label="Ձեր հարցը" autocomplete="off"><button type="submit" aria-label="Ուղարկել">➤</button></form></div>';
+  if(id==='term') return '<div class="term" data-term><div class="l"><span class="g">BERD SOFT</span> 1.0 · գրեք <span class="am">help</span></div><div data-out></div><form data-tf><span class="g">berd@soft ~ %</span><input id="t-in" autocomplete="off" spellcheck="false" aria-label="Հրաման"></form></div>';
+  return '';
+}
+function browserBody(p){
+  return '<div class="br"><div class="vp"><div class="addr"><span class="u"><i></i>'+p.url+'</span><span class="demo">Դեմո</span></div><div class="view" data-view><div class="scroller" data-sc>'+mock(p)+'</div></div></div>'+
+    '<div class="info"><span class="cat">'+CATS[p.cat]+'</span><h3>'+p.name+'</h3><span class="t">Թեստային նախագիծ</span><dl><div><dt>Խնդիր</dt><dd>'+p.task+'</dd></div><div><dt>Լուծում</dt><dd>'+p.sol+'</dd></div><div><dt>Արդյունք</dt><dd>'+p.res+'</dd></div></dl><div class="chips">'+p.stack.map(function(s){return '<span>'+s+'</span>'}).join('')+'</div></div></div>';
+}
+
+/* open "Աշխատանքներ" already filtered to one category (used by the services list) */
+function goWork(cat){
+  var r;
+  if(phoneMode()){openSheet('work');r=$('#sheetBody')}else{api.open('work');r=openWins.work}
+  var b=r&&r.querySelector('[data-f="'+cat+'"]');if(b)b.click();
+}
+
+/* ---------- wiring shared by desktop windows and phone sheets ---------- */
+function wire(root, openProject){
+  root.querySelectorAll('[data-f]').forEach(function(b){b.addEventListener('click',function(){
+    root.querySelectorAll('[data-f]').forEach(function(x){x.classList.toggle('on',x===b)});
+    var f=b.getAttribute('data-f');root.querySelectorAll('[data-cat]').forEach(function(c){c.hidden=!(f==='all'||c.getAttribute('data-cat')===f)});
+  })});
+  root.querySelectorAll('[data-p]').forEach(function(c){c.addEventListener('click',function(){openProject(c.getAttribute('data-p'),c)})});
+  root.querySelectorAll('[data-goto]').forEach(function(b){b.addEventListener('click',function(){goWork(b.getAttribute('data-goto'))})});
+  var form=root.querySelector('[data-form]');
+  if(form) form.addEventListener('submit',function(e){
+    e.preventDefault();var log=root.querySelector('[data-log]'),m=root.querySelector('#c-msg'),n=root.querySelector('#c-name');
+    var txt=(m.value||'').trim();if(!txt){m.focus();m.placeholder='Գրեք մի քանի բառ նախագծի մասին';return}
+    var t=new Date(),hm=('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2);
+    var o=document.createElement('div');o.className='msg out';o.textContent=txt;o.innerHTML+='<small>'+hm+'</small>';log.appendChild(o);m.value='';
+    setTimeout(function(){var r=document.createElement('div');r.className='msg in';r.textContent='Շնորհակալություն'+((n.value||'').trim()?', '+n.value.trim():'')+'։ Սա նախատիպ է, ուստի հայտն իրականում չի ուղարկվել։ Գործող կայքում այն կգա մեզ անմիջապես։';r.innerHTML+='<small>'+hm+'</small>';log.appendChild(r);log.scrollTop=log.scrollHeight},700);
+    log.scrollTop=log.scrollHeight;
+  });
+  var term=root.querySelector('[data-term]');
+  if(term){
+    var out=term.querySelector('[data-out]'),inp=term.querySelector('#t-in');
+    var cmds={
+      help:'<span class="am">projects</span>  նախագծերի ցանկ\n<span class="am">services</span>  ծառայություններ\n<span class="am">contact</span>   կապ\n<span class="am">whoami</span>    ով ենք մենք\n<span class="am">clear</span>     մաքրել',
+      projects:PROJ.map(function(p){return '<span class="bl">'+p.name.padEnd(14)+'</span>'+CATS[p.cat]+' · թեստային'}).join('\n'),
+      services:'Կայքեր · Վեբ հավելվածներ · Մոբայլ · Telegram-բոտեր · Սերվեր',
+      contact:'Բացում եմ «Կապ»-ը…',
+      whoami:'<span class="pk">BERD SOFT</span> · լրիվ ցիկլի մշակում · Երևան'
+    };
+    term.querySelector('[data-tf]').addEventListener('submit',function(e){
+      e.preventDefault();var v=inp.value.trim().toLowerCase();inp.value='';
+      if(v==='clear'){out.innerHTML='';return}
+      var d=document.createElement('div');d.className='l';
+      d.innerHTML='<span class="g">berd@soft ~ %</span> '+v.replace(/[<>&]/g,'')+'\n'+(cmds[v]||(v?'հրամանը չգտնվեց. գրեք <span class="am">help</span>':''));
+      out.appendChild(d);term.scrollTop=term.scrollHeight;
+      if(v==='contact') setTimeout(function(){api.open('chat')},350);
+    });
+    term.addEventListener('click',function(){inp.focus()});
+  }
+  var bot=root.querySelector('[data-bot]');
+  if(bot){
+    var blog=bot.querySelector('[data-log]'),qs=bot.querySelector('[data-qs]'),asked={},busy=false;
+    function hm(){var t=new Date();return ('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2)}
+    function say(text,who,act){
+      var m=document.createElement('div');m.className='msg '+(who==='me'?'out':'in');m.textContent=text;
+      if(act){var b=document.createElement('button');b.type='button';b.className='act';b.textContent=act[1]+' →';
+        b.addEventListener('click',function(){if(act[0]==='work')goWork('all');else api.open(act[0])});m.appendChild(b)}
+      var s=document.createElement('small');s.textContent=hm();m.appendChild(s);blog.appendChild(m);blog.scrollTop=blog.scrollHeight;
+    }
+    function typing(cb){
+      busy=true;var t=document.createElement('div');t.className='msg in typing';t.innerHTML='<i></i><i></i><i></i>';blog.appendChild(t);blog.scrollTop=blog.scrollHeight;
+      setTimeout(function(){t.remove();busy=false;cb()},RM?0:750);
+    }
+    /* question list: shown at the start and whenever the visitor goes back to it */
+    function chips(){
+      qs.innerHTML='';qs.classList.remove('back');
+      var left=QA.filter(function(q){return !asked[q[0]]});
+      if(!left.length){asked={};left=QA}
+      left.forEach(function(q){
+        var c=document.createElement('button');c.type='button';c.textContent=q[1];c.addEventListener('click',function(){ask(q[0],q[1])});qs.appendChild(c);
+      });
+      qs.hidden=false;blog.scrollTop=blog.scrollHeight;
+    }
+    /* after an answer the list collapses into one button that brings it back */
+    function backBtn(){
+      qs.innerHTML='';qs.classList.add('back');
+      var b=document.createElement('button');b.type='button';b.textContent='← Վերադառնալ հարցերին';b.addEventListener('click',chips);qs.appendChild(b);
+      qs.hidden=false;blog.scrollTop=blog.scrollHeight;
+    }
+    function answer(text,act){qs.hidden=true;typing(function(){say(text,'bot',act);backBtn()})}
+    function ask(id,label){
+      if(busy)return;var q=QA.filter(function(x){return x[0]===id})[0];
+      asked[id]=1;say(label,'me');answer(q[2],q[3]?[q[3],q[4]]:null);
+    }
+    bot.querySelector('[data-ask]').addEventListener('submit',function(e){
+      e.preventDefault();var inp=bot.querySelector('#bot-in'),v=(inp.value||'').trim();if(!v||busy)return;inp.value='';
+      var hit=QK.filter(function(k){return k[1].test(v)})[0];
+      say(v,'me');
+      if(hit){var q=QA.filter(function(x){return x[0]===hit[0]})[0];asked[hit[0]]=1;answer(q[2],q[3]?[q[3],q[4]]:null)}
+      else answer('Այս հարցին ավելի լավ կպատասխանի մեր թիմը։ Գրեք մեզ, և կպատասխանենք մեկ աշխատանքային օրվա ընթացքում։',['chat','Բացել «Կապ»-ը']);
+    });
+    say('Բարև։ Ես BERD SOFT-ի օգնականն եմ 👋','bot');
+    setTimeout(function(){say('Ընտրեք հարցը ներքևից կամ գրեք ձերը։','bot');chips()},RM?0:450);
+  }
+  var sc=root.querySelector('[data-sc]'),view=root.querySelector('[data-view]');
+  if(sc&&view) requestAnimationFrame(function(){var d=Math.max(0,sc.scrollHeight-view.clientHeight);sc.style.setProperty('--dist',-d+'px');sc.style.setProperty('--dur',Math.max(8,d/70)+'s')});
+}
+
+/* ---------- desktop OS ---------- */
+var os=$('#os'),screenEl=$('#screen'),winsEl=$('#wins'),dock=$('#dock'),api={};
+var scale=1,zTop=200,openWins={};
+
+function fit(){
+  var wrap=$('#lwrap');if(!wrap||getComputedStyle($('#stage')).display==='none')return;
+  var W=wrap.clientWidth,H=wrap.clientHeight;
+  var big=document.body.classList.contains('zoom');
+  // whole laptop = screen × 1.19 wide (deck overhang) and × 0.72 tall (bezel + deck); zoom drops the deck
+  var sw=big?Math.min(W/1.045,H/0.665):Math.min((W-8)/1.19,(H-12)/0.72);
+  sw=Math.floor(Math.max(240,Math.min(sw,1600)));
+  scale=sw/1280;
+  $('#laptop').style.setProperty('--sw',sw+'px');
+  os.style.transform='scale('+scale+')';
+}
+window.addEventListener('resize',fit);
+
+ORDER.forEach(function(id,i){
+  if(i===ORDER.length-1){var s=document.createElement('span');s.className='sep';dock.appendChild(s)}
+  var b=document.createElement('button');b.type='button';b.className='dk';b.dataset.app=id;b.setAttribute('aria-label',APPS[id].t);
+  b.innerHTML='<span class="ico i-'+id+'">'+SV[id]+'</span><span class="tip">'+APPS[id].t+'</span><span class="run"></span>';
+  b.addEventListener('click',function(){api.open(id)});dock.appendChild(b);
+});
+[['work','Աշխատանքներ',FOLDER],['chat','Բրիֆ.txt',DOC]].forEach(function(d){
+  var b=document.createElement('button');b.type='button';b.className='dicon';
+  b.innerHTML=(d[2]?'<span class="ico i-folder">'+d[2]+'</span>':'<span class="ico i-term">'+SV.term+'</span>')+'<span>'+d[1]+'</span>';
+  b.addEventListener('dblclick',function(){api.open(d[0])});b.addEventListener('click',function(){api.open(d[0])});
+  $('#dicons').appendChild(b);
+});
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){api.open(b.getAttribute('data-open'))})});
+/* floating assistant button (desktop and phone) */
+['#botFab','#pBotFab'].forEach(function(s){var f=$(s);f.innerHTML='<span class="ring"></span>'+ROBOT;f.addEventListener('click',function(){$('#botBubble').classList.remove('show');api.open('bot')})});
+
+function vRect(el){var r=el.getBoundingClientRect(),s=screenEl.getBoundingClientRect();return {x:(r.left-s.left)/scale,y:(r.top-s.top)/scale,w:r.width/scale,h:r.height/scale}}
+function genie(win,from,closing){
+  if(RM||!win.animate) return Promise.resolve();
+  var r={x:win.offsetLeft,y:win.offsetTop,w:win.offsetWidth,h:win.offsetHeight};
+  var dx=(from.x+from.w/2)-(r.x+r.w/2),dy=(from.y+from.h/2)-(r.y+r.h/2),sx=from.w/r.w,sy=from.h/r.h;
+  var k=[
+    {transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')',clipPath:'polygon(35% 0,65% 0,55% 100%,45% 100%)',opacity:.2},
+    {transform:'translate('+dx*.35+'px,'+dy*.5+'px) scale(.62,.8)',clipPath:'polygon(4% 0,96% 0,72% 100%,28% 100%)',opacity:1,offset:.5},
+    {transform:'none',clipPath:'polygon(0 0,100% 0,100% 100%,0 100%)',opacity:1}
+  ];
+  if(closing)k.reverse();
+  return win.animate(k,{duration:closing?380:520,easing:'cubic-bezier(.2,.8,.2,1)'}).finished;
+}
+function setRun(){dock.querySelectorAll('.dk').forEach(function(d){d.classList.toggle('on',!!(openWins[d.dataset.app]&&!openWins[d.dataset.app].hidden))})}
+function focusWin(w){w.style.zIndex=++zTop}
+function makeWin(key,title,html,box,source){
+  var w=document.createElement('section');w.className='win';w.dataset.key=key;w.dataset.title=title;w.setAttribute('aria-label',title);
+  w.style.cssText='left:'+box.x+'px;top:'+box.y+'px;width:'+box.w+'px;height:'+box.h+'px';
+  w.innerHTML='<div class="tbar"><span class="lights"><button type="button" class="c" aria-label="Փակել">×</button><button type="button" class="m" aria-label="Թաքցնել">−</button><button type="button" class="x" aria-label="Մեծացնել">+</button></span><span class="tt">'+title+'</span></div><div class="wbody">'+html+'</div>';
+  winsEl.appendChild(w);focusWin(w);
+  w.addEventListener('pointerdown',function(){focusWin(w)});
+  var bar=w.querySelector('.tbar');
+  bar.addEventListener('pointerdown',function(e){
+    if(e.target.closest('button')||w.classList.contains('max'))return;
+    var sx=e.clientX,sy=e.clientY,ox=w.offsetLeft,oy=w.offsetTop;bar.setPointerCapture(e.pointerId);
+    function mv(ev){w.style.left=Math.min(1180,Math.max(-w.offsetWidth+120,ox+(ev.clientX-sx)/scale))+'px';w.style.top=Math.min(740,Math.max(28,oy+(ev.clientY-sy)/scale))+'px'}
+    function up(){bar.removeEventListener('pointermove',mv);bar.removeEventListener('pointerup',up)}
+    bar.addEventListener('pointermove',mv);bar.addEventListener('pointerup',up);
+  });
+  bar.addEventListener('dblclick',function(e){if(!e.target.closest('button'))w.classList.toggle('max')});
+  w.querySelector('.x').addEventListener('click',function(){w.classList.toggle('max')});
+  w.querySelector('.c').addEventListener('click',function(){var t=dockTarget(key);genie(w,t,true).then(function(){w.remove();delete openWins[key];setRun()})});
+  w.querySelector('.m').addEventListener('click',function(){var t=dockTarget(key);genie(w,t,true).then(function(){w.hidden=true;setRun()})});
+  wire(w,openProject);
+  openWins[key]=w;setRun();
+  genie(w,source||dockTarget(key),false);
+  return w;
+}
+function dockTarget(key){var d=key==='bot'?$('#botFab'):dock.querySelector('[data-app="'+(APPS[key]&&key!=='bot'?key:'work')+'"]');return vRect(d)}
+api.open=function(id){
+  if(phoneMode()) return openSheet(id);
+  var w=openWins[id];
+  if(w){ if(w.hidden){w.hidden=false;focusWin(w);genie(w,dockTarget(id),false)} else focusWin(w); return }
+  var a=APPS[id];makeWin(id,a.t,body(id),{x:a.x,y:a.y,w:a.w,h:a.h});
+};
+function openProject(pid,fromEl){
+  var p=PROJ.filter(function(x){return x.id===pid})[0];if(!p)return;
+  if(phoneMode()) return openSheet('p:'+pid);
+  var key='p:'+pid,w=openWins[key];if(w){w.hidden=false;focusWin(w);return}
+  var n=Object.keys(openWins).filter(function(k){return k.indexOf('p:')===0}).length;
+  makeWin(key,p.name+' · '+p.url,browserBody(p),{x:120+n*28,y:48+n*24,w:1040,h:640},fromEl?vRect(fromEl):null);
+}
+
+/* clock */
+function tick(){var t=new Date(),days=['Կիր','Երկ','Երք','Չրք','Հնգ','Ուրբ','Շբթ'];var hm=('0'+t.getHours()).slice(-2)+':'+('0'+t.getMinutes()).slice(-2);
+  $('#clock').textContent=days[t.getDay()]+' '+hm;$('#pclock').textContent=hm}
+tick();setInterval(tick,15000);
+
+/* zoom laptop to fill the stage */
+$('#fsBtn').addEventListener('click',function(){document.body.classList.toggle('zoom');$('#deck').hidden=document.body.classList.contains('zoom');fit()});
+
+/* boot + lid opening */
+var boot=$('#boot'),lid=$('#lid'),power=$('#power'),booted=false,timers=[];
+function later(fn,ms){timers.push(setTimeout(fn,ms))}
+function endBoot(){
+  if(booted)return;booted=true;timers.forEach(clearTimeout);
+  power.classList.remove('on');power.hidden=true;
+  boot.classList.add('gone');setTimeout(function(){boot.remove()},500);
+  os.classList.add('ready');
+  setTimeout(function(){if(!openWins.bot)$('#botBubble').classList.add('show')},1600);
+  setTimeout(function(){$('#botBubble').classList.remove('show')},9000);
+  if(!phoneMode())setTimeout(openFromHash,450);
+}
+/* deep links: #work, #chat … open an app; #p-aroma opens that project */
+function openFromHash(){
+  var h=location.hash.replace('#','');
+  if(APPS[h])return api.open(h);
+  if(h.indexOf('p-')===0)openProject(h.slice(2));
+}
+boot.addEventListener('click',endBoot);power.addEventListener('click',endBoot);
+fit();
+if(RM||!lid.animate){endBoot()}else{
+  // 1) the lid swings open, 2) the panel lights up, 3) the boot logo loads, 4) the desktop slides in
+  lid.animate([{transform:'rotateX(-88deg)',filter:'brightness(.55)'},{transform:'rotateX(6deg)',filter:'brightness(1)',offset:.78},{transform:'rotateX(0)'}],
+    {duration:1250,easing:'cubic-bezier(.25,.8,.25,1)',fill:'backwards'});
+  later(function(){power.classList.add('on')},1050);
+  later(endBoot,3300);
+}
+
+/* ---------- phone mode ---------- */
+function phoneMode(){return matchMedia('(max-width:760px)').matches}
+var sheet=$('#sheet');
+function appTile(id,lbl){var b=document.createElement('button');b.type='button';b.className='app';b.innerHTML='<span class="ico i-'+id+'">'+SV[id]+'</span>'+(lbl?'<span>'+APPS[id].t+'</span>':'');b.setAttribute('aria-label',APPS[id].t);b.addEventListener('click',function(){openSheet(id)});return b}
+ORDER.forEach(function(id){$('#papps').appendChild(appTile(id,true))});
+['work','chat','serv','about'].forEach(function(id){$('#pdock').appendChild(appTile(id,false))});
+PROJ.forEach(function(p){
+  var c=document.createElement('button');c.type='button';c.className='card';
+  c.innerHTML=thumb(p)+'<span><b>'+p.name+'</b><small>'+p.kind+'</small></span>';
+  c.addEventListener('click',function(){openSheet('p:'+p.id)});$('#prail').appendChild(c);
+});
+$('#featAll').addEventListener('click',function(){openSheet('work')});
+function openSheet(id){
+  var title,html;
+  if(id.indexOf('p:')===0){var p=PROJ.filter(function(x){return 'p:'+x.id===id})[0];title=p.name;html=browserBody(p)}
+  else{title=APPS[id].t;html=body(id)}
+  $('#sheetTitle').textContent=title;var sb=$('#sheetBody');sb.innerHTML=html;sb.scrollTop=0;
+  wire(sb,function(pid){openSheet('p:'+pid)});
+  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');sheet.dataset.cur=id;
+}
+$('#sheetBack').addEventListener('click',function(){
+  var cur=sheet.dataset.cur||'';if(cur.indexOf('p:')===0)return openSheet('work');
+  sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
+});
+if(phoneMode())openFromHash();
+})();
+</script>
+</body>
+</html>
