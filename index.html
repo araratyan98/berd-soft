@@ -642,10 +642,11 @@ window.BERD_CONFIG = window.BERD_CONFIG || {
   },
   /* Cloudflare Worker URL that forwards requests to your Telegram (see worker/SETUP.md) */
   leadEndpoint: 'https://berd-leads.araratyanarmen398.workers.dev',
-  /* analytics: fill one or both; leave '' to keep the site free of trackers */
+  /* analytics: leave '' to keep the site free of trackers (see ANALYTICS.md) */
   analytics: {
-    goatcounter: '', // your GoatCounter code, e.g. 'berdsoft' for berdsoft.goatcounter.com
-    ga4: ''          // Google Analytics 4 measurement id, e.g. 'G-XXXXXXX'
+    ga4: '',         // Google Analytics 4 measurement id, e.g. 'G-XXXXXXXXXX'
+    clarity: '',     // Microsoft Clarity project id, e.g. 'k9x2abc3de'
+    goatcounter: ''  // optional: GoatCounter code, e.g. 'berdsoft'
   }
 };
 /* ============================================================================== */
@@ -888,15 +889,30 @@ var A=CFG.analytics;
   try{
     if(A.goatcounter){var g=document.createElement('script');g.async=true;g.src='https://gc.zgo.at/count.js';g.setAttribute('data-goatcounter','https://'+A.goatcounter+'.goatcounter.com/count');document.head.appendChild(g)}
     if(A.ga4){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+encodeURIComponent(A.ga4);document.head.appendChild(s);
-      window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('config',A.ga4,{anonymize_ip:true})}
+      window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());
+      gtag('config',A.ga4,{anonymize_ip:true,site_language:L,device_view:matchMedia('(max-width:760px)').matches?'phone':'laptop'})}
+    if(A.clarity){(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script',A.clarity);
+      clarity('set','lang',L);clarity('set','view',matchMedia('(max-width:760px)').matches?'phone':'laptop')}
   }catch(e){}
 })();
-function track(name,detail){
+/* every interaction goes to all configured tools with the same name, so reports line up */
+var lastStep='home';
+function track(name,detail,extra){
   try{
+    if(name!=='window_time')lastStep=name+(detail?':'+detail:'');
     if(A.goatcounter&&window.goatcounter&&goatcounter.count)goatcounter.count({path:'event/'+name+(detail?'/'+detail:''),title:name,event:true});
-    if(A.ga4&&window.gtag)gtag('event',name,{detail:detail||'',lang:L});
+    if(A.ga4&&window.gtag)gtag('event',name,Object.assign({detail:detail||'',lang:L},extra||{}));
+    if(A.clarity&&window.clarity){clarity('event',name+(detail?'_'+detail:''));if(name==='lead_sent')clarity('upgrade','lead')}
   }catch(e){}
 }
+/* time spent in each window, and the last thing done before leaving the site */
+var winOpenedAt={};
+function winOpened(key){winOpenedAt[key]=Date.now()}
+function winClosed(key){var t=winOpenedAt[key];if(t){delete winOpenedAt[key];track('window_time',key,{seconds:Math.round((Date.now()-t)/1000)})}}
+window.addEventListener('pagehide',function(){
+  Object.keys(winOpenedAt).forEach(winClosed);
+  try{if(A.ga4&&window.gtag)gtag('event','exit_after',{detail:lastStep,lang:L,transport_type:'beacon'})}catch(e){}
+});
 
 /* ---------- leads: every form goes through here ---------- */
 function sendLead(payload){
@@ -1077,6 +1093,7 @@ function initBrief(root){
     if(i<steps.length){
       var s=steps[i],v=ans[s.id];
       if(s.multi?!(v&&v.length):!v)return err(s.multi?B.pickSome:B.pickOne);
+      if(i===0)track('brief_start');
       track('brief_step',s.id);i++;return render();
     }
     save();
@@ -1084,7 +1101,8 @@ function initBrief(root){
     if(!contact.contact){err(B.needContact);root.querySelector('#b-contact').focus();return}
     var hp=root.querySelector('.hp');if(hp&&hp.value)return;
     var btn=root.querySelector('[data-nx]');btn.disabled=true;btn.textContent=B.sending;
-    sendLead({type:'brief',answers:readable(),raw:ans,name:contact.name,contact:contact.contact,comment:contact.comment}).then(function(st){status=st;render()});
+    track('brief_submit',ans.type);
+    sendLead({type:'brief',answers:readable(),raw:ans,name:contact.name,contact:contact.contact,comment:contact.comment}).then(function(st){status=st;if(st!=='sent')track('lead_failed',st);render()});
   }
   function label(stepId,key){var s=steps.filter(function(x){return x.id===stepId})[0];var o=s&&s.opts.filter(function(x){return x[0]===key})[0];return o?o[1]:key}
   function readable(){
@@ -1227,8 +1245,8 @@ function buildDesktop(){
   });
   setRun();
 }
-document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){api.open(b.getAttribute('data-open'))})});
-['#botFab','#pBotFab'].forEach(function(s){var f=$(s);f.innerHTML='<span class="ring"></span>'+ROBOT;f.addEventListener('click',function(){$('#botBubble').classList.remove('show');api.open('bot')})});
+document.querySelectorAll('[data-open]').forEach(function(b){b.addEventListener('click',function(){track('hero_click',b.getAttribute('data-open'));api.open(b.getAttribute('data-open'))})});
+['#botFab','#pBotFab'].forEach(function(s){var f=$(s);f.innerHTML='<span class="ring"></span>'+ROBOT;f.addEventListener('click',function(){$('#botBubble').classList.remove('show');track('bot_open');api.open('bot')})});
 
 function vRect(el){var r=el.getBoundingClientRect(),s=screenEl.getBoundingClientRect();return {x:(r.left-s.left)/scale,y:(r.top-s.top)/scale,w:r.width/scale,h:r.height/scale}}
 function genie(win,from,closing){
@@ -1263,10 +1281,10 @@ function makeWin(key,title,html,box,source){
   });
   bar.addEventListener('dblclick',function(e){if(!e.target.closest('button'))toggleMax(w)});
   w.querySelector('.x').addEventListener('click',function(){toggleMax(w)});
-  w.querySelector('.c').addEventListener('click',function(){var tg=dockTarget(key);genie(w,tg,true).then(function(){w.remove();delete openWins[key];setRun()})});
-  w.querySelector('.m').addEventListener('click',function(){var tg=dockTarget(key);genie(w,tg,true).then(function(){w.hidden=true;setRun()})});
+  w.querySelector('.c').addEventListener('click',function(){winClosed(key);var tg=dockTarget(key);genie(w,tg,true).then(function(){w.remove();delete openWins[key];setRun()})});
+  w.querySelector('.m').addEventListener('click',function(){winClosed(key);var tg=dockTarget(key);genie(w,tg,true).then(function(){w.hidden=true;setRun()})});
   wire(w,openProject);
-  openWins[key]=w;setRun();
+  openWins[key]=w;setRun();winOpened(key);
   genie(w,source||dockTarget(key),false);
   return w;
 }
@@ -1367,10 +1385,11 @@ function openSheet(id){
   else{title=appTitle(id);html=body(id)}
   $('#sheetTitle').textContent=title;var sb=$('#sheetBody');sb.innerHTML=html;sb.scrollTop=0;
   wire(sb,function(pid){openProject(pid)});
-  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');sheet.dataset.cur=id;
+  if(sheet.dataset.cur&&sheet.classList.contains('open'))winClosed(sheet.dataset.cur);
+  sheet.classList.add('open');sheet.setAttribute('aria-hidden','false');sheet.dataset.cur=id;winOpened(id);
 }
 $('#sheetBack').addEventListener('click',function(){
-  var cur=sheet.dataset.cur||'';if(cur.indexOf('p:')===0)return openSheet('work');
+  var cur=sheet.dataset.cur||'';winClosed(cur);if(cur.indexOf('p:')===0)return openSheet('work');
   sheet.classList.remove('open');sheet.setAttribute('aria-hidden','true');
 });
 
