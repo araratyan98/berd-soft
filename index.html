@@ -189,7 +189,8 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .card small{display:block;font:500 12.5px var(--f-ui);color:var(--muted);margin-top:2px}
 
 /* browser window */
-.br{display:grid;grid-template-columns:1fr 300px;height:100%}
+.br{display:grid;grid-template-columns:1fr 300px;grid-template-rows:minmax(0,1fr);height:100%}
+.br .vp,.br .info{min-height:0}
 .br .vp{display:flex;flex-direction:column;min-width:0;background:#e9ebf0}
 .br .addr{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--win-2);border-bottom:1px solid var(--line)}
 .br .addr .u{flex:1;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font:500 13px var(--f-lat);color:#444}
@@ -315,7 +316,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .sheet .pf aside button{white-space:nowrap;gap:6px}
 .sheet .pf main{padding:16px}
 .sheet .grid{grid-template-columns:1fr 1fr;gap:12px}
-.sheet .br{grid-template-columns:1fr;height:auto}
+.sheet .br{grid-template-columns:1fr;grid-template-rows:auto;height:auto}
 .sheet .br .view{flex:none;height:auto;overflow:visible}
 /* demo sites reflow like real mobile sites inside the phone browser */
 .sheet .ms nav div{display:none}
