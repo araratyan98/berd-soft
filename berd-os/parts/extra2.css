@@ -210,3 +210,75 @@ body>.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px))}
 .sheet .pa.shots{grid-auto-flow:row}
 .br .view .scroller{min-height:100%;display:flex;flex-direction:column;justify-content:center}
 .sheet .br .view .scroller{min-height:0}
+
+/* ---------- phone home (2026-10): the logo's four squares are the navigation, no bottom dock ---------- */
+@media (max-width:760px){
+  .phone{padding-block:12px calc(112px + env(safe-area-inset-bottom,0px))}
+  /* hero: editorial, no glass card */
+  .phone .wid{margin-top:26px;padding:0 2px;background:none;border:0;border-radius:0;backdrop-filter:none}
+  .phone .wid .mk{width:30px;height:30px}
+  .phone .wid .greet{margin:16px 0 -4px;color:#c8ccda}
+  .phone .wid h1{margin-top:12px;font-size:clamp(34px,10.4vw,44px);line-height:1.04;letter-spacing:-.03em}
+  .phone .wid p{max-width:32ch;margin-top:12px;font-size:15px;color:#c8ccda}
+  /* mosaic: 2x2 like the logo */
+  .phone .mosaic{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:28px auto 0;max-width:520px}
+  .phone .tile{position:relative;aspect-ratio:1;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;padding:16px;border-radius:26px;text-align:left;overflow:hidden;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 14px 30px rgba(0,0,0,.28);transition:transform .18s cubic-bezier(.2,.8,.2,1);
+    animation:rise .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 60ms + 80ms)}
+  .phone .tile:active{transform:scale(.96)}
+  .phone .tile:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .phone .t-work{background:linear-gradient(155deg,#4b62ff,#1B36F5 55%,#1328c4);color:#fff}
+  .phone .t-calc{background:linear-gradient(155deg,#e4ff5c,#CCFF00 60%,#b3e000);color:#111}
+  .phone .t-brief{background:linear-gradient(155deg,#ff3f86,#E01060 60%,#b80a4d);color:#fff}
+  .phone .t-chat{background:linear-gradient(155deg,#ffd04d,#FFB800 60%,#e9a300);color:#111}
+  .phone .tile .tico{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:rgba(255,255,255,.2);flex:none}
+  .phone .t-calc .tico,.phone .t-chat .tico{background:rgba(0,0,0,.08)}
+  .phone .tile .tico svg{width:24px;height:24px}
+  .phone .tile .tico svg [stroke]{stroke:currentColor}
+  .phone .tile .tico svg [fill]:not([fill="none"]){fill:currentColor}
+  .phone .tile .ttx{display:grid;gap:3px;position:relative;z-index:1}
+  .phone .tile .ttx b{font:800 18px/1.15 var(--f-ui);letter-spacing:-.01em}
+  .phone .tile .ttx small{font:600 12.5px/1.3 var(--f-ui);opacity:.82}
+  .phone .tile .tnum{position:absolute;top:14px;right:16px;font:800 30px/1 var(--f-lat);letter-spacing:-.03em;opacity:.95}
+  .phone .t-work .tnum{top:auto;bottom:56px;right:auto;left:16px;font-size:40px}
+  /* three real thumbnails fanned in the works tile */
+  .phone .tstack{position:absolute;top:14px;right:-14px;width:58%;height:46%}
+  .phone .tstack img{position:absolute;right:0;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:9px;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+  .phone .tstack img:nth-child(1){top:22%;transform:rotate(-12deg);opacity:.7}
+  .phone .tstack img:nth-child(2){top:11%;transform:rotate(-5deg);opacity:.85}
+  .phone .tstack img:nth-child(3){top:0;transform:rotate(3deg)}
+  /* recent works */
+  .phone .feat{margin-top:34px}
+  .phone .feat h2{font-size:19px}
+  .phone .rail{gap:12px;padding-bottom:4px}
+  .phone .rail .card{width:84%;gap:12px}
+  .phone .rail .card .th{border-radius:18px;box-shadow:0 16px 30px rgba(0,0,0,.35)}
+  .phone .rail .card b{font-size:16px}
+  .phone .rdots{display:flex;gap:6px;justify-content:center;margin-top:14px}
+  .phone .rdots i{width:6px;height:6px;border-radius:99px;background:rgba(255,255,255,.3);transition:width .25s,background .25s}
+  .phone .rdots i.on{width:20px;background:var(--lime)}
+  /* the rest as a list */
+  .phone .plist{margin-top:34px;border-radius:24px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:6px 6px 6px;max-width:520px;margin-inline:auto}
+  .phone .plist h2{margin:12px 12px 6px;font:700 13px var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:#9aa0b0}
+  :lang(hy) .phone .plist h2{text-transform:none;letter-spacing:0;font-size:14px}
+  .phone .plist .li{display:flex;align-items:center;gap:14px;width:100%;padding:10px 10px;border-radius:16px;color:#fff;text-align:left}
+  .phone .plist .li:active{background:rgba(255,255,255,.08)}
+  .phone .plist .li+.li{border-top:1px solid rgba(255,255,255,.07)}
+  .phone .plist .li .ico{width:40px;height:40px;flex:none;border-radius:12px}
+  .phone .plist .li .ico svg{width:60%;height:60%}
+  .phone .plist .li b{flex:1;font:600 15.5px var(--f-ui)}
+  .phone .plist .li .chev{font:400 26px/1 var(--f-lat);color:#7d8396}
+  /* contacts at the end */
+  .phone .pfoot{margin-top:28px;display:grid;gap:14px;justify-items:center;text-align:center}
+  .phone .pfoot .cts{justify-content:center}
+  .phone .pfoot .cts a{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.16)}
+  .phone .pfoot small{color:#7d8396;font:500 12px var(--f-ui)}
+  /* the robot no longer has a dock to clear */
+  .pfab{bottom:calc(16px + env(safe-area-inset-bottom,0px));width:56px;height:56px}
+  /* keep the section links clear of the robot */
+  .phone .feat h2{padding-right:4px}
+}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){
+  .phone .tile{animation:none}
+  .phone .tile:active{transform:none}
+}

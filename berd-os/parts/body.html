@@ -60,9 +60,11 @@
     <h1 data-t="hero.h1"></h1>
     <p data-t="hero.p"></p>
   </section>
-  <div class="apps" id="papps"></div>
-  <section class="feat"><h2><span data-t="ui.recent"></span> <button type="button" id="featAll" data-t="ui.allArrow"></button></h2><div class="rail" id="prail"></div></section>
-  <nav class="pdock" id="pdock" data-ta="ui.dock"></nav>
+  <!-- the logo's four squares are the main navigation: works, estimator, brief, contact -->
+  <nav class="mosaic" id="pmosaic" data-ta="ui.dock"></nav>
+  <section class="feat"><h2><span data-t="ui.recent"></span> <button type="button" id="featAll" data-t="ui.allArrow"></button></h2><div class="rail" id="prail"></div><div class="rdots" id="prdots" aria-hidden="true"></div></section>
+  <nav class="plist" id="plist"><h2 data-t="ui.ph.more"></h2><div id="plistItems"></div></nav>
+  <footer class="pfoot" id="pfoot"></footer>
   <button class="botfab pfab" id="pBotFab" type="button" data-ta="ui.apps.bot"></button>
 </div>
 <div class="sheet" id="sheet" aria-hidden="true">
@@ -581,15 +583,36 @@ function openFromHash(){
 function phoneMode(){return matchMedia('(max-width:760px)').matches}
 var sheet=$('#sheet');
 function appTile(id,lbl){var b=document.createElement('button');b.type='button';b.className='app';b.innerHTML='<span class="ico i-'+id+'">'+SV[id]+'</span>'+(lbl?'<span>'+esc(appTitle(id))+'</span>':'');b.setAttribute('aria-label',appTitle(id));b.addEventListener('click',function(){api.open(id)});return b}
+var MOSAIC=['work','calc','brief','chat'];
 function buildPhone(){
-  $('#papps').innerHTML='';$('#pdock').innerHTML='';$('#prail').innerHTML='';
-  ORDER.forEach(function(id){$('#papps').appendChild(appTile(id,true))});
-  ['work','brief','chat','serv'].forEach(function(id){$('#pdock').appendChild(appTile(id,false))});
-  PROJ.slice(0,6).forEach(function(x){
+  var t=T(),ph=t.ui.ph||{},m=$('#pmosaic'),rail=$('#prail'),dots=$('#prdots'),list=$('#plistItems');
+  m.innerHTML='';rail.innerHTML='';dots.innerHTML='';list.innerHTML='';
+  /* 2x2 tiles in the logo's colours */
+  MOSAIC.forEach(function(id,i){
+    var b=document.createElement('button');b.type='button';b.className='tile t-'+id;b.style.setProperty('--i',i);
+    var sub=ph[id]||'',extra='';
+    if(id==='work'){extra='<span class="tnum">'+PROJ.length+'</span><span class="tstack">'+PROJ.slice(0,3).map(function(x){return '<img src="'+MEDIA+x.id+'-thumb.webp" alt="" loading="lazy" decoding="async">'}).join('')+'</span>'}
+    if(id==='calc'&&CFG.pricing&&CFG.pricing.types&&CFG.pricing.types.landing){extra='<span class="tnum">$'+CFG.pricing.types.landing[0]+'+</span>';sub=(t.calc&&t.calc.types&&t.calc.types.landing)||sub}
+    b.innerHTML='<span class="tico">'+SV[id]+'</span>'+extra+'<span class="ttx"><b>'+esc(appTitle(id))+'</b><small>'+esc(sub)+'</small></span>';
+    b.setAttribute('aria-label',appTitle(id));b.addEventListener('click',function(){api.open(id)});m.appendChild(b);
+  });
+  /* recent works: big swipeable cards with position dots */
+  var shown=PROJ.slice(0,6);
+  shown.forEach(function(x,i){
     var p=proj(x.id),c=document.createElement('button');c.type='button';c.className='card';
     c.innerHTML=thumb(p)+'<span><b>'+esc(p.name)+'</b><small>'+esc(p.kind)+'</small></span>';
-    c.addEventListener('click',function(){openProject(p.id)});$('#prail').appendChild(c);
+    c.addEventListener('click',function(){openProject(p.id)});rail.appendChild(c);
+    var d=document.createElement('i');if(!i)d.className='on';dots.appendChild(d);
   });
+  rail.onscroll=function(){var w=rail.firstChild?rail.firstChild.offsetWidth+12:1,k=Math.round(rail.scrollLeft/w);[].forEach.call(dots.children,function(d,j){d.classList.toggle('on',j===k)})};
+  /* everything else as a short list */
+  ORDER.filter(function(id){return MOSAIC.indexOf(id)<0}).forEach(function(id){
+    var b=document.createElement('button');b.type='button';b.className='li';
+    b.innerHTML='<span class="ico i-'+id+'">'+SV[id]+'</span><b>'+esc(appTitle(id))+'</b><span class="chev" aria-hidden="true">›</span>';
+    b.addEventListener('click',function(){api.open(id)});list.appendChild(b);
+  });
+  var f=$('#pfoot');f.innerHTML=contactsHTML()+'<small>© BERD SOFT · '+esc(t.hero.kick||'')+'</small>';
+  f.querySelectorAll('[data-ct]').forEach(function(a){a.addEventListener('click',function(){track('contact_click',a.textContent.split(' ')[0])})});
 }
 $('#featAll').addEventListener('click',function(){api.open('work')});
 function openSheet(id){

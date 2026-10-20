@@ -43,7 +43,13 @@
         "blog": "Բլոգ",
         "game": "BERD Blocks"
       },
-      "noscript": "Կայքը աշխատելու համար անհրաժեշտ է JavaScript։"
+      "noscript": "Կայքը աշխատելու համար անհրաժեշտ է JavaScript։",
+      "ph": {
+        "work": "Իրական նախագծեր",
+        "brief": "Պատմեք նախագծի մասին",
+        "chat": "Գրեք մեզ",
+        "more": "Ավելին"
+      }
     },
     "hero": {
       "kick": "Վեբ ստուդիա · Երևան",
@@ -528,7 +534,13 @@
         "blog": "Блог",
         "game": "BERD Blocks"
       },
-      "noscript": "Для работы сайта нужен JavaScript."
+      "noscript": "Для работы сайта нужен JavaScript.",
+      "ph": {
+        "work": "Реальные проекты",
+        "brief": "Расскажите о проекте",
+        "chat": "Напишите нам",
+        "more": "Ещё"
+      }
     },
     "hero": {
       "kick": "Веб-студия · Ереван",
@@ -1013,7 +1025,13 @@
         "blog": "Blog",
         "game": "BERD Blocks"
       },
-      "noscript": "This website needs JavaScript to run."
+      "noscript": "This website needs JavaScript to run.",
+      "ph": {
+        "work": "Real projects",
+        "brief": "Tell us about your project",
+        "chat": "Write to us",
+        "more": "More"
+      }
     },
     "hero": {
       "kick": "Web studio · Yerevan",
