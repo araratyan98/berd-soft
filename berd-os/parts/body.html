@@ -243,7 +243,7 @@ function body(id){
     t.about.gua.map(function(g){return '<div><b>'+esc(g[0])+'</b><p>'+esc(g[1])+'</p></div>'}).join('')+'</div><div class="stack">'+['React','Next.js','TypeScript','Node.js','Python','PostgreSQL','React Native','Telegram Bot API','Docker'].map(function(s){return '<span>'+s+'</span>'}).join('')+'</div>'+
     '<div class="about-cts"><h4>'+esc(t.about.contacts)+'</h4>'+contactsHTML()+'</div></div>';
   if(id==='chat') return '<div class="chat"><div class="hd"><span class="av"><span class="mk"><i></i><i></i><i></i><i></i></span></span><span><b>BERD SOFT</b><small>'+esc(t.chat.online)+'</small></span></div>'+
-    '<div class="log" data-log><div class="msg in">'+esc(t.chat.greet1)+'</div><div class="msg in">'+esc(t.chat.greet2)+'</div></div>'+
+    '<div class="log" data-log><div class="msg in">'+esc(t.chat.greet1)+'</div></div>'+
     '<form data-form novalidate><input class="hp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><div class="two"><input id="c-name" placeholder="'+esc(t.chat.name)+'" aria-label="'+esc(t.chat.name)+'" autocomplete="name"><input id="c-contact" placeholder="'+esc(t.chat.contact)+'" aria-label="'+esc(t.chat.contact)+'" autocomplete="tel"></div>'+
     '<div class="send"><textarea id="c-msg" rows="2" placeholder="'+esc(t.chat.msg)+'" aria-label="'+esc(t.chat.msg)+'"></textarea><button type="submit">'+esc(t.chat.send)+'</button></div>'+
     '<span class="tg">'+esc(t.chat.direct)+' '+contactsHTML()+'</span></form></div>';
@@ -592,6 +592,11 @@ function buildPhone(){
     var b=document.createElement('button');b.type='button';b.className='tile t-'+id;b.style.setProperty('--i',i);
     var sub=ph[id]||'',extra='';
     if(id==='work'){extra='<span class="tnum">'+PROJ.length+'</span><span class="tstack">'+PROJ.slice(0,3).map(function(x){return '<img src="'+MEDIA+x.id+'-thumb.webp" alt="" loading="lazy" decoding="async">'}).join('')+'</span>'}
+    /* brief: the first real brief question, its answers ticked one after another */
+    if(id==='brief'&&t.brief&&t.brief.steps&&t.brief.steps[0]){var opts=t.brief.steps[0].opts.filter(function(o){return ['site','shop','bot'].indexOf(o[0])>=0});
+      extra='<span class="tbrief" aria-hidden="true">'+opts.map(function(o,k){return '<span class="o" style="--k:'+k+'"><i></i>'+esc(o[1])+'</span>'}).join('')+'</span>'}
+    /* contact: our real chat greeting, then "typing" */
+    if(id==='chat'&&t.chat&&t.chat.greet1)extra='<span class="tchat" aria-hidden="true"><span class="bub">'+esc(t.chat.greet1)+'</span><span class="bub typing"><i></i><i></i><i></i></span></span>';
     if(id==='calc'&&CFG.pricing&&CFG.pricing.types&&CFG.pricing.types.landing){extra='<span class="tnum">$'+CFG.pricing.types.landing[0]+'+</span>';sub=(t.calc&&t.calc.types&&t.calc.types.landing)||sub}
     b.innerHTML='<span class="tico">'+SV[id]+'</span>'+extra+'<span class="ttx"><b>'+esc(appTitle(id))+'</b><small>'+esc(sub)+'</small></span>';
     b.setAttribute('aria-label',appTitle(id));b.addEventListener('click',function(){api.open(id)});m.appendChild(b);

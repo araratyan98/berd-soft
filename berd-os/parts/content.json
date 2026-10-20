@@ -159,7 +159,6 @@
     "chat": {
       "online": "● Առցանց է",
       "greet1": "Բարև։ Պատմեք ձեր նախագծի մասին. ինչ է պետք անել և երբ։",
-      "greet2": "Պատասխանում ենք մեկ աշխատանքային օրվա ընթացքում, գնահատումն անվճար է։",
       "name": "Ձեր անունը",
       "contact": "Հեռախոս կամ Telegram",
       "msg": "Ինչ է պետք անել…",
@@ -650,7 +649,6 @@
     "chat": {
       "online": "● В сети",
       "greet1": "Здравствуйте! Расскажите о вашем проекте: что нужно сделать и к какому сроку.",
-      "greet2": "Отвечаем в течение одного рабочего дня, оценка бесплатная.",
       "name": "Ваше имя",
       "contact": "Телефон или Telegram",
       "msg": "Что нужно сделать…",
@@ -1141,7 +1139,6 @@
     "chat": {
       "online": "● Online",
       "greet1": "Hi! Tell us about your project: what needs to be built and by when.",
-      "greet2": "We reply within one business day, and the estimate is free.",
       "name": "Your name",
       "contact": "Phone or Telegram",
       "msg": "What do you need…",
