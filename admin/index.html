@@ -88,9 +88,10 @@ textarea{resize:vertical;min-height:44px;line-height:1.45}
 .drop{display:grid;place-items:center;gap:6px;min-height:150px;border:2px dashed var(--line2);border-radius:var(--r);background:#fafbfc;text-align:center;padding:16px;cursor:pointer;color:var(--muted);position:relative}
 .drop:hover,.drop.over{border-color:var(--blue);background:var(--blue-soft)}
 .drop b{color:var(--ink)}
+.drop small{color:var(--faint)}
 .drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
 .pv{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-top:14px}
-.pv figure{margin:0;display:grid;gap:6px;font-size:12.5px;color:var(--muted)}
+.pv figure{margin:0;display:grid;gap:6px;font-size:12.5px;color:var(--muted);justify-items:start}
 .pv img{display:block;border-radius:8px;border:1px solid var(--line);background:#e9ebf0}
 .pv .big{width:260px;max-height:340px;object-fit:cover;object-position:top}
 .pv .sm{width:160px}
@@ -176,12 +177,15 @@ const CATS={web:'Կայք',app:'Վեբ հավելված',mob:'Մոբայլ',bot:
 const SECTIONS={meta:'Google և հղման նախադիտում',hero:'Գլխավոր էկրան',ui:'Կոճակներ և մակագրություններ',cats:'Աշխատանքների կատեգորիաներ',services:'Ծառայություններ',
   process:'Ինչպես ենք աշխատում',about:'Մեր մասին',chat:'Կապ',live:'Կենդանի չատ',bot:'BERD Օգնական',brief:'Բրիֆ',calc:'Հաշվիչ',ba:'Առաջ / Հետո',tod:'Ողջույններ',
   blog:'Բլոգի պատուհան',game:'Խաղ',days:'Շաբաթվա օրեր',code:'Լեզվի կոդ',name:'Լեզվի անուն'};
+const DOWN='Ադմինի ծրագիրը չի աշխատում։ Կրկնակի սեղմեք ADMIN.cmd (berd-soft թղթապանակում) և բացեք http://127.0.0.1:5179';
 const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>[...(r||document).querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let D=null,tab='works',view=null,dirty=false,log=[],textChanges=new Map(),textSec='hero',textQ='';
 
 async function call(method,url,body){
-  const r=await fetch(url,{method,headers:{'Content-Type':'application/json','X-Admin-Token':TOKEN},body:body?JSON.stringify(body):undefined});
+  let r;
+  try{r=await fetch(url,{method,headers:{'Content-Type':'application/json','X-Admin-Token':TOKEN},body:body?JSON.stringify(body):undefined})}
+  catch(e){throw new Error(DOWN)}
   const j=await r.json().catch(()=>({error:'Սերվերը չպատասխանեց'}));
   if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));
   return j;
@@ -235,6 +239,11 @@ async function saveProjects(arr,images,what,okMsg){
 function renderEditor(){
   $('.save')?.remove();
   const v=view,p=v.p,isNew=v.i<0;let lang=v.lang||'hy';
+  v.gone=v.gone||{};
+  const saved=isNew?null:D.projects[v.i];
+  // a saved image counts until it is removed or the picture type changes
+  const has=slot=>!!saved&&saved.type===p.type&&!v.gone[slot];
+  const ready=slot=>!!v.imgs[slot]||has(slot);
   const field=(id,label,val,opt)=>'<div class="f"><label for="'+id+'">'+label+(opt&&opt.req?' <span class="req">*</span>':'')+'</label>'+
     (opt&&opt.area?'<textarea id="'+id+'" rows="'+(opt.rows||3)+'">'+esc(val)+'</textarea>':'<input type="'+(opt&&opt.type||'text')+'" id="'+id+'" value="'+esc(val)+'"'+(opt&&opt.ph?' placeholder="'+esc(opt.ph)+'"':'')+'>')+
     (opt&&opt.note?'<span class="note">'+opt.note+'</span>':'')+'</div>';
@@ -250,7 +259,7 @@ function renderEditor(){
     '<section class="card"><h2>Նկար <span class="req">*</span></h2><p class="hint">Վերբեռնեք սքրինշոթը, ադմինն ինքը կփոքրացնի այն և կսարքի WebP, որ կայքը չծանրանա։</p>'+
       '<div class="seg" role="group" aria-label="Նկարի տեսակ"><button type="button" data-type="shot" aria-pressed="'+(p.type==='shot')+'">Կայքի կամ ծրագրի էկրան</button><button type="button" data-type="phones" aria-pressed="'+(p.type==='phones')+'">Հեռախոսի 2 էկրան</button></div>'+
       '<div class="grid2" style="margin-top:14px">'+(p.type==='shot'
-        ?'<label class="drop" id="d0"><input type="file" accept="image/*" data-slot="shot"><span><b>Ընտրեք կամ քաշեք նկարը</b><br>Լավագույնը՝ ամբողջ էջի սքրինշոթ, 1200px կամ ավելի լայն</span></label>'
+        ?'<label class="drop" id="d0"><input type="file" accept="image/*" data-slot="shot"><span><b>Ընտրեք կամ քաշեք նկարը</b><br>կամ սեղմեք Ctrl+V՝ սքրինշոթը տեղադրելու համար<br><small>Լավագույնը՝ ամբողջ էջի սքրինշոթ, 1200px կամ ավելի լայն</small></span></label>'
         :'<label class="drop"><input type="file" accept="image/*" data-slot="p1"><span><b>Առաջին էկրանը</b><br>Հեռախոսի սքրինշոթ</span></label><label class="drop"><input type="file" accept="image/*" data-slot="p2"><span><b>Երկրորդ էկրանը</b><br>Հեռախոսի սքրինշոթ</span></label>')+
       '</div><div class="pv" id="pv"></div>'+
       '<div style="margin-top:18px"><div class="f" style="margin-bottom:8px"><label>Բրենդի գույները</label><span class="note">Երևում են, մինչ նկարը բեռնվում է, և հեռախոսի էկրանների ֆոնում։</span></div><div class="colors">'+
@@ -282,7 +291,7 @@ function renderEditor(){
   langForm();dots();
   $$('main input,main select,main textarea').forEach(x=>x.addEventListener('input',()=>{dirty=true}));
   $('#back').onclick=$('#cancel').onclick=()=>{if(leaveOk()){view=null;render();scrollTo(0,0)}};
-  $$('[data-type]').forEach(b=>b.onclick=()=>{if(p.type===b.dataset.type)return;sync();p.type=b.dataset.type;v.imgs={};dirty=true;renderEditor()});
+  $$('[data-type]').forEach(b=>b.onclick=()=>{if(p.type===b.dataset.type)return;sync();p.type=b.dataset.type;v.imgs={};v.gone={};dirty=true;renderEditor()});
   $$('.drop').forEach(d=>{d.addEventListener('dragover',e=>{e.preventDefault();d.classList.add('over')});d.addEventListener('dragleave',()=>d.classList.remove('over'));
     d.addEventListener('drop',e=>{e.preventDefault();d.classList.remove('over');const f=e.dataTransfer.files[0];if(f)takeFile(d.querySelector('input').dataset.slot,f)})});
   $$('.drop input').forEach(inp=>inp.addEventListener('change',()=>{if(inp.files[0])takeFile(inp.dataset.slot,inp.files[0])}));
@@ -290,22 +299,29 @@ function renderEditor(){
     try{if(!/^image\//.test(f.type))throw new Error('Սա նկար չէ');
       $('#smsg').textContent='Նկարը մշակվում է…';
       const bmp=await createImageBitmap(f);v.src=v.src||{};v.src[slot]=bmp;
+      delete v.gone[slot];
       if(slot==='shot'){const s=await makeShot(bmp);v.imgs.shot=s.blob;p.w=s.w;p.h=s.h}
       else v.imgs[slot]=await makePhone(bmp);
       dirty=true;if(!v.picked){pickColors(bmp);v.picked=1}
       $('#smsg').textContent='Նկարը պատրաստ է։ Չմոռանաք պահպանել։';preview()}
     catch(e){$('#smsg').textContent='';toast(esc(e.message||'Նկարը չհաջողվեց կարդալ'),true)}
   }
+  // Ctrl+V: a screenshot from the clipboard goes into the first free slot
+  document.onpaste=e=>{if(view!==v||!$('#pv'))return;const f=[...(e.clipboardData?.files||[])].find(x=>/^image\//.test(x.type));if(!f)return;e.preventDefault();
+    takeFile(p.type==='shot'?'shot':(!v.imgs.p1&&(!ready('p1')||ready('p2'))?'p1':'p2'),f)};
   function pickColors(bmp){const c=colorsOf(bmp);$('#c2').value=p.c2=c.bg;$('#c1').value=p.c1=c.dark;$('#c3').value=p.c3=c.accent}
   $('#pick').onclick=async()=>{const bmp=v.src&&(v.src.shot||v.src.p1);if(bmp){pickColors(bmp);dirty=true;return}
     try{const img=await loadImg('/media/work/'+p.id+(p.type==='shot'?'':'-1')+'.webp?'+Date.now());pickColors(img);dirty=true}catch(e){toast('Նախ ավելացրեք նկար',true)}};
   function preview(){
-    const saved=isNew?null:D.projects[v.i],u=b=>URL.createObjectURL(b),cur=(n)=>saved&&saved.type===p.type?'/media/work/'+p.id+n+'.webp?'+(D.ver||''):'';
+    const u=b=>URL.createObjectURL(b),cur=(slot,n)=>has(slot)&&!v.imgs[slot]?'/media/work/'+p.id+n+'.webp?'+(D.ver||''):'';
+    const fig=(slot,src,cls,cap)=>'<figure><img class="'+cls+'" src="'+src+'" alt=""><figcaption>'+cap+'</figcaption><button class="btn sm danger" type="button" data-rm="'+slot+'">✕ Հեռացնել</button></figure>';
     let h='';
-    if(p.type==='shot'){const s=v.imgs.shot?u(v.imgs.shot):cur('');if(s)h+='<figure><img class="big" src="'+s+'" alt=""><figcaption>Էջի նկար'+(p.w?' · '+p.w+'×'+p.h:'')+'</figcaption></figure>'}
-    else for(const k of ['p1','p2']){const s=v.imgs[k]?u(v.imgs[k]):cur(k==='p1'?'-1':'-2');if(s)h+='<figure><img class="ph" src="'+s+'" alt=""><figcaption>'+(k==='p1'?'Առաջին':'Երկրորդ')+' էկրան</figcaption></figure>'}
-    if(saved&&saved.type===p.type&&!v.imgs.shot&&!v.imgs.p1&&!v.imgs.p2)h+='<figure><img class="sm" src="'+thumbUrl(p.id)+'" alt=""><figcaption>Քարտ</figcaption></figure>';
-    $('#pv').innerHTML=h||'<span style="color:var(--faint);font-size:14px">Նկար դեռ չկա։</span>';
+    if(p.type==='shot'){const s=v.imgs.shot?u(v.imgs.shot):cur('shot','');if(s)h+=fig('shot',s,'big','Էջի նկար'+(p.w?' · '+p.w+'×'+p.h:''))}
+    else for(const k of ['p1','p2']){const s=v.imgs[k]?u(v.imgs[k]):cur(k,k==='p1'?'-1':'-2');if(s)h+=fig(k,s,'ph',(k==='p1'?'Առաջին':'Երկրորդ')+' էկրան')}
+    $('#pv').innerHTML=h||'<span style="color:var(--faint);font-size:14px">Նկար դեռ չկա։ Ընտրեք ֆայլ, քաշեք այն վերևի դաշտ կամ սեղմեք Ctrl+V։</span>';
+    $$('#pv [data-rm]').forEach(b=>b.onclick=()=>{const k=b.dataset.rm;if(v.imgs[k]){delete v.imgs[k];if(v.src)delete v.src[k]}else v.gone[k]=true;
+      if(k==='shot'&&!v.imgs.shot){const keep=has('shot');p.w=keep?saved.w:undefined;p.h=keep?saved.h:undefined}
+      dirty=true;$('#smsg').textContent='Նկարը հեռացված է։ Ավելացրեք նորը, առանց նկարի աշխատանքը չի պահպանվի։';preview()});
   }
   preview();
   $('#saveW').onclick=async()=>{
@@ -313,8 +329,8 @@ function renderEditor(){
     const miss=[];if(!p.name)miss.push('անունը');
     for(const l of LANGS)if(!full(l))miss.push(LN[l]+'՝ տեսակը, խնդիրը և լուծումը');
     if(p.link&&!/^https:\/\//.test(p.link))miss.push('հղումը պետք է սկսվի https://-ով');
-    if(isNew){p.id=uniqueId(p.name);if(p.type==='shot'&&!v.imgs.shot||p.type==='phones'&&!(v.imgs.p1&&v.imgs.p2))miss.push('նկարը')}
-    else if(p.type!==D.projects[v.i].type&&(p.type==='shot'?!v.imgs.shot:!(v.imgs.p1&&v.imgs.p2)))miss.push('նկարը');
+    if(isNew)p.id=uniqueId(p.name);
+    if(p.type==='shot'?!ready('shot'):!(ready('p1')&&ready('p2')))miss.push(p.type==='shot'?'նկարը':'հեռախոսի երկու էկրանները');
     if(miss.length)return toast('Լրացրեք՝ '+esc(miss.join(', ')),true);
     const btn=$('#saveW');btn.disabled=true;btn.textContent='Պահպանվում է…';
     try{
@@ -410,7 +426,7 @@ function renderSettings(){
       for(const k of ['telegram','phone','email','instagram'])next.contacts[k]=$('#ct-'+k).value.trim().replace(/^@/,'');
       $$('[data-g]').forEach(i=>{const g=i.dataset.g,k=i.dataset.k,ix=+i.dataset.i,v=Math.max(0,Math.round(+i.value||0));if(k==='x')next.pricing[g][ix]=v;else next.pricing[g][k][ix]=v});
       try{const r=await call('POST','/api/save',{config:next});D.config=next;dirty=false;log.push('contacts and prices');setState(r.git);renderSettings();toast('Պահպանված է · <a href="/preview" target="_blank" rel="noopener">Դիտել</a>')}catch(e){toast(esc(e.message),true)}}}
-  $('#pull').onclick=async()=>{const b=$('#pull');b.disabled=true;b.textContent='Ստանում է…';try{const r=await call('POST','/api/pull');await load();toast('Ստացված է. '+esc(r.out.split('\n').pop()))}catch(e){toast(esc(e.message),true)}finally{b.disabled=false;b.textContent='Ստանալ վերջին տարբերակը'}};
+  $('#pull').onclick=async()=>{const b=$('#pull');b.disabled=true;b.textContent='Ստանում է…';try{const r=await call('POST','/api/pull');await load();toast(/up to date/i.test(r.out)?'Արդեն վերջին տարբերակն է':'Մյուս համակարգչի փոփոխությունները ստացված են')}catch(e){toast(esc(e.message),true)}finally{b.disabled=false;b.textContent='Ստանալ վերջին տարբերակը'}};
 }
 
 /* ---------- dialogs ---------- */
@@ -440,7 +456,9 @@ $('#pubBtn').onclick=()=>{
   };
 };
 
-load().catch(e=>{$('#main').innerHTML='<div class="empty">Չհաջողվեց բեռնել. '+esc(e.message)+'</div>'});
+// opened as a file or from the published site: there is no admin program behind this page
+if(TOKEN.indexOf('ADMIN_TOKEN')>=0)$('#main').innerHTML='<div class="empty"><b>Այս էջը աշխատում է միայն ադմինի ծրագրով։</b><br><br>'+esc(DOWN)+'</div>';
+else load().catch(e=>{$('#main').innerHTML='<div class="empty">Չհաջողվեց բեռնել. '+esc(e.message)+'</div>'});
 })();
 </script>
 </body>
