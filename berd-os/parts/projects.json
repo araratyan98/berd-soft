@@ -1,0 +1,697 @@
+[
+  {
+    "id": "walletly",
+    "name": "Walletly",
+    "cat": "app",
+    "url": "walletly-am.up.railway.app",
+    "link": "https://walletly-am.up.railway.app",
+    "c1": "#1f1a16",
+    "c2": "#eee4d6",
+    "c3": "#bd5a3f",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "libSQL",
+      "Apple Wallet",
+      "Google Wallet"
+    ],
+    "type": "shot",
+    "h": 1470,
+    "text": {
+      "hy": {
+        "kind": "SaaS՝ քարտեր Apple Wallet-ում",
+        "role": "Բանալի հանձնելով՝ դիզայն, մշակում, գործարկում",
+        "task": "Փոքր բիզնեսին տալ հավատարմության քարտ հաճախորդի հեռախոսում՝ առանց սեփական հավելվածի և ծրագրավորողի։",
+        "sol": "Տերը քարտը հավաքում է կոնստրուկտորում և տալիս QR-ով։ Աշխատակիցները սկանավորում են այն հեռախոսով, իսկ քարտը թարմանում է հաճախորդի Wallet-ում։"
+      },
+      "ru": {
+        "kind": "SaaS: карты в Apple Wallet",
+        "role": "Под ключ: дизайн, разработка, запуск",
+        "task": "Дать малому бизнесу карту лояльности в телефоне клиента — без своего приложения и без программиста.",
+        "sol": "Владелец собирает карту в конструкторе и выдаёт её по QR. Сотрудники сканируют карту телефоном, и она обновляется прямо в Wallet клиента."
+      },
+      "en": {
+        "kind": "SaaS: Apple Wallet cards",
+        "role": "Turnkey: design, development, launch",
+        "task": "Give a small business a loyalty card on the customer’s phone, without building an app or hiring a developer.",
+        "sol": "The owner designs the card in an editor and hands it out by QR. Staff scan it with a phone, and the card updates right in the customer’s Wallet."
+      }
+    }
+  },
+  {
+    "id": "mirror-booking",
+    "name": "MirrorBooking",
+    "cat": "mob",
+    "url": "mirrorbooking.com",
+    "link": "https://mirrorbooking.com",
+    "c1": "#1a1a2e",
+    "c2": "#f5f3ff",
+    "c3": "#7c3aed",
+    "stack": [
+      "React Native",
+      "Expo",
+      "Next.js",
+      "Node.js",
+      "MongoDB"
+    ],
+    "type": "phones",
+    "text": {
+      "hy": {
+        "kind": "Գրանցման հարթակ՝ վեբ և iOS/Android",
+        "role": "Դիզայն և մշակում՝ վեբ, iOS, Android",
+        "task": "Հեռախոսով գրանցումն ու ձեռքով աղյուսակները փոխարինել մեկ հարմար գործիքով՝ հաճախորդների, վարպետների և սրահի տիրոջ համար։",
+        "sol": "Օնլայն գրանցում առանց զանգերի, վարպետի կաբինետ՝ ժամանակացույցով, վերլուծություն տիրոջ համար և մոբայլ հավելված։"
+      },
+      "ru": {
+        "kind": "Платформа записи: веб и iOS/Android",
+        "role": "Дизайн и разработка: веб, iOS, Android",
+        "task": "Заменить запись по телефону и таблицы одним удобным инструментом для клиентов, мастеров и владельца салона.",
+        "sol": "Онлайн-запись без звонков, кабинет мастера с расписанием, аналитика для владельца и мобильное приложение."
+      },
+      "en": {
+        "kind": "Booking platform: web and iOS/Android",
+        "role": "Design and development: web, iOS, Android",
+        "task": "Replace phone bookings and spreadsheets with one tool for clients, stylists and the salon owner.",
+        "sol": "Online booking without calls, a stylist dashboard with a schedule, analytics for the owner and a mobile app."
+      }
+    }
+  },
+  {
+    "id": "the-face",
+    "name": "THE FACE",
+    "cat": "web",
+    "url": "theface.am",
+    "link": "https://www.theface.am/",
+    "c1": "#17140f",
+    "c2": "#f5f2ed",
+    "c3": "#a89478",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "Supabase"
+    ],
+    "type": "shot",
+    "h": 2700,
+    "text": {
+      "hy": {
+        "kind": "Կայք-կատալոգ երեք լեզվով",
+        "role": "Կայքի մշակում",
+        "task": "Գեղեցիկ ցույց տալ ձեռագործ քարե սեղանները և հաճախորդին թույլ տալ օնլայն հավաքել անհատական պատվեր։",
+        "sol": "Իմիջային կատալոգ հայերեն, ռուսերեն և անգլերեն, պատվերի կոնֆիգուրատոր և ադմին վահանակ, որտեղ տերը ամեն ինչ փոխում է առանց կոդի։"
+      },
+      "ru": {
+        "kind": "Сайт-каталог на трёх языках",
+        "role": "Разработка сайта",
+        "task": "Красиво показать каменные столы ручной работы и дать клиенту собрать индивидуальный заказ онлайн.",
+        "sol": "Имиджевый каталог на армянском, русском и английском, конфигуратор заказа и админка, где владелец всё меняет без кода."
+      },
+      "en": {
+        "kind": "Catalogue website in three languages",
+        "role": "Website development",
+        "task": "Show handmade stone tables at their best and let clients put together a custom order online.",
+        "sol": "An image-led catalogue in Armenian, Russian and English, an order configurator and an admin panel where the owner edits everything without code."
+      }
+    }
+  },
+  {
+    "id": "ararat-park",
+    "name": "Ararat Park",
+    "cat": "web",
+    "url": "",
+    "link": "",
+    "c1": "#0b120e",
+    "c2": "#d8cdb8",
+    "c3": "#186038",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "Supabase",
+      "Three.js",
+      "MapLibre"
+    ],
+    "type": "shot",
+    "h": 2700,
+    "text": {
+      "hy": {
+        "kind": "Բնակելի համալիրի կայք",
+        "role": "Fullstack մշակում",
+        "task": "Գնորդին հնարավորություն տալ ինքնուրույն ընտրել բնակարանը և օնլայն հայտ թողնել։",
+        "sol": "Բնակարանի ընտրություն ըստ հարկի, մակերեսի և գնի՝ երեք քայլով, շենքի 3D մոդել և հիփոթեքային հաշվիչ։"
+      },
+      "ru": {
+        "kind": "Сайт жилого комплекса",
+        "role": "Fullstack-разработка",
+        "task": "Дать покупателю самому выбрать квартиру и оставить заявку онлайн.",
+        "sol": "Подбор квартиры по этажу, площади и цене в три шага, 3D-модель здания и ипотечный калькулятор."
+      },
+      "en": {
+        "kind": "Residential complex website",
+        "role": "Fullstack development",
+        "task": "Let buyers choose an apartment on their own and send a request online.",
+        "sol": "A three-step apartment picker by floor, area and price, a 3D model of the building and a mortgage calculator."
+      }
+    }
+  },
+  {
+    "id": "lezu",
+    "name": "Lezu",
+    "cat": "app",
+    "url": "",
+    "link": "",
+    "c1": "#16202c",
+    "c2": "#f5f6f8",
+    "c3": "#1f3a8a",
+    "stack": [
+      "Python",
+      "FastAPI",
+      "Claude API",
+      "SQLAlchemy"
+    ],
+    "type": "shot",
+    "h": 750,
+    "text": {
+      "hy": {
+        "kind": "AI ծառայություն թարգմանչական բյուրոների համար",
+        "role": "Բանալի հանձնելով՝ AI շղթա, ինտերֆեյս, անվտանգություն",
+        "task": "Վերացնել անձնագրերի և վկայականների ձեռքով վերատպումը, որ թարգմանչին մնա միայն ստուգումն ու ստորագրությունը։",
+        "sol": "Փաստաթղթի լուսանկարը, PDF-ը կամ Word-ը դառնում է նույն կառուցվածքով թարգմանություն։ Անուններն ու համարները փոխանցվում են կանոններով, իսկ վիճելի տեղերը ծառայությունն ինքն է նշում։"
+      },
+      "ru": {
+        "kind": "AI-сервис для бюро переводов",
+        "role": "Под ключ: AI-конвейер, интерфейс, безопасность",
+        "task": "Убрать ручную перепечатку паспортов и свидетельств, чтобы переводчику оставались только проверка и подпись.",
+        "sol": "Фото, PDF или Word документа превращается в перевод с той же структурой. Имена и номера переносятся по правилам, а спорные места сервис отмечает сам."
+      },
+      "en": {
+        "kind": "AI service for translation bureaus",
+        "role": "Turnkey: AI pipeline, interface, security",
+        "task": "Stop retyping passports and certificates by hand, so the translator only reviews and signs.",
+        "sol": "A photo, PDF or Word file becomes a translation with the same layout. Names and numbers follow the rules, and the service flags doubtful spots on its own."
+      }
+    }
+  },
+  {
+    "id": "pharmacy-itops",
+    "name": "ITOps",
+    "cat": "app",
+    "url": "",
+    "link": "",
+    "c1": "#14532d",
+    "c2": "#f6f8f7",
+    "c3": "#16a34a",
+    "stack": [],
+    "type": "shot",
+    "h": 750,
+    "text": {
+      "hy": {
+        "kind": "Ներքին համակարգ դեղատների ցանցի համար",
+        "role": "Ճարտարապետություն և մշակում՝ սերվեր, վեբ վահանակ, Windows ագենտ",
+        "task": "Որ երեք IT ադմինիստրատորները տեսնեն ամբողջ ցանցը և խնդրի մասին իմանան ավելի շուտ, քան դեղատունը կզանգի։",
+        "sol": "Ամեն համակարգչի ագենտ ուղարկում է ցուցանիշներ, 13 կանոն բացում և ինքնուրույն փակում են ծանուցումները, իսկ հեռավար հրամանները՝ միայն թույլատրված ցանկից։",
+        "stack": [
+          "Windows ագենտ",
+          "Ծանուցումների 13 կանոն",
+          "Հայտեր",
+          "Աուդիտի մատյան"
+        ]
+      },
+      "ru": {
+        "kind": "Внутренняя система для сети аптек",
+        "role": "Архитектура и разработка: сервер, веб-панель, Windows-агент",
+        "task": "Чтобы три IT-администратора видели всю сеть и узнавали о проблеме раньше, чем позвонит аптека.",
+        "sol": "Агент на каждом компьютере шлёт метрики, 13 правил открывают и сами закрывают оповещения, а удалённые команды — только из разрешённого списка.",
+        "stack": [
+          "Windows-агент",
+          "13 правил оповещений",
+          "Заявки",
+          "Журнал аудита"
+        ]
+      },
+      "en": {
+        "kind": "Internal system for a pharmacy chain",
+        "role": "Architecture and development: server, web console, Windows agent",
+        "task": "Let three IT admins see the whole network and learn about a problem before the pharmacy calls.",
+        "sol": "An agent on every computer sends metrics, 13 rules open and auto-close alerts, and remote commands come only from an allow-list.",
+        "stack": [
+          "Windows agent",
+          "13 alert rules",
+          "Tickets",
+          "Audit log"
+        ]
+      }
+    }
+  },
+  {
+    "id": "autohay",
+    "name": "AUTOHAY",
+    "cat": "web",
+    "url": "",
+    "link": "",
+    "c1": "#0d0f12",
+    "c2": "#14171c",
+    "c3": "#f97316",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "MongoDB"
+    ],
+    "type": "shot",
+    "h": 2700,
+    "text": {
+      "hy": {
+        "kind": "Տրանսպորտի մարքեթփլեյս",
+        "role": "Fullstack մշակում",
+        "task": "Ստեղծել հարմար հարթակ ամբողջ Հայաստանում տրանսպորտ գնելու և վաճառելու համար։",
+        "sol": "Որոնում ըստ մակնիշի, մոդելի և VIN-ի, ֆիլտրեր, վաճառողի կաբինետ և մաքսազերծման կարգավիճակներ։"
+      },
+      "ru": {
+        "kind": "Маркетплейс транспорта",
+        "role": "Fullstack-разработка",
+        "task": "Сделать удобную площадку для покупки и продажи транспорта по всей Армении.",
+        "sol": "Поиск по марке, модели и VIN, фильтры, кабинет продавца и статусы растаможки."
+      },
+      "en": {
+        "kind": "Vehicle marketplace",
+        "role": "Fullstack development",
+        "task": "Build a convenient place to buy and sell vehicles across Armenia.",
+        "sol": "Search by make, model and VIN, filters, a seller dashboard and customs clearance statuses."
+      }
+    }
+  },
+  {
+    "id": "arxe",
+    "name": "ARXÉ",
+    "cat": "web",
+    "url": "",
+    "link": "",
+    "c1": "#0c1220",
+    "c2": "#0f1626",
+    "c3": "#7c8cf8",
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "type": "shot",
+    "h": 2700,
+    "text": {
+      "hy": {
+        "kind": "Ճարտարապետական բյուրոյի կայք",
+        "role": "Կայքի մշակում",
+        "task": "Փոխանցել ստուդիայի փիլիսոփայությունը և ցույց տալ նախագծերը մթնոլորտային պատկերներով։",
+        "sol": "Խմբագրական կայք՝ լիաէկրան լուսանկարներով, ոլորման անիմացիայով և նախագծերի էջերով։"
+      },
+      "ru": {
+        "kind": "Сайт архитектурного бюро",
+        "role": "Разработка сайта",
+        "task": "Передать философию студии и показать проекты через атмосферные изображения.",
+        "sol": "Редакционный сайт с полноэкранными фотографиями, анимацией при прокрутке и страницами проектов."
+      },
+      "en": {
+        "kind": "Architecture studio website",
+        "role": "Website development",
+        "task": "Convey the studio’s philosophy and show its projects through atmospheric imagery.",
+        "sol": "An editorial website with full-screen photography, scroll animation and project pages."
+      }
+    }
+  },
+  {
+    "id": "dermond-clinic",
+    "name": "Dermond Clinic",
+    "cat": "bot",
+    "url": "",
+    "link": "",
+    "c1": "#0f1115",
+    "c2": "#f5f6f8",
+    "c3": "#2b5cff",
+    "stack": [],
+    "type": "shot",
+    "h": 472,
+    "text": {
+      "hy": {
+        "kind": "Telegram-բոտ + ադմին վահանակ",
+        "role": "Բոտի և ադմին վահանակի մշակում",
+        "task": "Կլինիկայում գրանցումը զանգերից տեղափոխել ավտոմատ Telegram-բոտ։",
+        "sol": "Բոտը ցույց է տալիս մասնագետներին ու ազատ ժամերը, ինքն է հիշեցնում այցի մասին, իսկ ադմին վահանակում հավաքվում է ժամանակացույցը։",
+        "stack": [
+          "Telegram-բոտ",
+          "Ավտոհիշեցումներ",
+          "Բժիշկների ժամանակացույց",
+          "Ադմին վահանակ"
+        ]
+      },
+      "ru": {
+        "kind": "Telegram-бот + админ-панель",
+        "role": "Разработка бота и админ-панели",
+        "task": "Перевести запись в клинику со звонков в автоматический Telegram-бот.",
+        "sol": "Бот показывает специалистов и свободные слоты, сам напоминает о визите, а расписание собирается в админ-панели.",
+        "stack": [
+          "Telegram-бот",
+          "Автонапоминания",
+          "Расписание врачей",
+          "Админ-панель"
+        ]
+      },
+      "en": {
+        "kind": "Telegram bot + admin panel",
+        "role": "Bot and admin panel development",
+        "task": "Move clinic bookings from phone calls to an automatic Telegram bot.",
+        "sol": "The bot shows specialists and free slots and sends visit reminders on its own, while the schedule comes together in the admin panel.",
+        "stack": [
+          "Telegram bot",
+          "Auto reminders",
+          "Doctors’ schedule",
+          "Admin panel"
+        ]
+      }
+    }
+  },
+  {
+    "id": "shinbid",
+    "name": "ShinBid",
+    "cat": "bot",
+    "url": "",
+    "link": "",
+    "c1": "#111827",
+    "c2": "#ffffff",
+    "c3": "#facc15",
+    "stack": [],
+    "type": "shot",
+    "h": 458,
+    "text": {
+      "hy": {
+        "kind": "Տենդերների հարթակ + Telegram-բոտ",
+        "role": "Fullstack մշակում",
+        "task": "Օգնել պատվիրատուներին արագ գտնել կապալառուներ և համեմատել առաջարկները։",
+        "sol": "Պատվիրատուն հրապարակում է հայտը կայքում, կապալառուները գին են առաջարկում, իսկ Telegram-բոտը տեղեկացնում է նոր առաջարկների մասին։",
+        "stack": [
+          "Տենդերներ",
+          "Telegram-բոտ",
+          "Կապալառուների առաջարկներ",
+          "Գների համեմատում"
+        ]
+      },
+      "ru": {
+        "kind": "Площадка тендеров + Telegram-бот",
+        "role": "Fullstack-разработка",
+        "task": "Помочь заказчикам быстро находить подрядчиков и сравнивать предложения.",
+        "sol": "Заказчик публикует заявку на сайте, подрядчики предлагают цену, а Telegram-бот сообщает о новых предложениях.",
+        "stack": [
+          "Тендеры",
+          "Telegram-бот",
+          "Ставки подрядчиков",
+          "Сравнение цен"
+        ]
+      },
+      "en": {
+        "kind": "Tender platform + Telegram bot",
+        "role": "Fullstack development",
+        "task": "Help clients find contractors quickly and compare their offers.",
+        "sol": "The client posts a request on the site, contractors bid a price, and a Telegram bot reports every new offer.",
+        "stack": [
+          "Tenders",
+          "Telegram bot",
+          "Contractor bids",
+          "Price comparison"
+        ]
+      }
+    }
+  },
+  {
+    "id": "earthtiles",
+    "name": "EarthTiles",
+    "cat": "app",
+    "url": "",
+    "link": "",
+    "c1": "#05070d",
+    "c2": "#0a0e18",
+    "c3": "#7c5cff",
+    "stack": [
+      "Next.js",
+      "Three.js",
+      "Prisma",
+      "Stripe"
+    ],
+    "type": "shot",
+    "w": 929,
+    "h": 861,
+    "text": {
+      "hy": {
+        "kind": "3D վեբ հավելված",
+        "role": "Fullstack մշակում",
+        "task": "Բրենդի ներկայության նոր ձևաչափ՝ տարածք ինտերակտիվ գլոբուսի վրա։",
+        "sol": "Իրական ժամանակի 3D գլոբուս, որտեղ ամեն քառակուսի կապված է կոորդինատներին. բրենդը գնում է այն և տեղադրում իր լոգոն։"
+      },
+      "ru": {
+        "kind": "3D-веб-приложение",
+        "role": "Fullstack-разработка",
+        "task": "Новый формат присутствия бренда — участок на интерактивном глобусе.",
+        "sol": "3D-глобус в реальном времени, где каждый квадрат привязан к координатам: бренд покупает его и размещает свой логотип."
+      },
+      "en": {
+        "kind": "3D web app",
+        "role": "Fullstack development",
+        "task": "A new format of brand presence: a plot on an interactive globe.",
+        "sol": "A real-time 3D globe where every square is tied to coordinates: a brand buys one and places its logo there."
+      }
+    }
+  },
+  {
+    "id": "skinradar",
+    "name": "SkinRadar",
+    "cat": "bot",
+    "url": "",
+    "link": "",
+    "c1": "#0a0b0e",
+    "c2": "#15171d",
+    "c3": "#d8a94a",
+    "stack": [
+      "Node.js",
+      "TypeScript",
+      "Express",
+      "Steam OpenID",
+      "Telegram Bot API"
+    ],
+    "type": "shot",
+    "h": 1053,
+    "text": {
+      "hy": {
+        "kind": "Վեբ ծառայություն + Telegram-բոտ",
+        "role": "Fullstack մշակում",
+        "task": "Օգնել CS2 սքինների թրեյդերներին հետևել գներին և ժամանակին իմանալ շահավետ փոփոխությունների մասին։",
+        "sol": "Մուտք Steam-ով, կենդանի գներ Steam-ից և Skinport-ից, ինվենտարի արժեքի պատմություն և Telegram-բոտ, որը ծանուցում է գների փոփոխության մասին։"
+      },
+      "ru": {
+        "kind": "Веб-сервис + Telegram-бот",
+        "role": "Fullstack-разработка",
+        "task": "Помочь трейдерам скинов CS2 следить за ценами и вовремя узнавать о выгодных изменениях.",
+        "sol": "Вход через Steam, живые цены Steam и Skinport, история стоимости инвентаря и Telegram-бот, который сообщает об изменении цен."
+      },
+      "en": {
+        "kind": "Web service + Telegram bot",
+        "role": "Fullstack development",
+        "task": "Help CS2 skin traders track prices and catch profitable changes in time.",
+        "sol": "Steam sign-in, live Steam and Skinport prices, inventory value history and a Telegram bot that alerts on price changes."
+      }
+    }
+  },
+  {
+    "id": "traderrealistic",
+    "name": "TraderRealistic",
+    "cat": "app",
+    "url": "",
+    "link": "",
+    "c1": "#0b0e14",
+    "c2": "#11151c",
+    "c3": "#3b82f6",
+    "stack": [
+      "Python",
+      "FastAPI",
+      "SQLAlchemy",
+      "Redis",
+      "Next.js"
+    ],
+    "type": "shot",
+    "h": 750,
+    "text": {
+      "hy": {
+        "kind": "Վերլուծական տերմինալ կրիպտոշուկայի համար",
+        "role": "Ճարտարապետություն, ագենտներ, ինտերֆեյս",
+        "task": "Տասնյակ աղբյուրներից հավաքել մեկ պատկեր և ազնվորեն ցույց տալ, երբ որոշման համար տվյալները չեն բավարարում։",
+        "sol": "Ագենտները քվեարկում են, համակարգողը փնտրում է հակասությունները, ռիսկի վերահսկիչը կարող է արգելափակել եզրակացությունը։ Որոշումը մարդունն է, գործարքները՝ միայն դեմո հաշվով։"
+      },
+      "ru": {
+        "kind": "Аналитический терминал для криптовалют",
+        "role": "Архитектура, агенты, интерфейс",
+        "task": "Свести десятки источников в одну картину и честно показывать, когда данных для решения не хватает.",
+        "sol": "Агенты голосуют, координатор ищет противоречия, риск-контроль может заблокировать вывод. Решение — за человеком, сделки только на демо-счёте."
+      },
+      "en": {
+        "kind": "Crypto market analytics terminal",
+        "role": "Architecture, agents, interface",
+        "task": "Bring dozens of sources into one picture and say honestly when there is not enough data to decide.",
+        "sol": "Agents vote, a coordinator looks for conflicts and a risk guard can block the verdict. A human decides, and trades run on a demo account only."
+      }
+    }
+  },
+  {
+    "id": "ai-assistant",
+    "name": "AI Assistant",
+    "cat": "bot",
+    "url": "",
+    "link": "",
+    "c1": "#0f1115",
+    "c2": "#f6f7fb",
+    "c3": "#1d4ed8",
+    "stack": [],
+    "type": "shot",
+    "h": 542,
+    "text": {
+      "hy": {
+        "kind": "AI չաթ-բոտ Instagram-ի և Telegram-ի համար",
+        "role": "AI օգնականի մշակում",
+        "task": "Հաճախորդներին պատասխանել ակնթարթորեն՝ ցանկացած ժամի, և մենեջերներին փոխանցել պատրաստի հայտեր։",
+        "sol": "Օգնականը պատասխանում է միայն գիտելիքների բազայով՝ ոչինչ չի հորինում, դիմումները բաշխում է ըստ քաղաքների և հավաքում հայտերը։",
+        "name": "AI օգնական վաճառքի համար",
+        "stack": [
+          "AI չաթ-բոտ",
+          "Instagram + Telegram",
+          "Գիտելիքների բազա",
+          "Հայտերի հավաք"
+        ]
+      },
+      "ru": {
+        "kind": "AI-чат-бот для Instagram и Telegram",
+        "role": "Разработка AI-ассистента",
+        "task": "Отвечать клиентам мгновенно в любое время и передавать менеджерам готовые заявки.",
+        "sol": "Ассистент отвечает только по базе знаний — ничего не выдумывает, распределяет обращения по городам и собирает заявки.",
+        "name": "AI-ассистент для продаж",
+        "stack": [
+          "AI-чат-бот",
+          "Instagram + Telegram",
+          "База знаний",
+          "Сбор заявок"
+        ]
+      },
+      "en": {
+        "kind": "AI chatbot for Instagram and Telegram",
+        "role": "AI assistant development",
+        "task": "Answer clients instantly at any hour and hand managers ready-made requests.",
+        "sol": "The assistant answers only from the knowledge base, invents nothing, routes conversations by city and collects requests.",
+        "name": "AI sales assistant",
+        "stack": [
+          "AI chatbot",
+          "Instagram + Telegram",
+          "Knowledge base",
+          "Lead capture"
+        ]
+      }
+    }
+  },
+  {
+    "id": "loyalty-wallet",
+    "name": "Loyalty Card",
+    "cat": "mob",
+    "url": "",
+    "link": "",
+    "c1": "#2a211c",
+    "c2": "#ffffff",
+    "c3": "#c9a26b",
+    "stack": [],
+    "type": "shot",
+    "h": 820,
+    "text": {
+      "hy": {
+        "kind": "Սրճարանի քարտ Apple և Google Wallet-ում",
+        "role": "Fullstack մշակում",
+        "task": "Պլաստիկ քարտերը փոխարինել թվայիններով, որ հյուրերն ավելի հաճախ վերադառնան։",
+        "sol": "Քարտը հեռախոսում է՝ առանց առանձին հավելվածի. դրոշմներ գնումների համար, 10-րդ սուրճը՝ նվեր, առաջարկներ ուղիղ քարտի վրա։",
+        "name": "Հավատարմության քարտ",
+        "stack": [
+          "Apple & Google Wallet",
+          "Դրոշմաքարտ",
+          "Push առաջարկներ",
+          "Վերլուծություն"
+        ]
+      },
+      "ru": {
+        "kind": "Карта кофейни в Apple и Google Wallet",
+        "role": "Fullstack-разработка",
+        "task": "Заменить пластиковые карты цифровыми, чтобы гости возвращались чаще.",
+        "sol": "Карта живёт в телефоне без отдельного приложения: штампы за покупки, 10-й кофе в подарок, предложения прямо на карту.",
+        "name": "Карта лояльности",
+        "stack": [
+          "Apple & Google Wallet",
+          "Штамп-карта",
+          "Push-предложения",
+          "Аналитика"
+        ]
+      },
+      "en": {
+        "kind": "Café card in Apple and Google Wallet",
+        "role": "Fullstack development",
+        "task": "Replace plastic loyalty cards with digital ones so guests come back more often.",
+        "sol": "The card lives on the phone with no separate app: stamps for purchases, the 10th coffee free, offers sent straight to the card.",
+        "name": "Loyalty card",
+        "stack": [
+          "Apple & Google Wallet",
+          "Stamp card",
+          "Push offers",
+          "Analytics"
+        ]
+      }
+    }
+  },
+  {
+    "id": "jarvis",
+    "name": "JARVIS",
+    "cat": "app",
+    "url": "",
+    "link": "",
+    "c1": "#0b1020",
+    "c2": "#0e1526",
+    "c3": "#3b9cff",
+    "stack": [],
+    "type": "shot",
+    "w": 1080,
+    "h": 580,
+    "text": {
+      "hy": {
+        "kind": "Ձայնային օգնական Windows-ի համար",
+        "role": "Ձայնային մաս, ագենտ, overlay ինտերֆեյս",
+        "task": "Ձայնով կառավարել համակարգիչը՝ առանց ձայնը ամպ ուղարկելու և առանց վտանգավոր գործողությունների առանց մարդու հաստատման։",
+        "sol": "Խոսքը ճանաչվում և հնչեցվում է հենց համակարգչում, իսկ վտանգավոր գործողությունը կատարվում է միայն հաստատման քարտում սեղմելուց հետո։",
+        "stack": [
+          "Wake word",
+          "Տեղային խոսք",
+          "hy · ru · en",
+          "Ռիսկի հաստատում"
+        ]
+      },
+      "ru": {
+        "kind": "Голосовой ассистент для Windows",
+        "role": "Голосовой стек, агент, оверлей",
+        "task": "Управлять компьютером голосом, не отправляя звук в облако и не допуская опасных действий без подтверждения человека.",
+        "sol": "Речь распознаётся и озвучивается на самом компьютере, а опасное действие выполняется только после клика в карточке подтверждения.",
+        "stack": [
+          "Wake word",
+          "Локальная речь",
+          "hy · ru · en",
+          "Подтверждение рисков"
+        ]
+      },
+      "en": {
+        "kind": "Voice assistant for Windows",
+        "role": "Voice stack, agent, overlay",
+        "task": "Control the computer by voice without sending audio to the cloud or allowing risky actions without a human’s approval.",
+        "sol": "Speech is recognised and spoken on the computer itself, and a risky action runs only after a click on an approval card.",
+        "stack": [
+          "Wake word",
+          "On-device speech",
+          "hy · ru · en",
+          "Risk approval"
+        ]
+      }
+    }
+  }
+]

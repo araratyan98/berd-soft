@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="hy">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>BERD SOFT · Ադմին</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='13' height='13' fill='%231B36F5'/%3E%3Crect x='17' y='2' width='13' height='13' fill='%23CCFF00'/%3E%3Crect x='2' y='17' width='13' height='13' fill='%23E01060'/%3E%3Crect x='17' y='17' width='13' height='13' fill='%23FFB800'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Armenian:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f4f7;--panel:#fff;--ink:#121318;--muted:#5f6370;--faint:#8a8f9c;--line:#e2e4ea;--line2:#d3d6de;--blue:#1B36F5;--blue-d:#0f26c9;--blue-soft:#eef1ff;
+  --lime:#CCFF00;--pink:#E01060;--amber:#FFB800;--ok:#16794a;--ok-soft:#e5f5ec;--warn:#8a5a00;--warn-soft:#fff3d4;--bad:#b4123f;--bad-soft:#fdebf0;
+  --r:12px;--f:"Noto Sans Armenian",system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;padding:12px 24px;background:#0b0c10;color:#fff}
+.mk{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:22px;height:22px;flex:none}
+.mk i:nth-child(1){background:var(--blue)}.mk i:nth-child(2){background:var(--lime)}.mk i:nth-child(3){background:var(--pink)}.mk i:nth-child(4){background:var(--amber)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.01em;white-space:nowrap}
+.brand small{font-weight:500;color:#9aa0b0}
+.top .sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;font-size:13px;font-weight:600;background:#1c1e26;color:#cfd3dd;white-space:nowrap}
+.pill i{width:8px;height:8px;border-radius:50%;background:#7a8090}
+.pill.ok i{background:#3ddc84}.pill.wait i{background:var(--amber)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:#fff;border-radius:10px;padding:9px 16px;font-weight:600;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{border-color:#b9bdc8}
+.btn.p{background:var(--blue);border-color:var(--blue);color:#fff}.btn.p:hover{background:var(--blue-d)}
+.btn.dark{background:#1c1e26;border-color:#2c2f3a;color:#fff}.btn.dark:hover{background:#262935}
+.btn.danger{color:var(--bad)}.btn.danger:hover{border-color:var(--bad);background:var(--bad-soft)}
+.btn.sm{padding:6px 11px;font-size:13.5px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.top .btn.p:disabled{background:#2a2d38;border-color:#2a2d38;color:#8a8f9c;opacity:1}
+.icon{width:34px;height:34px;padding:0;border-radius:8px}
+
+/* tabs */
+.tabs{display:flex;gap:4px;padding:0 24px;background:#fff;border-bottom:1px solid var(--line);position:sticky;top:58px;z-index:15}
+.tabs button{border:0;background:none;padding:14px 16px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--blue)}
+.tabs .n{display:inline-block;min-width:22px;padding:0 6px;margin-left:6px;border-radius:999px;background:var(--bg);font-size:12px;color:var(--muted)}
+
+main{max-width:1180px;margin:0 auto;padding:28px 24px 120px}
+h1{font-size:24px;line-height:1.25;margin:0 0 6px;font-weight:800;letter-spacing:-.01em}
+.lead{margin:0 0 22px;color:var(--muted)}
+.bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.bar .sp{flex:1}
+
+/* works list */
+.list{display:grid;gap:10px}
+.row{display:grid;grid-template-columns:136px 1fr auto;gap:18px;align-items:center;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.row.off{opacity:.62}
+.row .th{width:136px;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:#e9ebf0}
+.row .th img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.row b{font-size:16px}
+.row .meta{color:var(--muted);font-size:13.5px;margin-top:2px}
+.chip{display:inline-block;padding:2px 9px;border-radius:999px;background:var(--bg);color:var(--muted);font-size:12px;font-weight:600;margin-right:6px}
+.chip.hid{background:var(--warn-soft);color:var(--warn)}
+.chip.live{background:var(--ok-soft);color:var(--ok)}
+.acts{display:flex;gap:6px;align-items:center}
+.ord{display:flex;flex-direction:column;gap:4px;margin-right:6px}
+.ord button{width:30px;height:26px;border:1px solid var(--line2);background:#fff;border-radius:7px;line-height:1;padding:0;color:var(--muted)}
+.ord button:disabled{opacity:.3;cursor:default}
+
+/* editor */
+.back{border:0;background:none;color:var(--blue);font-weight:600;padding:0;margin-bottom:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;margin-bottom:16px}
+.card h2{font-size:17px;margin:0 0 4px}
+.card .hint{color:var(--muted);font-size:13.5px;margin:0 0 16px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f{display:grid;gap:6px;margin-bottom:14px;align-content:start}
+.f label{font-weight:600;font-size:14px}
+.f .note{font-size:12.5px;color:var(--faint)}
+input[type=text],input[type=url],input[type=number],input[type=search],select,textarea{width:100%;border:1px solid var(--line2);border-radius:9px;background:#fff;padding:9px 12px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(27,54,245,.12)}
+textarea{resize:vertical;min-height:44px;line-height:1.45}
+.req{color:var(--pink)}
+.seg{display:inline-flex;background:var(--bg);border-radius:10px;padding:3px;gap:3px;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:8px;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed=true]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.seg .dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:6px;background:var(--line2)}
+.seg .dot.full{background:#3ddc84}
+.drop{display:grid;place-items:center;gap:6px;min-height:150px;border:2px dashed var(--line2);border-radius:var(--r);background:#fafbfc;text-align:center;padding:16px;cursor:pointer;color:var(--muted);position:relative}
+.drop:hover,.drop.over{border-color:var(--blue);background:var(--blue-soft)}
+.drop b{color:var(--ink)}
+.drop input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.pv{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;margin-top:14px}
+.pv figure{margin:0;display:grid;gap:6px;font-size:12.5px;color:var(--muted)}
+.pv img{display:block;border-radius:8px;border:1px solid var(--line);background:#e9ebf0}
+.pv .big{width:260px;max-height:340px;object-fit:cover;object-position:top}
+.pv .sm{width:160px}
+.pv .ph{width:120px}
+.colors{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end}
+.colors label{display:grid;gap:6px;font-size:13px;font-weight:600}
+.colors input[type=color]{width:64px;height:38px;border:1px solid var(--line2);border-radius:9px;padding:3px;background:#fff}
+.save{position:fixed;left:0;right:0;bottom:0;z-index:25;background:rgba(255,255,255,.96);border-top:1px solid var(--line);backdrop-filter:blur(6px)}
+.save .in{max-width:1180px;margin:0 auto;padding:12px 24px;display:flex;gap:12px;align-items:center}
+.save .sp{flex:1}
+.save .msg{color:var(--muted);font-size:14px}
+
+/* texts */
+.tx{display:grid;grid-template-columns:230px 1fr;gap:20px;align-items:start}
+.secs{position:sticky;top:130px;display:grid;gap:2px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:8px}
+.secs button{border:0;background:none;text-align:left;padding:8px 10px;border-radius:8px;color:var(--muted);font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:8px}
+.secs button span{font-weight:500;font-size:12px;color:var(--faint)}
+.secs button[aria-pressed=true]{background:var(--blue-soft);color:var(--blue)}
+.secs button.ch::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--amber);align-self:center}
+.trow{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:10px}
+.trow.ch{border-color:var(--amber);box-shadow:0 0 0 3px rgba(255,184,0,.15)}
+.trow .k{font-size:12px;color:var(--faint);margin-bottom:8px;font-family:ui-monospace,Consolas,monospace}
+.tri{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tri label{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--muted)}
+.empty{padding:40px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line2);border-radius:var(--r)}
+
+/* settings */
+table.pr{width:100%;border-collapse:collapse}
+table.pr th{text-align:left;font-size:13px;color:var(--muted);font-weight:600;padding:6px 8px}
+table.pr td{padding:6px 8px;border-top:1px solid var(--line)}
+table.pr input{max-width:130px}
+
+/* dialog + toast */
+dialog{border:0;border-radius:16px;padding:0;max-width:560px;width:calc(100% - 32px);box-shadow:0 30px 80px rgba(0,0,0,.25)}
+dialog::backdrop{background:rgba(11,12,16,.5)}
+.dl{padding:24px}
+.dl h2{margin:0 0 8px;font-size:20px}
+.dl p{margin:0 0 14px;color:var(--muted)}
+.dl .acts{justify-content:flex-end;margin-top:18px}
+.steps{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:8px}
+.steps li{display:flex;gap:10px;align-items:center;color:var(--muted)}
+.steps li i{width:20px;height:20px;border-radius:50%;border:2px solid var(--line2);flex:none;display:grid;place-items:center;font-style:normal;font-size:12px}
+.steps li.run{color:var(--ink)}.steps li.run i{border-color:var(--blue);border-top-color:transparent;animation:spin .8s linear infinite}
+.steps li.done{color:var(--ink)}.steps li.done i{background:var(--ok);border-color:var(--ok);color:#fff}
+.steps li.fail{color:var(--bad)}.steps li.fail i{background:var(--bad);border-color:var(--bad);color:#fff}
+@keyframes spin{to{transform:rotate(360deg)}}
+pre.err{white-space:pre-wrap;background:var(--bad-soft);color:var(--bad);padding:12px;border-radius:10px;font-size:12.5px;max-height:220px;overflow:auto}
+.toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);z-index:60;background:#121318;color:#fff;padding:12px 18px;border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.25);display:flex;gap:14px;align-items:center;max-width:calc(100% - 32px)}
+.toast a{color:var(--lime);font-weight:700}
+.toast.bad{background:var(--bad)}
+
+@media (max-width:860px){
+  .top{flex-wrap:wrap;padding:10px 16px}.tabs{top:auto;position:static;padding:0 8px;overflow-x:auto}
+  main{padding:20px 16px 120px}.grid2,.tri{grid-template-columns:1fr}.tx{grid-template-columns:1fr}.secs{position:static;grid-template-columns:repeat(2,1fr)}
+  .row{grid-template-columns:96px 1fr}.row .th{width:96px}.row .acts{grid-column:1/-1;flex-wrap:wrap}
+}
+@media (prefers-reduced-motion:reduce){.steps li.run i{animation:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="brand"><span class="mk"><i></i><i></i><i></i><i></i></span>BERD SOFT <small>Ադմին</small></span>
+  <span class="sp"></span>
+  <span class="pill" id="state"><i></i><span>Բեռնվում է…</span></span>
+  <a class="btn dark" href="/preview" target="_blank" rel="noopener">Դիտել կայքը</a>
+  <button class="btn p" id="pubBtn" type="button" disabled>Հրապարակել</button>
+</header>
+<nav class="tabs" role="tablist" aria-label="Բաժիններ">
+  <button role="tab" data-tab="works" aria-selected="true">Աշխատանքներ<span class="n" id="nWorks"></span></button>
+  <button role="tab" data-tab="texts" aria-selected="false">Տեքստեր</button>
+  <button role="tab" data-tab="settings" aria-selected="false">Կոնտակտներ և գներ</button>
+</nav>
+<main id="main"><div class="empty">Բեռնվում է…</div></main>
+
+<dialog id="dlg"><div class="dl" id="dlgBody"></div></dialog>
+
+<script>
+(function(){
+'use strict';
+const TOKEN='__ADMIN_TOKEN__';
+const LANGS=['hy','ru','en'],LN={hy:'Հայերեն',ru:'Русский',en:'English'},LS={hy:'ՀԱՅ',ru:'РУС',en:'ENG'};
+const CATS={web:'Կայք',app:'Վեբ հավելված',mob:'Մոբայլ',bot:'Բոտ'};
+const SECTIONS={meta:'Google և հղման նախադիտում',hero:'Գլխավոր էկրան',ui:'Կոճակներ և մակագրություններ',cats:'Աշխատանքների կատեգորիաներ',services:'Ծառայություններ',
+  process:'Ինչպես ենք աշխատում',about:'Մեր մասին',chat:'Կապ',live:'Կենդանի չատ',bot:'BERD Օգնական',brief:'Բրիֆ',calc:'Հաշվիչ',ba:'Առաջ / Հետո',tod:'Ողջույններ',
+  blog:'Բլոգի պատուհան',game:'Խաղ',days:'Շաբաթվա օրեր',code:'Լեզվի կոդ',name:'Լեզվի անուն'};
+const $=(s,r)=>(r||document).querySelector(s),$$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let D=null,tab='works',view=null,dirty=false,log=[],textChanges=new Map(),textSec='hero',textQ='';
+
+async function call(method,url,body){
+  const r=await fetch(url,{method,headers:{'Content-Type':'application/json','X-Admin-Token':TOKEN},body:body?JSON.stringify(body):undefined});
+  const j=await r.json().catch(()=>({error:'Սերվերը չպատասխանեց'}));
+  if(!r.ok||j.error)throw new Error(j.error||('HTTP '+r.status));
+  return j;
+}
+function toast(html,bad){const t=document.createElement('div');t.className='toast'+(bad?' bad':'');t.setAttribute('role','status');t.innerHTML=html;document.body.appendChild(t);setTimeout(()=>t.remove(),bad?9000:5000)}
+function setState(g){
+  D.git=g;const el=$('#state'),n=g.changes+(g.ahead||0);
+  el.className='pill '+(n?'wait':'ok');
+  el.lastElementChild.textContent=n?'Կա չհրապարակված փոփոխություն':'Ամեն ինչ հրապարակված է';
+  el.title=g.last||'';$('#pubBtn').disabled=!n;
+}
+async function load(){D=await call('GET','/api/data');setState(D.git);render()}
+
+/* ---------- tabs ---------- */
+$$('.tabs button').forEach(b=>b.addEventListener('click',()=>{if(!leaveOk())return;tab=b.dataset.tab;view=null;$$('.tabs button').forEach(x=>x.setAttribute('aria-selected',x===b));render();scrollTo(0,0)}));
+function leaveOk(){if(!dirty&&!textChanges.size)return true;if(confirm('Կան չպահպանված փոփոխություններ։ Դուրս գա՞լ առանց պահպանելու։')){dirty=false;textChanges.clear();return true}return false}
+addEventListener('beforeunload',e=>{if(dirty||textChanges.size){e.preventDefault();e.returnValue=''}});
+function render(){
+  $('#nWorks').textContent=D.projects.length;
+  $('.save')?.remove();
+  if(tab==='works')return view?renderEditor():renderWorks();
+  if(tab==='texts')return renderTexts();
+  renderSettings();
+}
+const thumbUrl=id=>'/media/work/'+id+'-thumb.webp?'+(D.ver||'');
+
+/* ---------- works list ---------- */
+function renderWorks(){
+  const P=D.projects;
+  $('#main').innerHTML='<h1>Աշխատանքներ</h1><p class="lead">Ինչ երևում է կայքի «Աշխատանքներ» պատուհանում։ Հերթականությունը փոխեք սլաքներով, թաքցրածը կայքում չի երևում, բայց չի ջնջվում։</p>'+
+    '<div class="bar"><button class="btn p" id="addW" type="button">+ Նոր աշխատանք</button><span class="sp"></span><span class="meta" style="color:var(--muted);font-size:14px">'+P.filter(p=>!p.hidden).length+' կայքում · '+P.filter(p=>p.hidden).length+' թաքցրած</span></div>'+
+    '<div class="list">'+P.map((p,i)=>'<div class="row'+(p.hidden?' off':'')+'"><div class="th"><img src="'+thumbUrl(p.id)+'" alt="" loading="lazy"></div>'+
+      '<div><b>'+esc(p.name)+'</b><div class="meta">'+esc(p.text.hy.kind)+'</div><div style="margin-top:6px"><span class="chip">'+CATS[p.cat]+'</span>'+(p.link?'<span class="chip live">Կենդանի հղում</span>':'')+(p.hidden?'<span class="chip hid">Թաքցրած</span>':'')+'</div></div>'+
+      '<div class="acts"><span class="ord"><button type="button" data-up="'+i+'" aria-label="Վեր" '+(i?'':'disabled')+'>↑</button><button type="button" data-down="'+i+'" aria-label="Վար" '+(i<P.length-1?'':'disabled')+'>↓</button></span>'+
+      '<button class="btn sm" type="button" data-hide="'+i+'">'+(p.hidden?'Ցույց տալ':'Թաքցնել')+'</button><button class="btn sm" type="button" data-edit="'+i+'">Խմբագրել</button><button class="btn sm danger" type="button" data-del="'+i+'">Ջնջել</button></div></div>').join('')+'</div>';
+  $('#addW').onclick=()=>{view={i:-1,p:blank(),imgs:{}};render();scrollTo(0,0)};
+  $$('[data-edit]').forEach(b=>b.onclick=()=>{const i=+b.dataset.edit;view={i,p:structuredClone(P[i]),imgs:{}};render();scrollTo(0,0)});
+  $$('[data-up],[data-down]').forEach(b=>b.onclick=()=>{const i=+(b.dataset.up??b.dataset.down),j=b.dataset.up!=null?i-1:i+1;const a=P.slice();[a[i],a[j]]=[a[j],a[i]];saveProjects(a,{},'order','Հերթականությունը պահպանված է')});
+  $$('[data-hide]').forEach(b=>b.onclick=()=>{const i=+b.dataset.hide,a=structuredClone(P);a[i].hidden=!a[i].hidden;if(!a[i].hidden)delete a[i].hidden;saveProjects(a,{},(a[i].hidden?'hide ':'show ')+a[i].id,a[i].hidden?'«'+esc(a[i].name)+'»-ը թաքցված է':'«'+esc(a[i].name)+'»-ը երևում է կայքում')});
+  $$('[data-del]').forEach(b=>b.onclick=()=>{const i=+b.dataset.del,p=P[i];
+    ask('Ջնջե՞լ «'+esc(p.name)+'»-ը','Աշխատանքը և նրա նկարները կջնջվեն։ Եթե պարզապես չեք ուզում, որ երևա, ընտրեք «Թաքցնել»։','Ջնջել',true).then(ok=>{if(ok)saveProjects(P.filter((_,k)=>k!==i),{},'delete '+p.id,'«'+esc(p.name)+'»-ը ջնջված է')})});
+}
+function blank(){return{id:'',name:'',cat:'web',url:'',link:'',c1:'#16181f',c2:'#f4f5f8',c3:'#1B36F5',stack:[],type:'shot',text:{hy:{},ru:{},en:{}}}}
+async function saveProjects(arr,images,what,okMsg){
+  try{const r=await call('POST','/api/save',{projects:arr,images});D.projects=arr;D.ver=Date.now();log.push(what);setState(r.git);dirty=false;view=null;render();
+    toast(okMsg+' · <a href="/preview" target="_blank" rel="noopener">Դիտել</a>');return true}
+  catch(e){toast(esc(e.message),true);return false}
+}
+
+/* ---------- editor ---------- */
+function renderEditor(){
+  $('.save')?.remove();
+  const v=view,p=v.p,isNew=v.i<0;let lang=v.lang||'hy';
+  const field=(id,label,val,opt)=>'<div class="f"><label for="'+id+'">'+label+(opt&&opt.req?' <span class="req">*</span>':'')+'</label>'+
+    (opt&&opt.area?'<textarea id="'+id+'" rows="'+(opt.rows||3)+'">'+esc(val)+'</textarea>':'<input type="'+(opt&&opt.type||'text')+'" id="'+id+'" value="'+esc(val)+'"'+(opt&&opt.ph?' placeholder="'+esc(opt.ph)+'"':'')+'>')+
+    (opt&&opt.note?'<span class="note">'+opt.note+'</span>':'')+'</div>';
+  $('#main').innerHTML='<button class="back" type="button" id="back">‹ Աշխատանքներ</button><h1>'+(isNew?'Նոր աշխատանք':esc(p.name))+'</h1>'+
+    '<p class="lead">'+(isNew?'Լրացրեք դաշտերը և ավելացրեք սքրինշոթ։ Աստղանիշով դաշտերը պարտադիր են։':'Փոխեք, ինչ պետք է, և սեղմեք «Պահպանել»։')+(isNew?'':' <a href="/preview#p-'+esc(p.id)+'" target="_blank" rel="noopener">Տեսնել կայքում ↗</a>')+'</p>'+
+    '<section class="card"><h2>Հիմնական</h2><p class="hint">Անունը և հղումը նույնն են բոլոր լեզուների համար։</p><div class="grid2">'+
+      field('e-name','Անուն',p.name,{req:1,ph:'Օր.՝ Walletly'})+
+      '<div class="f"><label for="e-cat">Կատեգորիա <span class="req">*</span></label><select id="e-cat">'+Object.entries(CATS).map(([k,t])=>'<option value="'+k+'"'+(p.cat===k?' selected':'')+'>'+t+'</option>').join('')+'</select></div>'+
+      field('e-link','Կենդանի կայքի հղում',p.link,{type:'url',ph:'https://…',note:'Եթե կա, աշխատանքի պատուհանում կերևա «Բացել կայքը» կոճակը։ Դատարկ թողեք, եթե հրապարակային հասցե չկա։'})+
+      field('e-url','Ինչ գրել հասցեի տողում',p.url,{ph:'օր.՝ theface.am',note:'Դատարկի դեպքում կերևա աշխատանքի անունը։'})+
+    '</div>'+field('e-stack','Տեխնոլոգիաներ',(p.stack||[]).join(', '),{ph:'Next.js, TypeScript, PostgreSQL',note:'Ստորակետով։ Եթե տեխնոլոգիաները չգիտեք, թողեք դատարկ և լեզուների բաժնում գրեք հնարավորությունները։'})+'</section>'+
+
+    '<section class="card"><h2>Նկար <span class="req">*</span></h2><p class="hint">Վերբեռնեք սքրինշոթը, ադմինն ինքը կփոքրացնի այն և կսարքի WebP, որ կայքը չծանրանա։</p>'+
+      '<div class="seg" role="group" aria-label="Նկարի տեսակ"><button type="button" data-type="shot" aria-pressed="'+(p.type==='shot')+'">Կայքի կամ ծրագրի էկրան</button><button type="button" data-type="phones" aria-pressed="'+(p.type==='phones')+'">Հեռախոսի 2 էկրան</button></div>'+
+      '<div class="grid2" style="margin-top:14px">'+(p.type==='shot'
+        ?'<label class="drop" id="d0"><input type="file" accept="image/*" data-slot="shot"><span><b>Ընտրեք կամ քաշեք նկարը</b><br>Լավագույնը՝ ամբողջ էջի սքրինշոթ, 1200px կամ ավելի լայն</span></label>'
+        :'<label class="drop"><input type="file" accept="image/*" data-slot="p1"><span><b>Առաջին էկրանը</b><br>Հեռախոսի սքրինշոթ</span></label><label class="drop"><input type="file" accept="image/*" data-slot="p2"><span><b>Երկրորդ էկրանը</b><br>Հեռախոսի սքրինշոթ</span></label>')+
+      '</div><div class="pv" id="pv"></div>'+
+      '<div style="margin-top:18px"><div class="f" style="margin-bottom:8px"><label>Բրենդի գույները</label><span class="note">Երևում են, մինչ նկարը բեռնվում է, և հեռախոսի էկրանների ֆոնում։</span></div><div class="colors">'+
+        '<label>Ֆոն<input type="color" id="c2" value="'+p.c2+'"></label><label>Մուգ<input type="color" id="c1" value="'+p.c1+'"></label><label>Շեշտ<input type="color" id="c3" value="'+p.c3+'"></label>'+
+        '<button class="btn sm" type="button" id="pick">Վերցնել նկարից</button></div></div></section>'+
+
+    '<section class="card"><h2>Տեքստեր</h2><p class="hint">Գրեք կարճ և բնական։ Աշխատանքը ներկայացրեք որպես մեր կատարածը, ոչ թե մեր ապրանքը։ Թվեր և արդյունքներ՝ միայն իրական։</p>'+
+      '<div class="seg" role="tablist" id="langs">'+LANGS.map(l=>'<button type="button" data-lang="'+l+'" aria-pressed="'+(l===lang)+'">'+LN[l]+'<span class="dot" data-dot="'+l+'"></span></button>').join('')+'</div>'+
+      '<div id="ltext" style="margin-top:16px"></div></section>';
+  const s=document.createElement('div');s.className='save';s.innerHTML='<div class="in"><span class="msg" id="smsg">'+(isNew?'Նոր աշխատանքը կավելացվի ցանկի վերջում։':'')+'</span><span class="sp"></span><button class="btn" type="button" id="cancel">Չեղարկել</button><button class="btn p" type="button" id="saveW">Պահպանել</button></div>';document.body.appendChild(s);
+
+  const sync=()=>{p.name=$('#e-name').value.trim();p.cat=$('#e-cat').value;p.link=$('#e-link').value.trim();p.url=$('#e-url').value.trim();
+    p.stack=$('#e-stack').value.split(',').map(x=>x.trim()).filter(Boolean);p.c1=$('#c1').value;p.c2=$('#c2').value;p.c3=$('#c3').value;readLang()};
+  function langForm(){
+    const t=p.text[lang]||(p.text[lang]={});
+    $('#ltext').innerHTML='<div class="grid2">'+field('t-kind','Տեսակ',t.kind,{req:1,ph:{hy:'Օր.՝ Բնակելի համալիրի կայք',ru:'Напр.: Сайт жилого комплекса',en:'E.g. Residential complex website'}[lang],note:'Երևում է քարտի վրա, անվան տակ։'})+
+      field('t-role','Ինչ ենք արել',t.role,{ph:{hy:'Օր.՝ Դիզայն և մշակում',ru:'Напр.: Дизайн и разработка',en:'E.g. Design and development'}[lang]})+'</div>'+
+      field('t-task','Խնդիր',t.task,{req:1,area:1,rows:2})+field('t-sol','Լուծում',t.sol,{req:1,area:1,rows:3})+
+      field('t-res','Արդյունք',t.res,{area:1,rows:2,note:'Միայն իրական թիվ կամ փաստ։ Դատարկ թողնելու դեպքում այս տողը կայքում չի երևա։'})+
+      '<div class="grid2">'+field('t-name','Անունն այս լեզվով',t.name,{note:'Ոչ պարտադիր։ Եթե անունը տարբեր է լեզուներում (օր.՝ «Карта лояльности»)։'})+
+      field('t-stack','Հնարավորություններ այս լեզվով',(t.stack||[]).join(', '),{note:'Ոչ պարտադիր։ Փոխարինում է տեխնոլոգիաները այս լեզվում։'})+'</div>';
+    $$('#ltext input,#ltext textarea').forEach(x=>x.addEventListener('input',()=>{dirty=true;readLang();dots()}));
+  }
+  function readLang(){const t=p.text[lang];if(!$('#t-kind'))return;t.kind=$('#t-kind').value.trim();t.role=$('#t-role').value.trim();t.task=$('#t-task').value.trim();t.sol=$('#t-sol').value.trim();t.res=$('#t-res').value.trim();t.name=$('#t-name').value.trim();
+    const st=$('#t-stack').value.split(',').map(x=>x.trim()).filter(Boolean);if(st.length)t.stack=st;else delete t.stack;for(const k of ['role','res','name'])if(!t[k])delete t[k]}
+  const full=l=>{const t=p.text[l]||{};return !!(t.kind&&t.task&&t.sol)};
+  function dots(){$$('[data-dot]').forEach(d=>d.classList.toggle('full',full(d.dataset.dot)))}
+  $$('#langs button').forEach(b=>b.onclick=()=>{readLang();lang=v.lang=b.dataset.lang;$$('#langs button').forEach(x=>x.setAttribute('aria-pressed',x===b));langForm()});
+  langForm();dots();
+  $$('main input,main select,main textarea').forEach(x=>x.addEventListener('input',()=>{dirty=true}));
+  $('#back').onclick=$('#cancel').onclick=()=>{if(leaveOk()){view=null;render();scrollTo(0,0)}};
+  $$('[data-type]').forEach(b=>b.onclick=()=>{if(p.type===b.dataset.type)return;sync();p.type=b.dataset.type;v.imgs={};dirty=true;renderEditor()});
+  $$('.drop').forEach(d=>{d.addEventListener('dragover',e=>{e.preventDefault();d.classList.add('over')});d.addEventListener('dragleave',()=>d.classList.remove('over'));
+    d.addEventListener('drop',e=>{e.preventDefault();d.classList.remove('over');const f=e.dataTransfer.files[0];if(f)takeFile(d.querySelector('input').dataset.slot,f)})});
+  $$('.drop input').forEach(inp=>inp.addEventListener('change',()=>{if(inp.files[0])takeFile(inp.dataset.slot,inp.files[0])}));
+  async function takeFile(slot,f){
+    try{if(!/^image\//.test(f.type))throw new Error('Սա նկար չէ');
+      $('#smsg').textContent='Նկարը մշակվում է…';
+      const bmp=await createImageBitmap(f);v.src=v.src||{};v.src[slot]=bmp;
+      if(slot==='shot'){const s=await makeShot(bmp);v.imgs.shot=s.blob;p.w=s.w;p.h=s.h}
+      else v.imgs[slot]=await makePhone(bmp);
+      dirty=true;if(!v.picked){pickColors(bmp);v.picked=1}
+      $('#smsg').textContent='Նկարը պատրաստ է։ Չմոռանաք պահպանել։';preview()}
+    catch(e){$('#smsg').textContent='';toast(esc(e.message||'Նկարը չհաջողվեց կարդալ'),true)}
+  }
+  function pickColors(bmp){const c=colorsOf(bmp);$('#c2').value=p.c2=c.bg;$('#c1').value=p.c1=c.dark;$('#c3').value=p.c3=c.accent}
+  $('#pick').onclick=async()=>{const bmp=v.src&&(v.src.shot||v.src.p1);if(bmp){pickColors(bmp);dirty=true;return}
+    try{const img=await loadImg('/media/work/'+p.id+(p.type==='shot'?'':'-1')+'.webp?'+Date.now());pickColors(img);dirty=true}catch(e){toast('Նախ ավելացրեք նկար',true)}};
+  function preview(){
+    const saved=isNew?null:D.projects[v.i],u=b=>URL.createObjectURL(b),cur=(n)=>saved&&saved.type===p.type?'/media/work/'+p.id+n+'.webp?'+(D.ver||''):'';
+    let h='';
+    if(p.type==='shot'){const s=v.imgs.shot?u(v.imgs.shot):cur('');if(s)h+='<figure><img class="big" src="'+s+'" alt=""><figcaption>Էջի նկար'+(p.w?' · '+p.w+'×'+p.h:'')+'</figcaption></figure>'}
+    else for(const k of ['p1','p2']){const s=v.imgs[k]?u(v.imgs[k]):cur(k==='p1'?'-1':'-2');if(s)h+='<figure><img class="ph" src="'+s+'" alt=""><figcaption>'+(k==='p1'?'Առաջին':'Երկրորդ')+' էկրան</figcaption></figure>'}
+    if(saved&&saved.type===p.type&&!v.imgs.shot&&!v.imgs.p1&&!v.imgs.p2)h+='<figure><img class="sm" src="'+thumbUrl(p.id)+'" alt=""><figcaption>Քարտ</figcaption></figure>';
+    $('#pv').innerHTML=h||'<span style="color:var(--faint);font-size:14px">Նկար դեռ չկա։</span>';
+  }
+  preview();
+  $('#saveW').onclick=async()=>{
+    sync();
+    const miss=[];if(!p.name)miss.push('անունը');
+    for(const l of LANGS)if(!full(l))miss.push(LN[l]+'՝ տեսակը, խնդիրը և լուծումը');
+    if(p.link&&!/^https:\/\//.test(p.link))miss.push('հղումը պետք է սկսվի https://-ով');
+    if(isNew){p.id=uniqueId(p.name);if(p.type==='shot'&&!v.imgs.shot||p.type==='phones'&&!(v.imgs.p1&&v.imgs.p2))miss.push('նկարը')}
+    else if(p.type!==D.projects[v.i].type&&(p.type==='shot'?!v.imgs.shot:!(v.imgs.p1&&v.imgs.p2)))miss.push('նկարը');
+    if(miss.length)return toast('Լրացրեք՝ '+esc(miss.join(', ')),true);
+    const btn=$('#saveW');btn.disabled=true;btn.textContent='Պահպանվում է…';
+    try{
+      const images={};
+      if(p.type==='shot'&&v.imgs.shot){images[p.id+'.webp']=await b64(v.imgs.shot);images[p.id+'-thumb.webp']=await b64(await makeThumb(v.src.shot,p.c2))}
+      if(p.type==='phones'){if(v.imgs.p1)images[p.id+'-1.webp']=await b64(v.imgs.p1);if(v.imgs.p2)images[p.id+'-2.webp']=await b64(v.imgs.p2);
+        if(v.imgs.p1||v.imgs.p2)images[p.id+'-thumb.webp']=await b64(await makePhonesThumb(await phoneSrc(p,v,'p1','-1'),await phoneSrc(p,v,'p2','-2'),p.c3))}
+      if(p.type==='phones'){delete p.w;delete p.h}
+      const arr=structuredClone(D.projects);if(isNew)arr.push(p);else arr[v.i]=p;
+      const ok=await saveProjects(arr,images,(isNew?'add ':'edit ')+p.id,'«'+esc(p.name)+'»-ը պահպանված է');
+      if(!ok){btn.disabled=false;btn.textContent='Պահպանել'}
+    }catch(e){toast(esc(e.message),true);btn.disabled=false;btn.textContent='Պահպանել'}
+  };
+}
+function uniqueId(name){let base=(name||'').toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,32);if(!base)base='work';
+  let id=base,n=2;while(D.projects.some(p=>p.id===id))id=base+'-'+n++;return id}
+
+/* ---------- images (all in the browser: resize + WebP) ---------- */
+const canvas=(w,h)=>{const c=document.createElement('canvas');c.width=w;c.height=h;return c};
+const webp=(c,q)=>new Promise((res,rej)=>c.toBlob(b=>b&&b.type==='image/webp'?res(b):rej(new Error('Բրաուզերը չի կարողանում WebP պատրաստել. բացեք ադմինը Chrome-ով')),'image/webp',q));
+const b64=b=>new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(String(fr.result).split(',')[1]);fr.readAsDataURL(b)});
+const loadImg=src=>new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src});
+const dims=b=>({w:b.naturalWidth||b.width,h:b.naturalHeight||b.height});
+async function makeShot(bmp){const {w:W,h:H}=dims(bmp),w=Math.min(1200,W),k=w/W,h=Math.min(2700,Math.round(H*k));
+  const c=canvas(w,h);c.getContext('2d').drawImage(bmp,0,0,W,h/k,0,0,w,h);return {blob:await webp(c,.72),w,h}}
+async function makeThumb(bmp,bg){const {w:W,h:H}=dims(bmp),c=canvas(640,400),x=c.getContext('2d'),k=640/W,sh=Math.min(H,400/k);
+  x.fillStyle=bg;x.fillRect(0,0,640,400);x.drawImage(bmp,0,0,W,sh,0,0,640,sh*k);return webp(c,.74)}
+async function makePhone(bmp){const {w:W,h:H}=dims(bmp),w=Math.min(460,W),h=Math.min(1100,Math.round(H*w/W)),c=canvas(w,h);c.getContext('2d').drawImage(bmp,0,0,W,h*W/w,0,0,w,h);return webp(c,.78)}
+async function phoneSrc(p,v,slot,suf){return v.src&&v.src[slot]?v.src[slot]:loadImg('/media/work/'+p.id+suf+'.webp?'+Date.now())}
+async function makePhonesThumb(a,b,bg){const c=canvas(640,400),x=c.getContext('2d');x.fillStyle=bg;x.fillRect(0,0,640,400);
+  [a,b].forEach((im,i)=>{const {w:W,h:H}=dims(im),h=340,w=Math.round(W*h/H),left=i?334:306-w;x.save();x.beginPath();x.roundRect(left,30,w,h,22);x.clip();x.drawImage(im,left,30,w,h);x.restore()});return webp(c,.74)}
+function colorsOf(img){const c=canvas(48,48),x=c.getContext('2d');const {w:W,h:H}=dims(img);x.drawImage(img,0,0,W,Math.min(H,W),0,0,48,48);
+  const d=x.getImageData(0,0,48,48).data,m=new Map();
+  for(let i=0;i<d.length;i+=4){const k=(d[i]>>4)+','+(d[i+1]>>4)+','+(d[i+2]>>4);const e=m.get(k)||{n:0,r:0,g:0,b:0};e.n++;e.r+=d[i];e.g+=d[i+1];e.b+=d[i+2];m.set(k,e)}
+  const L=[...m.values()].map(e=>{const r=e.r/e.n,g=e.g/e.n,b=e.b/e.n,mx=Math.max(r,g,b),mn=Math.min(r,g,b);return{n:e.n,r,g,b,lum:.2126*r+.7152*g+.0722*b,sat:mx?(mx-mn)/mx:0}}).sort((a,b)=>b.n-a.n);
+  const hex=e=>'#'+[e.r,e.g,e.b].map(v=>Math.round(v).toString(16).padStart(2,'0')).join('');
+  const bg=L[0],dark=L.slice(0,14).sort((a,b)=>a.lum-b.lum)[0],acc=L.filter(e=>e.n>2&&e.lum>40&&e.lum<230).sort((a,b)=>b.sat*Math.sqrt(b.n)-a.sat*Math.sqrt(a.n))[0]||L[1]||bg;
+  return {bg:hex(bg),dark:hex(dark.lum<bg.lum?dark:{r:22,g:24,b:31}),accent:hex(acc)}}
+
+/* ---------- texts ---------- */
+function flat(o,pre,out){if(typeof o==='string')out.push({path:pre,v:o});else if(o&&typeof o==='object')for(const k of Object.keys(o))flat(o[k],pre.concat(Array.isArray(o)?+k:k),out);return out}
+const getAt=(o,p)=>p.reduce((a,k)=>a==null?a:a[k],o);
+const tech=(r)=>{const a=LANGS.map(l=>getAt(D.content[l],r.path));return a.every(x=>x===a[0])&&/^[a-z0-9_\-.:/#+ ]{1,24}$/i.test(a[0]||'')};
+function rows(){return flat(D.content.hy,[],[]).filter(r=>!tech(r))}
+function renderTexts(){
+  const ORD=['hero','services','process','about','bot','brief','calc','chat','live','ui','cats','meta','tod','blog','ba','game','days','name','code'],rank=k=>{const i=ORD.indexOf(k);return i<0?99:i};
+  const all=rows(),secOf=r=>String(r.path[0]),secs=[...new Set(all.map(secOf))].sort((a,b)=>rank(a)-rank(b));
+  if(!secs.includes(textSec))textSec=secs[0];
+  const q=textQ.trim().toLowerCase();
+  const list=q?all.filter(r=>LANGS.some(l=>String(getAt(D.content[l],r.path)||'').toLowerCase().includes(q))):all.filter(r=>secOf(r)===textSec);
+  const changedSecs=new Set([...textChanges.values()].map(c=>String(c.path[0])));
+  $('#main').innerHTML='<h1>Տեքստեր</h1><p class="lead">Կայքի բոլոր տեքստերը երեք լեզվով։ Փոխված դաշտերը նշվում են դեղինով, պահպանելուց հետո կայքը տեղում թարմանում է։ <b>&lt;em&gt;</b>, <b>&lt;b&gt;</b> նշանները մի ջնջեք. դրանք գունավորում կամ թավ են դարձնում բառը։</p>'+
+    '<div class="bar"><input type="search" id="tq" placeholder="Որոնել տեքստերում…" value="'+esc(textQ)+'" style="max-width:420px" aria-label="Որոնել տեքստերում"><span class="sp"></span></div>'+
+    '<div class="tx"><nav class="secs" aria-label="Բաժիններ">'+secs.map(s=>'<button type="button" data-sec="'+esc(s)+'" aria-pressed="'+(!q&&s===textSec)+'" class="'+(changedSecs.has(s)?'ch':'')+'">'+esc(SECTIONS[s]||s)+'<span>'+all.filter(r=>secOf(r)===s).length+'</span></button>').join('')+'</nav>'+
+    '<div id="trows">'+(list.length?list.slice(0,300).map(r=>{const key=r.path.join('.'),ch=LANGS.some(l=>textChanges.has(key+'|'+l));
+      return '<div class="trow'+(ch?' ch':'')+'" data-key="'+esc(key)+'"><div class="k">'+esc(SECTIONS[r.path[0]]||r.path[0])+' · '+esc(r.path.slice(1).join(' › '))+'</div><div class="tri">'+
+        LANGS.map(l=>{const val=textChanges.has(key+'|'+l)?textChanges.get(key+'|'+l).value:getAt(D.content[l],r.path);return '<label>'+LS[l]+'<textarea data-l="'+l+'" rows="'+Math.min(8,Math.max(1,Math.ceil(String(val).length/44)))+'">'+esc(val)+'</textarea></label>'}).join('')+'</div></div>'}).join('')
+      :'<div class="empty">Ոչինչ չգտնվեց։</div>')+'</div></div>';
+  bar();
+  const tq=$('#tq');tq.oninput=()=>{textQ=tq.value;const pos=tq.selectionStart;renderTexts();const n=$('#tq');n.focus();n.setSelectionRange(pos,pos)};
+  $$('[data-sec]').forEach(b=>b.onclick=()=>{textSec=b.dataset.sec;textQ='';renderTexts();scrollTo(0,0)});
+  $$('#trows textarea').forEach(t=>t.addEventListener('input',()=>{const row=t.closest('.trow'),key=row.dataset.key,l=t.dataset.l,path=key.split('.').map(k=>/^\d+$/.test(k)?+k:k);
+    const orig=getAt(D.content[l],path);if(t.value===orig)textChanges.delete(key+'|'+l);else textChanges.set(key+'|'+l,{lang:l,path,value:t.value});
+    row.classList.toggle('ch',LANGS.some(x=>textChanges.has(key+'|'+x)));bar()}));
+  function bar(){
+    $('.save')?.remove();if(!textChanges.size)return;
+    const s=document.createElement('div');s.className='save';s.innerHTML='<div class="in"><span class="msg">'+textChanges.size+' փոփոխված դաշտ</span><span class="sp"></span><button class="btn" type="button" id="tUndo">Չեղարկել</button><button class="btn p" type="button" id="tSave">Պահպանել</button></div>';document.body.appendChild(s);
+    $('#tUndo').onclick=()=>{textChanges.clear();renderTexts()};
+    $('#tSave').onclick=async()=>{const b=$('#tSave');b.disabled=true;b.textContent='Պահպանվում է…';
+      try{const texts=[...textChanges.values()];const r=await call('POST','/api/save',{texts});for(const c of texts){const parent=getAt(D.content[c.lang],c.path.slice(0,-1));parent[c.path[c.path.length-1]]=c.value}
+        log.push('texts ('+texts.length+')');textChanges.clear();setState(r.git);renderTexts();toast('Տեքստերը պահպանված են · <a href="/preview" target="_blank" rel="noopener">Դիտել</a>')}
+      catch(e){toast(esc(e.message),true);b.disabled=false;b.textContent='Պահպանել'}};
+  }
+}
+
+/* ---------- contacts and prices ---------- */
+function renderSettings(){
+  const c=D.config.contacts,pr=D.config.pricing,calc=D.content.hy.calc||{};
+  const inp=(id,label,val,ph,note)=>'<div class="f"><label for="'+id+'">'+label+'</label><input type="text" id="'+id+'" value="'+esc(val)+'" placeholder="'+esc(ph)+'">'+(note?'<span class="note">'+note+'</span>':'')+'</div>';
+  const prow=(g,k,label,v)=>'<tr><td>'+esc(label)+'</td><td><input type="number" min="0" step="1" data-g="'+g+'" data-k="'+k+'" data-i="0" value="'+v[0]+'"></td><td><input type="number" min="0" step="1" data-g="'+g+'" data-k="'+k+'" data-i="1" value="'+v[1]+'"></td></tr>';
+  $('#main').innerHTML='<h1>Կոնտակտներ և գներ</h1><p class="lead">Կոնտակտները երևում են «Կապ», «Մեր մասին» պատուհաններում և Օգնականի պատասխաններում։ Գները՝ հաշվիչում։</p>'+
+    '<section class="card"><h2>Կոնտակտներ</h2><p class="hint">Դատարկ դաշտը կայքում չի երևա։</p><div class="grid2">'+
+      inp('ct-telegram','Telegram',c.telegram,'BerdSoft','Առանց @')+inp('ct-phone','Հեռախոս',c.phone,'+374 55 551355')+inp('ct-email','Email',c.email,'name@gmail.com')+inp('ct-instagram','Instagram',c.instagram,'berd.soft','Առանց @')+'</div></section>'+
+    '<section class="card"><h2>Հաշվիչի գները</h2><p class="hint">«Սկսած» գինը դոլարով և ժամկետը օրերով։ Կայքը ինքն է գումարում ընտրված ֆունկցիաները։</p>'+
+      '<table class="pr"><thead><tr><th>Ինչ ենք ստեղծում</th><th>Գին, $</th><th>Օր</th></tr></thead><tbody>'+Object.keys(pr.types).map(k=>prow('types',k,(calc.types||{})[k]||k,pr.types[k])).join('')+'</tbody></table>'+
+      '<table class="pr" style="margin-top:18px"><thead><tr><th>Ֆունկցիա</th><th>Գին, $</th><th>Օր</th></tr></thead><tbody>'+Object.keys(pr.feats).map(k=>prow('feats',k,(calc.feats||{})[k]||k,pr.feats[k])).join('')+
+      prow('perPage','x','Ամեն լրացուցիչ էջ',pr.perPage)+prow('perLang','x','Ամեն լրացուցիչ լեզու',pr.perLang)+'</tbody></table></section>'+
+    '<section class="card"><h2>Երկու համակարգիչ</h2><p class="hint">Եթե մյուս համակարգչից ինչ-որ բան եք հրապարակել, ստացեք այն այստեղ։ Ադմինը նույնն անում է ամեն բացվելիս։</p><button class="btn" type="button" id="pull">Ստանալ վերջին տարբերակը</button></section>';
+  $$('main input').forEach(x=>x.addEventListener('input',()=>{dirty=true;bar()}));
+  function bar(){$('.save')?.remove();if(!dirty)return;const s=document.createElement('div');s.className='save';s.innerHTML='<div class="in"><span class="msg">Կան չպահպանված փոփոխություններ</span><span class="sp"></span><button class="btn" type="button" id="sUndo">Չեղարկել</button><button class="btn p" type="button" id="sSave">Պահպանել</button></div>';document.body.appendChild(s);
+    $('#sUndo').onclick=()=>{dirty=false;renderSettings()};
+    $('#sSave').onclick=async()=>{const next={contacts:{},pricing:structuredClone(pr)};
+      for(const k of ['telegram','phone','email','instagram'])next.contacts[k]=$('#ct-'+k).value.trim().replace(/^@/,'');
+      $$('[data-g]').forEach(i=>{const g=i.dataset.g,k=i.dataset.k,ix=+i.dataset.i,v=Math.max(0,Math.round(+i.value||0));if(k==='x')next.pricing[g][ix]=v;else next.pricing[g][k][ix]=v});
+      try{const r=await call('POST','/api/save',{config:next});D.config=next;dirty=false;log.push('contacts and prices');setState(r.git);renderSettings();toast('Պահպանված է · <a href="/preview" target="_blank" rel="noopener">Դիտել</a>')}catch(e){toast(esc(e.message),true)}}}
+  $('#pull').onclick=async()=>{const b=$('#pull');b.disabled=true;b.textContent='Ստանում է…';try{const r=await call('POST','/api/pull');await load();toast('Ստացված է. '+esc(r.out.split('\n').pop()))}catch(e){toast(esc(e.message),true)}finally{b.disabled=false;b.textContent='Ստանալ վերջին տարբերակը'}};
+}
+
+/* ---------- dialogs ---------- */
+function ask(title,text,okLabel,danger){return new Promise(res=>{const d=$('#dlg');$('#dlgBody').innerHTML='<h2>'+title+'</h2><p>'+text+'</p><div class="acts"><button class="btn" type="button" value="no">Չեղարկել</button><button class="btn '+(danger?'danger':'p')+'" type="button" value="ok">'+okLabel+'</button></div>';
+  $$('#dlgBody button').forEach(b=>b.onclick=()=>{d.close();res(b.value==='ok')});d.onclose=()=>res(false);d.showModal()})}
+
+/* ---------- publish ---------- */
+$('#pubBtn').onclick=()=>{
+  if(dirty||textChanges.size)return toast('Նախ պահպանեք կամ չեղարկեք փոփոխությունները',true);
+  const d=$('#dlg'),uniq=[...new Set(log)];
+  const def='Admin: '+(uniq.length?uniq.join(', '):'site update');
+  $('#dlgBody').innerHTML='<h2>Հրապարակել կայքում</h2><p>Փոփոխությունները կգնան GitHub և մի քանի րոպեից կերևան '+esc(D.site.replace(/^https?:\/\//,''))+' հասցեում։</p>'+
+    '<div class="f"><label for="pmsg">Ինչ է փոխվել (git-ի համար)</label><input type="text" id="pmsg" value="'+esc(def.slice(0,190))+'"></div>'+
+    '<ol class="steps" id="steps"><li data-s="push"><i></i>Ուղարկել GitHub</li><li data-s="live"><i></i>Սպասել, մինչև կայքը թարմանա</li></ol><div id="perr"></div>'+
+    '<div class="acts"><button class="btn" type="button" id="pClose">Փակել</button><button class="btn p" type="button" id="pGo">Հրապարակել</button></div>';
+  d.showModal();
+  const st=(s,c,t)=>{const li=$('[data-s="'+s+'"]');li.className=c;li.firstChild.textContent=c==='done'?'✓':c==='fail'?'!':'';if(t)li.lastChild.textContent=t};
+  $('#pClose').onclick=()=>d.close();
+  $('#pGo').onclick=async()=>{
+    const go=$('#pGo');go.disabled=true;$('#perr').innerHTML='';st('push','run');
+    try{const r=await call('POST','/api/publish',{message:$('#pmsg').value});st('push','done','Ուղարկված է GitHub');setState(r.git);log=[];}
+    catch(e){st('push','fail');$('#perr').innerHTML='<pre class="err">'+esc(e.message)+'</pre>';go.disabled=false;return}
+    st('live','run','Սպասում ենք GitHub Pages-ին (սովորաբար 1–2 րոպե)…');
+    for(let i=0;i<40;i++){await new Promise(r=>setTimeout(r,i?10000:4000));
+      try{const r=await call('GET','/api/live');if(r.live){st('live','done','Կայքը թարմացված է');$('#perr').innerHTML='<p style="margin-top:14px"><a class="btn p" href="'+esc(r.site)+'" target="_blank" rel="noopener">Բացել կայքը ↗</a></p>';go.hidden=true;return}}catch(e){}}
+    st('live','fail','GitHub Pages-ը դեռ չի թարմացել. ստուգեք մի քանի րոպեից');
+  };
+};
+
+load().catch(e=>{$('#main').innerHTML='<div class="empty">Չհաջողվեց բեռնել. '+esc(e.message)+'</div>'});
+})();
+</script>
+</body>
+</html>

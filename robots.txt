@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /worker/
 Disallow: /tools/
+Disallow: /admin/
 
 Sitemap: https://araratyan98.github.io/berd-soft/sitemap.xml

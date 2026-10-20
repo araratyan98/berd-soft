@@ -17,7 +17,7 @@ const CFG = Function('return (' + cfgMatch[1] + ')')();
 const contentMatch = src.match(/\/\*CONTENT\*\/([\s\S]*?)\/\*\/CONTENT\*\//);
 const C = Function('return (' + contentMatch[1] + ')')();
 // portfolio names and public links come from PROJ in the page script
-const PROJ = Function('return ' + src.match(/var PROJ = (\[[\s\S]*?\n\]);/)[1])();
+const PROJ = JSON.parse(src.match(/\/\*PROJ\*\/([\s\S]*?)\/\*\/PROJ\*\//)[1]);
 const projOf = id => PROJ.find(p => p.id === id) || { name: id };
 const SITE = CFG.siteUrl.replace(/\/?$/, '/');
 const LANGS = ['hy', 'ru', 'en'];
@@ -132,7 +132,7 @@ fs.writeFileSync(path.join(OUT, 'sitemap.xml'),
   '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' +
   LANGS.map(l => `  <url>\n    <loc>${url(l)}</loc>\n    <lastmod>${today}</lastmod>\n` +
     LANGS.map(x => `    <xhtml:link rel="alternate" hreflang="${x}" href="${url(x)}"/>`).join('\n') + '\n  </url>').join('\n') + '\n</urlset>\n');
-fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /worker/\nDisallow: /tools/\n\nSitemap: ${SITE}sitemap.xml\n`);
+fs.writeFileSync(path.join(OUT, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /worker/\nDisallow: /tools/\nDisallow: /admin/\n\nSitemap: ${SITE}sitemap.xml\n`);
 fs.writeFileSync(path.join(OUT, '404.html'), `<!doctype html><html lang="hy"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BERD SOFT</title><meta http-equiv="refresh" content="0;url=${SITE}"></head><body style="background:#0b0c10;color:#fff;font:16px system-ui;padding:24px"><a href="${SITE}" style="color:#CCFF00">BERD SOFT →</a></body></html>\n`);
 console.log('built:', LANGS.map(l => (l === 'hy' ? '' : l + '/') + 'index.html').join(', '), '+ sitemap.xml, robots.txt, 404.html');
 
