@@ -275,8 +275,8 @@ body>.toast{position:fixed;top:calc(16px + env(safe-area-inset-top,0px))}
   .phone .pfoot small{color:#7d8396;font:500 12px var(--f-ui)}
   /* the robot no longer has a dock to clear */
   .pfab{bottom:calc(16px + env(safe-area-inset-bottom,0px));width:56px;height:56px}
-  /* keep the section links clear of the robot */
-  .phone .feat h2{padding-right:4px}
+  /* "All" sits under the carousel, away from the robot */
+  .phone .pall{display:block;margin:14px auto 0;padding:10px 18px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);color:var(--lime);font:700 14px var(--f-ui)}
 }
 @media (max-width:760px) and (prefers-reduced-motion:reduce){
   .phone .tile{animation:none}
